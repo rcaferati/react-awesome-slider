@@ -1,0 +1,174 @@
+$unit: 4px;
+$double: $unit * 2;
+$half: $unit * 5;
+$deca: $unit * 10;
+
+%h1 {
+  font-size: $deca;
+  line-height: $deca;
+  color: #cfcfcf;
+}
+
+%h2 {
+  font-size: $double * 3;
+  line-height: $double * 3;
+}
+
+%h3 {
+  font-size: $deca / 2;
+  line-height: $deca / 2;
+}
+
+%h4 {
+  font-size: $double * 2;
+  line-height: $double * 2;
+}
+
+%text {
+  font-size: $double * 2;
+  line-height: $double * 7/2;
+}
+
+html {
+  box-sizing: border-box;
+  background-color: #2f2f2f;
+  color: #6f6f6f;
+}
+
+::selection {
+  color: #FFF;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: montserrat, tahoma, sans-serif;
+}
+
+main {
+  display: block;
+  max-width: $deca * 22;
+  margin: 0 auto;
+  padding: $deca * 2;
+}
+
+a {
+  color: #8a8a8a;
+}
+
+header {
+  margin-bottom: $deca;
+  h1 {
+    @extend %h1;
+    margin-bottom: $double * 3;
+  }
+  h2 {
+    @extend %h2;
+    margin-bottom: $unit;
+    strong {
+      display: inline-block;
+      margin-bottom: $double;
+      margin-right: $double;
+    }
+    span {
+      display: inline-block;
+      font-size: $double * 2;
+      font-weight: 500;
+    }
+  }
+  p {
+    @extend %text;
+    margin-bottom: $deca;
+  }
+}
+
+footer {
+  img {
+    max-width: 260px;
+    width: 80%;
+    margin-bottom: $double;
+  }
+  small {
+    display: block;
+    font-size: $unit * 3;
+    line-height: $double * 3;
+  }
+}
+
+.buttons {
+  div, button, a {
+    margin: $double $double $double 0;
+  }
+}
+
+.examples {
+  list-style: none;
+  li {
+    margin-bottom: $deca;
+  }
+  p {
+    @extend %text;
+    margin-top: $double;
+  }
+  h3 {
+    @extend %h3;
+  }
+  code {
+    padding: $unit * 3;
+    background-color: rgba(0,0,0,0.05);
+    border-radius: 4px;
+  }
+  .header {
+    margin-bottom: $double * 2;
+  }
+}
+
+.features {
+  margin-bottom: $deca;
+  background-color: rgba(0,0,0,0.1);
+  padding: $double * 2;
+  border-radius: $unit;
+  h3 {
+    @extend %h3;
+    margin-bottom: $double * 2;
+  }
+  ul {
+    list-style: none;
+  }
+  li {
+    @extend %text;
+    line-height: $double * 3;
+    margin-bottom: $double;
+    padding-left: $double * 3;
+    position: relative;
+    &:before {
+      content: "\F00C";
+      font-family: FontAwesome;
+      font-size: $double * 2;
+      display: block;
+      width: $half;
+      height: $half;
+      position: absolute;
+      left: 0;
+      top: calc(50% - #{$half/2} - 3px);
+      z-index: -1;
+    }
+  }
+}
+
+pre {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  line-height: $deca / 2;
+  h4 {
+    @extend %h4;
+    margin-bottom: $unit;
+  }
+  margin-bottom: $double;
+}
