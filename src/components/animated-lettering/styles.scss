@@ -1,0 +1,55 @@
+@import '../../core/react-awesome-slider.scss';
+
+.#{$root-element} {
+  &__content {
+    p:nth-child(n) {
+      text-align: center;
+      transform: translate3d(0, 0, 0);
+      opacity: 1;
+      font-size: 28px;
+      line-height: 36px;
+      color: rgba(0, 0, 0, 0.25);
+      transition: transform 0.45s cubic-bezier(0.15, 0.3, 0.15, 1), opacity 0.35s ease-out;
+    }
+    p:nth-child(2) {
+      transition-delay: 0.05s, 0.05s;
+    }
+    p:nth-child(3) {
+      transition-delay: 0.1s, 0.1s;
+    }
+    p:nth-child(4) {
+      transition-delay: 0.15s, 0.15s;
+    }
+    &--static {
+      p:nth-child(n) {
+        transition: none !important;
+      }
+    }
+    &--exit {
+      p:nth-child(n) {
+        transition: transform 0.225s cubic-bezier(0.85, 0, 0.85, 0.7), opacity 0.4s ease-out;
+      }
+      p:nth-child(2) {
+        transition-delay: 0.05s, 0.05s;
+      }
+      p:nth-child(3) {
+        transition-delay: 0.1s, 0.1s;
+      }
+      p:nth-child(4) {
+        transition-delay: 0.15s, 0.15s;
+      }
+    }
+    &--moveLeft {
+      p:nth-child(n) {
+        transform: translate3d(50px, 0, 0);
+        opacity: 0;
+      }
+    }
+    &--moveRight {
+      p:nth-child(n) {
+        transform: translate3d(-50px, 0, 0);
+        opacity: 0;
+      }
+    }
+  }
+}

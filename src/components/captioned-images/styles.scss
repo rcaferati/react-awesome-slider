@@ -1,0 +1,56 @@
+@import '../../core/react-awesome-slider.scss';
+
+.#{$root-element} {
+  --caption-background-color: rgba(0, 0, 0, 0.15);
+
+  &__content {
+    .caption {
+      display: flex;
+      padding: 15px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      z-index: 100;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+
+      p {
+        background-color: var(--caption-background-color);
+        padding: 10px 20px;
+        color: #FFF;
+        font-weight: bold;
+        transition: transform 0.425s cubic-bezier(0.05, 0.65, 0.1, 0.95), opacity 300ms ease-out;
+        transform: translate3d(0, 0, 0);
+        opacity: 1;
+      }
+    }
+
+    &--exit {
+      .caption {
+        p {
+          transition: transform 225ms cubic-bezier(0.85, 0, 0.85, 0.7) 75ms, opacity 275ms ease-out 175ms;
+        }
+      }
+    }
+
+    &--moveLeft {
+      .caption {
+        p {
+          transform: translate3d(50px, 0, 0.01px);
+          opacity: 0;
+        }
+      }
+    }
+
+    &--moveRight {
+      .caption {
+        p {
+          transform: translate3d(-50px, 0, 0.01px);
+          opacity: 0;
+        }
+      }
+    }
+
+  }
+}

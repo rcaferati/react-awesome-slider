@@ -1,0 +1,107 @@
+.container {
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  width: 500px;
+  padding: 50px 30px;
+  background-color: #333;
+  overflow-y: scroll;
+  transform: translateX(var(--customiser-transform));
+  transition: transform 0.25s ease-out;
+  z-index: 100;
+
+  footer {
+    padding: 10px 0;
+
+    p {
+      font-size: 14px;
+    }
+    a {
+      font-weight: bold;
+    }
+  }
+
+  header {
+    padding-top: 4px;
+    margin-bottom: 20px;
+    h2 {
+      font-size: 24px;
+      margin-bottom: 6px;
+    }
+    p {
+      line-height: 24px;
+    }
+  }
+
+  ul {
+    list-style: none;
+    margin-bottom: 18px;
+  }
+  h3 {
+    font-size: 18px;
+    margin-bottom: 4px;
+  }
+  li {
+    display: flex;
+    padding: 8px 0;
+    label {
+      display: block;
+      flex: 0 0 220px;
+      padding-right: 20px;
+      align-self: flex-start;
+    }
+    > div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    input {
+      display: block;
+    }
+    input[type="range"] {
+      width: 120px;
+    }
+    input[type="color"] {
+      width: 80px;
+      margin-right: 40px;
+    }
+    span {
+      display: block;
+      width: 100px;
+      text-align: right;
+      font-size: 14px;
+      line-height: 21px;
+      font-weight: bold;
+      text-align: left;
+      padding-left: 20px;
+    }
+  }
+}
+
+.export {
+  padding-top: 24px;
+  margin-bottom: 36px;
+  position: relative;
+
+  &:before {
+    content: "";
+    width: 60%;
+    height: 1px;
+    background-color: #6f6f6f;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+
+.control {
+  padding-top: 16px;
+
+  svg {
+    margin-top: -4px;
+  }
+  > a, > button {
+    margin-right: 10px;
+  }
+}

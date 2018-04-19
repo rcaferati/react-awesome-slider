@@ -1,0 +1,33 @@
+{
+  "name": "AwesomeSlider",
+  "framework": "React",
+  "title": "Awesome Slider",
+  "description": "React Awesome Slider is a 60fps, extendable, highly customisable, production ready javascript react component that renders an animated basic set of a UI gallery slider.",
+  "icon": "react-js",
+  "size": "~6KB compressed",
+  "repository": "https://github.com/rcaferati/react-awesome-slider",
+  "article": "//caferati.me/labs/awesome-button",
+  "domain": "",
+  "themes": [
+    {
+      "name": "Basic Usage",
+      "slug": "images"
+    },
+    {
+      "name": "Captioned Images",
+      "slug": "captioned"
+    },
+    {
+      "name": "Scale Animation",
+      "slug": "scaling"
+    },
+    {
+      "name": "Fold Animation",
+      "slug": "delayed"
+    },
+    {
+      "name": "Smooth Lettering",
+      "slug": "lettering"
+    }
+  ]
+}

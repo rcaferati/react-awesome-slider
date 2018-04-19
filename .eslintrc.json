@@ -19,14 +19,19 @@
     }
   },
   "rules": {
+    "func-names": 0,
     "no-console": 0,
+    "class-methods-use-this": 0,
     "react/jsx-filename-extension": 0,
     "react/forbid-prop-types": 0,
     "react/no-unused-prop-types": 0,
+    "react/prop-types": 0,
     "react/no-array-index-key": 0,
     "react/no-danger": 0,
     "no-nested-ternary": 0,
     "no-restricted-globals": 0,
+    "jsx-a11y/label-has-for": 0,
+    "jsx-a11y/media-has-caption": 0,
     "jsx-a11y/anchor-has-content": 0,
     "jsx-a11y/click-events-have-key-events": 0,
     "import/no-extraneous-dependencies": 0

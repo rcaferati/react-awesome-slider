@@ -4,7 +4,7 @@ const path = require('path');
 
 const config = {
   entry: {
-    styles: ['./src/styles/index.js'],
+    styles: ['./src/core/styles.js'],
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -25,7 +25,10 @@ const config = {
         loader: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
-            'css-loader',
+            {
+              loader: 'css-loader',
+              options: { minimize: true },
+            },
             'postcss-loader',
             'sass-loader',
           ],

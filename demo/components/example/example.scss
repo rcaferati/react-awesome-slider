@@ -1,0 +1,98 @@
+@import '../../helpers/base.scss';
+.container {
+  h3 {
+    margin-bottom: 12px;
+    font-size: 16px;
+  }
+}
+
+.component {
+  margin-bottom: 60px;
+
+  a, button {
+    margin: 8px 0;
+  }
+}
+
+.example {
+  display: block;
+  margin-bottom: 35px;
+
+  h3 {
+    margin-bottom: 8px;
+    font-size: 16px;
+  }
+
+  p {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  a, button {
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+}
+
+.container {
+  list-style: none;
+  li {
+    margin-bottom: $deca;
+  }
+  p {
+    @extend %text;
+  }
+  code {
+    padding: 12px 20px;
+    background-color: rgba(0,0,0,0.05);
+    border-radius: 4px;
+    overflow-x: auto;
+  }
+  .header {
+    margin-bottom: $double * 2;
+  }
+  pre {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    line-height: $deca / 2;
+    margin: 16px 0;
+    h4 {
+      @extend %h4;
+      margin-bottom: $unit;
+    }
+  }
+}
+
+.features {
+  margin-bottom: $deca;
+  background-color: rgba(0,0,0,0.1);
+  padding: $double * 2;
+  border-radius: $unit;
+  h3 {
+    @extend %h3;
+    margin-bottom: $double * 2;
+  }
+  ul {
+    list-style: none;
+  }
+  li {
+    @extend %text;
+    line-height: $double * 3;
+    margin-bottom: $double;
+    padding-left: $double * 3;
+    position: relative;
+    &:before {
+      content: "\F00C";
+      font-family: FontAwesome;
+      font-size: $double * 2;
+      display: block;
+      width: $half;
+      height: $half;
+      position: absolute;
+      left: 0;
+      top: calc(50% - #{$half/2} - 3px);
+      z-index: -1;
+    }
+  }
+}

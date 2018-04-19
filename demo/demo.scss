@@ -1,0 +1,50 @@
+@import './helpers/base.scss';
+
+::selection {
+  color: #FFF;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  box-sizing: border-box;
+  background-color: #2f2f2f;
+  color: #6f6f6f;
+}
+
+body {
+  font-family: lato, tahoma, sans-serif;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: montserrat, tahoma, sans-serif;
+  font-weight: 700;
+}
+
+main {
+  display: block;
+}
+
+a {
+  color: #8a8a8a;
+}
+
+nav a {
+  --button-font-family: montserrat, tahoma, sans-serif;
+}
+
+.ribbon {
+  span {
+    &:first-child {
+      margin-right: 8px;
+    }
+    &:nth-child(2) {
+      font-size: 18px;
+    }
+  }
+}

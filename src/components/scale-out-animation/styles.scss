@@ -1,0 +1,18 @@
+@import '../../core/react-awesome-slider.scss';
+
+.#{$root-element} {
+  &.#{$root-element}--moveLeft {
+    transform: scale(0.85);
+  }
+  &.#{$root-element}--moveRight {
+    transform: scale(0.85);
+  }
+  &--exit {
+    &.#{$root-element}--moveLeft {
+      transform: scale(0.85);
+    }
+    &.#{$root-element}--moveRight {
+      transform: scale(0.85);
+    }
+  }
+}

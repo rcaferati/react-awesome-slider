@@ -2,7 +2,7 @@
 
 [![Travis](https://img.shields.io/travis/rcaferati/react-awesome-slider/master.svg)](https://travis-ci.org/rcaferati/react-awesome-slider) ![NPM](https://img.shields.io/npm/v/react-awesome-slider.svg)
 
-`react-awesome-button` is a performant, extendable, highly customisable, production ready React Component that renders a media (image/video) gallery slider/carousel.
+`react-awesome-button` is a 60fps, extendable, highly customisable, production ready React Component that renders a media (image/video) gallery slider/carousel.
 
 [<img width="400" alt="react-awesome-slider demo" src="https://github.com/rcaferati/react-awesome-slider/blob/master/demo/images/gallery-demo.gif?raw=true">](https://caferati.me/demo/react-awesome-slider)
 

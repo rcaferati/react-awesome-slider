@@ -1,0 +1,18 @@
+@import '../../helpers/base.scss';
+
+.container {
+  display: block;
+  margin-top: 80px;
+  width: 100%;
+  text-align: center;
+  img {
+    max-width: 260px;
+    width: 80%;
+    margin-bottom: $double;
+  }
+  small {
+    display: block;
+    font-size: $unit * 3;
+    line-height: $double * 3;
+  }
+}

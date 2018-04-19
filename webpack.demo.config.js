@@ -2,7 +2,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const config = {
   entry: {
-    'react-awesome-slider': ['./src/demo/demo.js'],
+    'react-awesome-button': ['./demo/index.js'],
   },
   module: {
     rules: [
@@ -13,8 +13,7 @@ const config = {
         options: {
           presets: ['es2015', 'react', 'stage-0'],
         },
-      },
-      {
+      }, {
         test: /\.scss$/i,
         loader: ExtractTextPlugin.extract({
           fallback: 'style-loader',
@@ -32,7 +31,7 @@ const config = {
       },
       {
         test: /\.css$/i,
-        use: ExtractTextPlugin.extract({
+        loader: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: 'css-loader?importLoaders=1!postcss-loader',
         }),
@@ -45,7 +44,7 @@ const config = {
     }),
   ],
   devServer: {
-    contentBase: './public',
+    contentBase: './demo/public',
     historyApiFallback: true,
     inline: true,
   },

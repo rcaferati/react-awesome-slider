@@ -1,0 +1,30 @@
+$unit: 4px;
+$double: $unit * 2;
+$half: $unit * 5;
+$deca: $unit * 10;
+
+%h1 {
+  font-size: $deca;
+  line-height: $deca;
+  color: #cfcfcf;
+}
+
+%h2 {
+  font-size: $double * 3;
+  line-height: $double * 3;
+}
+
+%h3 {
+  font-size: $deca / 2;
+  line-height: $deca / 2;
+}
+
+%h4 {
+  font-size: $double * 2;
+  line-height: $double * 2;
+}
+
+%text {
+  font-size: $double * 2;
+  line-height: $double * 7/2;
+}

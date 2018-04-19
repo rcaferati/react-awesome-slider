@@ -1,0 +1,35 @@
+.container {
+  span {
+    display: inline-block;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    font-weight: bold;
+  }
+  nav {
+    display: inline-block;
+  }
+}
+
+.nav {
+  display: block;
+  padding: 0;
+  text-align: left;
+
+  a {
+    display: inline-block;
+    padding: 12px 16px;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 6px;
+    margin-right: 2px;
+    font-family: inherit;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+    &.selected {
+      background-color: rgba(0, 0, 0, 0.1);
+      color: #cfcfcf;
+    }
+  }
+}
