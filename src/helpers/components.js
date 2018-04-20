@@ -79,11 +79,9 @@ export function setCssEndEvent(element, type, tolerance = 0) {
     const capitalized = type.charAt(0).toUpperCase() + type.slice(1);
     let run = 0;
     function end(event) {
-      console.timeStamp('TRYING TO END THINGS');
       const target = event.srcElement || event.target;
       if (target === element) {
         if (run >= tolerance) {
-          console.timeStamp('ENDING THINGS');
           element.removeEventListener(eventName, end);
           resolve();
         }

@@ -60,7 +60,6 @@ class Customiser extends React.Component {
   }
 
   setElement = (element) => {
-    console.log('SETTING ELEMENT AND UPDATING ALL VALUES');
     this.element = element;
     this.updateAllValues(this.props);
   }

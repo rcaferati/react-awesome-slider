@@ -98,7 +98,7 @@ class Example extends React.Component {
       component,
       examples,
     } = this.props;
-    console.log(this.props);
+
     return (
       <div className={Styles.container}>
         <div className={Styles.header}>

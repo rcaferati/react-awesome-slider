@@ -97,10 +97,6 @@ const example = {
   title: 'Captioned Images',
   items: [
     {
-      title: 'Installation',
-      command: 'npm install --save react-awesome-slider',
-    },
-    {
       title: 'Basic Children Usage',
       jsx: `
 import AwesomeSlider from 'react-awesome-slider';
