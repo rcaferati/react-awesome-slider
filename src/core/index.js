@@ -153,6 +153,9 @@ export default class AwesomeSlider extends React.Component {
   setupClassNames(cssModule) {
     const { rootElement } = this;
     this.classNames = {
+      boxA: getClassName(`${this.rootElement}__boxA`, cssModule),
+      boxB: getClassName(`${this.rootElement}__boxB`, cssModule),
+      box: getClassName(`${this.rootElement}__box`, cssModule),
       container: getClassName(`${rootElement}__container`, cssModule),
       wrapper: getClassName(`${rootElement}__wrapper`, cssModule),
       bar: getClassName(`${rootElement}__bar`, cssModule),
@@ -563,23 +566,20 @@ export default class AwesomeSlider extends React.Component {
   }
 
   renderBox(box) {
-    const {
-      cssModule,
-    } = this.props;
     return (
       <div
         ref={(el) => { this[`box${box}`] = el; }}
-        className={getClassName(`${this.rootElement}__box${box}`, cssModule)}
+        className={this.classNames.box}
         onTouchStart={this.touchStart}
         onTouchMove={this.touchMove}
         onTouchEnd={this.touchEnd}
       >
-        {this.state[`box${box}`] && this.renderMedia(this.state[`box${box}`], cssModule)}
+        {this.state[`box${box}`] && this.renderMedia(this.state[`box${box}`])}
       </div>
     );
   }
 
-  renderMedia(media, cssModule) {
+  renderMedia(media) {
     let background = null;
     const className = [
       this.classNames.content,

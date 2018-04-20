@@ -184,7 +184,7 @@ $content-background-color: #2f2f2f;
   &__prev {
     left: 0;
   }
-  &__boxA, &__boxB {
+  &__box {
     z-index: 1;
     @extend %fill-parent;
   }
