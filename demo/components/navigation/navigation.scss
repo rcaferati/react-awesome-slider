@@ -23,12 +23,14 @@
     border-radius: 6px;
     margin-right: 2px;
     font-family: inherit;
+    background-color: rgba(0, 0, 0, 0.035);
+    transition: background-color 0.1s ease-out;
 
     &:hover {
-      background-color: rgba(0, 0, 0, 0.05);
+      background-color: rgba(0, 0, 0, 0.07);
     }
     &.selected {
-      background-color: rgba(0, 0, 0, 0.1);
+      background-color: rgba(0, 0, 0, 0.14);
       color: #cfcfcf;
     }
   }

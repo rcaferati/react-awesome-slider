@@ -256,7 +256,7 @@ $content-background-color: #2f2f2f;
     &:before, &:after {
       content: " ";
       position: absolute;
-      right: calc(50% - (#{$cos45}px * var(--organic-arrow-height) / 2));
+      right: calc(50% - (#{$cos45} * (var(--organic-arrow-height) + var(--organic-arrow-thickness))) / 2);
       height: 100%;
       border-radius: var(--organic-arrow-border-radius);
       width: var(--organic-arrow-thickness);
@@ -290,7 +290,7 @@ $content-background-color: #2f2f2f;
   &__controls__arrow-left {
     &:before, &:after {
       right: auto;
-      left: calc(50% - (#{$cos45}px * var(--organic-arrow-height) / 2));
+      left: calc(50% - (#{$cos45} * (var(--organic-arrow-height) + var(--organic-arrow-thickness))) / 2);
     }
     &:before {
       transform-origin: 0 100% 0;

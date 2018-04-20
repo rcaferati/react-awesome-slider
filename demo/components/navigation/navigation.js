@@ -15,7 +15,6 @@ export default class Navigation extends React.Component {
       <Link
         key={`${theme.name}-${index}`}
         to={`${this.props.domain}/${theme.slug}`}
-        onClick={this.onClick}
         className={theme.slug === this.props.theme ? Styles.selected : null}
       >
         {theme.name}
@@ -26,7 +25,6 @@ export default class Navigation extends React.Component {
   render() {
     return (
       <div className={Styles.container}>
-        <span>Select a theme:</span>
         <nav className={Styles.nav}>
           {this.renderButtons()}
         </nav>

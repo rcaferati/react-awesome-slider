@@ -82,10 +82,11 @@ const component = (
       title="Adult Swim &mdash; Rick and Morty"
     >
       <Captioned
-        name="mixed"
+        name="captioned-mixed"
         startupScreen={startupScreen}
         cssModule={CaptionedStyles}
         screens={media}
+        onFirstMount={resetSlider}
         onResetSlider={resetSlider}
         onTransitionStart={transitionStart}
         onTransitionEnd={transitionEnd}

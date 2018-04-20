@@ -76,7 +76,7 @@ const component = (
           data-src="/images/series/south-park-3.jpg"
         />
         <div
-          style={{ backgroundColor: '#fcd0a8' }}
+          style={{ backgroundColor: '#d63b6b' }}
           data-src="/images/series/south-park-0.jpg"
         />
       </AwesomeSlider>

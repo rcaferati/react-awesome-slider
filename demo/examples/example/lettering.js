@@ -46,6 +46,7 @@ function resetSlider(slider) {
   const color = getComputedStyle(divs[0]).backgroundColor;
   slider.element.style.setProperty('--organic-arrow-color', shadeRGBColor(color, -0.2));
   slider.element.style.setProperty('--control-bullet-active-color', shadeRGBColor(color, -0.2));
+  slider.element.style.setProperty('--slider-transition-duration', '525ms');
   slider.element.style.setProperty('--control-bullet-color', color);
   window.setElement(slider.element);
 }
