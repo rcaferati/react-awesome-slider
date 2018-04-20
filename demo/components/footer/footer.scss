@@ -16,3 +16,31 @@
     line-height: $double * 3;
   }
 }
+
+.follow {
+  position: relative;
+  margin-top: 20px;
+
+  h5 {
+    margin-bottom: 16px;
+  }
+  hr {
+    border: none;
+    background-color: rgba(255, 255, 255, 0.25);
+    height: 1px;
+    width: 50%;
+    max-width: 120px;
+    display: block;
+    margin: 0 auto 20px;
+  }
+  a, button {
+    margin: 0 5px;
+    --button-medium-width: 130px;
+
+    &:nth-child(4) {
+      svg {
+        margin-top: -3px;
+      }
+    }
+  }
+}

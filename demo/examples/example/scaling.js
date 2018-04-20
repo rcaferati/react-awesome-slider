@@ -14,12 +14,11 @@ function resetSlider(slider) {
   const divs = slider.currentSlide.querySelectorAll('div');
   const color = getComputedStyle(divs[0]).backgroundColor;
   slider.element.style.setProperty('--transition-bezier', 'cubic-bezier(0.45, 0, 0.2, 1)');
-  slider.element.style.setProperty('--slider-transition-duration', '770ms');
+  slider.element.style.setProperty('--slider-transition-duration', '670ms');
   slider.element.style.setProperty('--organic-arrow-color', shadeRGBColor(color, -0.2));
   slider.element.style.setProperty('--control-bullet-active-color', shadeRGBColor(color, -0.2));
   slider.element.style.setProperty('--control-bullet-color', color);
   slider.element.style.setProperty('--organic-arrow-thickness', '6px');
-  slider.element.style.setProperty('--organic-arrow-height', '30px');
   window.setElement(slider.element);
 }
 
@@ -52,17 +51,17 @@ const component = (
   <div>
     <AwesomeFrame
       cssModule={AwsFrameStyles}
-      title="Comedy Central's South Park"
+      title="Comedy Central &mdash; South Park"
     >
       <AwesomeSlider
         name="images"
         cssModule={AwsSliderStyles}
         organicArrows
         startupScreen={startupScreen}
-        firstMount={resetSlider}
+        onFirstMount={resetSlider}
         onResetSlider={resetSlider}
-        transitionStart={transitionStart}
-        transitionEnd={transitionEnd}
+        onTransitionStart={transitionStart}
+        onTransitionEnd={transitionEnd}
       >
         <div
           style={{ backgroundColor: '#a3b9d0' }}
@@ -86,7 +85,41 @@ const component = (
 
 const example = {
   title: 'Scale Animation',
-  items: [],
+  items: [
+    {
+      title: 'Scale Animation Styles',
+      description: 'For this example I\'m using the ScaleOutAnimation component ',
+      jsx: `
+import AwesomeSlider from 'react-awesome-slider';
+import AwesomeSliderStyles from 'react-awesome-slider/src/components/scale-out-animation/styles.scss';
+
+const Slider = (
+  <AwesomeSlider cssModule={AwesomeSliderStyles}>
+    <div data-src="/path/to/image-0.jpg" />
+    <div data-src="/path/to/image-1.jpg" />
+    <div data-src="/path/to/image-2.jpg" />
+    <div data-src="/path/to/image-3.jpg" />
+  </AwesomeSlider>
+);
+      `,
+    },
+    {
+      title: 'ScaleOutAnimation Styles',
+      description: 'The animation out styling on the <b>scale-out-animation</b> .scss file is pretty simple. We just apply the scaling down on exit moveLeft and exit moveRight classes of the current box container.',
+      scss: `
+.aws-slr {
+  &--exit {
+    &.aws-slr--moveLeft {
+      transform: scale(0.85);
+    }
+    &.aws-slr--moveRight {
+      transform: scale(0.85);
+    }
+  }
+}
+      `,
+    },
+  ],
   component,
   componentClass: AwsSliderStyles['aws-sld'],
 };

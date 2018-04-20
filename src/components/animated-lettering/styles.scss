@@ -1,4 +1,4 @@
-@import '../../core/react-awesome-slider.scss';
+@import '../../core/styles.scss';
 
 .#{$root-element} {
   &__content {
@@ -41,13 +41,13 @@
     }
     &--moveLeft {
       p:nth-child(n) {
-        transform: translate3d(50px, 0, 0);
+        transform: translate3d(-50px, 0, 0);
         opacity: 0;
       }
     }
     &--moveRight {
       p:nth-child(n) {
-        transform: translate3d(-50px, 0, 0);
+        transform: translate3d(50px, 0, 0);
         opacity: 0;
       }
     }

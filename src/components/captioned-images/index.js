@@ -7,16 +7,16 @@ export default class Lettering extends Component {
   static propTypes = {
     name: PropTypes.string,
     screens: PropTypes.array.isRequired,
-    resetSlider: PropTypes.func,
-    transitionStart: PropTypes.func,
-    transitionEnd: PropTypes.func,
+    onResetSlider: PropTypes.func,
+    onTransitionStart: PropTypes.func,
+    onTransitionEnd: PropTypes.func,
     startupScreen: PropTypes.node,
   };
   static defaultProps = {
     name: 'awesome-slider',
-    resetSlider: null,
-    transitionStart: null,
-    transitionEnd: null,
+    onResetSlider: null,
+    onTransitionStart: null,
+    onTransitionEnd: null,
     startupScreen: null,
   };
 
@@ -43,10 +43,10 @@ export default class Lettering extends Component {
         cssModule={Styles}
         organicArrows
         transitionDelay={100}
-        firstMount={this.props.resetSlider}
-        onResetSlider={this.props.resetSlider}
-        transitionStart={this.props.transitionStart}
-        transitionEnd={this.props.transitionEnd}
+        onFirstMount={this.props.onResetSlider}
+        onResetSlider={this.props.onResetSlider}
+        onTransitionStart={this.props.onTransitionStart}
+        onTransitionEnd={this.props.onTransitionEnd}
         startupScreen={this.props.startupScreen}
       >
         {this.renderScreens()}

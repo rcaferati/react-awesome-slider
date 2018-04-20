@@ -52,7 +52,6 @@ class Customiser extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log('did update');
     if (this.updateValues === true) {
       this.updateValues = false;
       // this.updateElement(this.props.componentClass);

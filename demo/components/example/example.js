@@ -35,7 +35,13 @@ class Example extends React.Component {
           className={Styles.example}
         >
           {title && (<h3>{title}</h3>)}
-          {description && (<p>{description}</p>)}
+          {description && (
+            <p
+              dangerouslySetInnerHTML={{
+                __html: description,
+              }}
+            />
+          )}
           {command && (
             <pre>
               <h4>.sh</h4>
@@ -92,7 +98,7 @@ class Example extends React.Component {
       component,
       examples,
     } = this.props;
-
+    console.log(this.props);
     return (
       <div className={Styles.container}>
         <div className={Styles.header}>

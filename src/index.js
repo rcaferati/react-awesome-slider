@@ -1,3 +1,3 @@
-import AwesomeSlider from './core/react-awesome-slider';
+import AwesomeSlider from './core';
 
 export default AwesomeSlider;

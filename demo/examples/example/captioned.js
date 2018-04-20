@@ -79,24 +79,80 @@ const component = (
   <div>
     <AwesomeFrame
       cssModule={AwsFrameStyles}
-      title="Adult Swim's Rick and Morty"
+      title="Adult Swim &mdash; Rick and Morty"
     >
       <Captioned
         name="mixed"
         startupScreen={startupScreen}
         cssModule={CaptionedStyles}
         screens={media}
-        organicArrows
-        resetSlider={resetSlider}
-        transitionStart={transitionStart}
-        transitionEnd={transitionEnd}
+        onResetSlider={resetSlider}
+        onTransitionStart={transitionStart}
+        onTransitionEnd={transitionEnd}
       />
     </AwesomeFrame>
   </div>);
 
 const example = {
   title: 'Captioned Images',
-  items: [],
+  items: [
+    {
+      title: 'Installation',
+      command: 'npm install --save react-awesome-slider',
+    },
+    {
+      title: 'Basic Children Usage',
+      jsx: `
+import AwesomeSlider from 'react-awesome-slider';
+import AwsSliderStyles from 'react-awesome-slider/src/styles.scss';
+
+const slider = (
+  <AwesomeSlider cssModule={styles}>
+    <div data-src="/path/to/image.jpg">
+      <p>I want to see what you got.</p>
+    </div>
+    <div data-src="/path/to/image.jpg">
+      <p>The answer is -- Don't think about it.</p>
+    </div>
+    <div data-src="/path/to/image.jpg">
+      <p>Sometimes science is more art than science.</p>
+    </div>
+    <div data-src="/path/to/image.jpg">
+      <p>Love, connection, experience.</p>
+    </div>
+  </AwesomeSlider>
+);
+      `,
+    },
+    {
+      title: 'Captioned Component',
+      description: 'For this specific example I\'m using the Captioned component which is a basic styled wrapper that applies a simple caption strategy. You can check out all the available components <a target="_blank" href="https://github.com/rcaferati/react-awesome-slider/tree/master/src/components">here</a>.',
+      jsx: `
+import Captioned from 'react-awesome-slider/src/components/captioned';
+import CaptionedStyles from 'react-awesome-slider/src/components/captioned/styles.scss';
+
+const component = (
+  <Captioned
+    startupScreen={StartupScreen}
+    cssModule={CaptionedStyles}
+    screens={[
+      {
+        backgroundColor: '#4a9c8c',
+        media: '/images/series/ricknmorty-3.png',
+        caption: 'I want to see what you got.',
+      },
+      {
+        backgroundColor: '#4a9c8c',
+        media: '/images/series/ricknmorty-3.png',
+        caption: 'The answer is -- Don't think about it.',
+      },
+      // ...
+    ]}
+  />
+)
+      `,
+    },
+  ],
   component,
   componentClass: CaptionedStyles['aws-sld'],
 };

@@ -1,6 +1,6 @@
 import React from 'react';
-import AwesomeSlider from '../../../src/components/delayed-out-animation';
-import AwsSliderStyles from '../../../src/components/delayed-out-animation/styles.scss';
+import AwesomeSlider from '../../../src/components/fold-out-animation';
+import AwsSliderStyles from '../../../src/components/fold-out-animation/styles.scss';
 import AwesomeFrame from '../../../src/components/react-awesome-frame';
 import AwsFrameStyles from '../../../src/components/react-awesome-frame/styles.scss';
 import { shadeRGBColor } from '../../helpers/examples';
@@ -52,17 +52,17 @@ const component = (
   <div>
     <AwesomeFrame
       cssModule={AwsFrameStyles}
-      title="Netflix's Bojack Horseman"
+      title="Netflix &mdash; Stranger Things"
     >
       <AwesomeSlider
         name="images"
         cssModule={AwsSliderStyles}
         organicArrows
         startupScreen={startupScreen}
-        firstMount={resetSlider}
+        onFirstMount={resetSlider}
         onResetSlider={resetSlider}
-        transitionStart={transitionStart}
-        transitionEnd={transitionEnd}
+        onTransitionStart={transitionStart}
+        onTransitionEnd={transitionEnd}
       >
         <div
           style={{ backgroundColor: '#fad0ce' }}
@@ -82,7 +82,33 @@ const component = (
 
 const example = {
   title: 'Fold Animation',
-  items: [],
+  items: [
+    {
+      title: 'Styling the fold animation',
+      description: 'The animation out styling is pretty simple. We just apply the folding with translate + rotation on exit moveLeft and exit moveRight classes. Checkout this component\'s source <a target="_blank" href="https://github.com/rcaferati/react-awesome-slider/tree/master/src/components/fold-out-animation">here</a>.',
+      scss: `
+.aws-sld {
+  &__container {
+    perspective: 2000px;
+  }
+  &--exit {
+    &.aws-sld--moveLeft, &.aws-sld--moveRight {
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+    }
+    &.aws-sld--moveLeft {
+      transform-origin: 100% 50%;
+      transform: translate3d(-100%, 0, 0) rotateY(-90deg);
+    }
+    &.aws-sld--moveRight {
+      transform-origin: 0% 50%;
+      transform: translate3d(100%, 0, 0) rotateY(90deg);
+    }
+  }
+}
+      `,
+    },
+  ],
   component,
   componentClass: AwsSliderStyles['aws-sld'],
 };

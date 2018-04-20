@@ -66,27 +66,73 @@ function transitionEnd(slider) {
   window.setElement(slider.element);
 }
 
-const component = (
-  <div>
-    <AwesomeFrame
-      cssModule={AwsFrameStyles}
-      title="Blower's Daughter ♪"
-    >
-      <Lettering
-        cssModyle={LetteringStyles}
-        transitionStart={transitionStart}
-        transitionEnd={transitionEnd}
-        resetSlider={resetSlider}
-        screens={screens}
-      />
-    </AwesomeFrame>
+const startupScreen = (
+  <div style={{ backgroundColor: '#0095B7' }}>
+    <span style={{ fontSize: '72px', color: 'rgba(0, 0, 0, 0.25)' }}>♪</span>
   </div>
+);
+
+const Component = (
+  <AwesomeFrame
+    cssModule={AwsFrameStyles}
+    title="Damien Rice &mdash; Blower's Daughter ♪"
+  >
+    <Lettering
+      name="lettering"
+      cssModule={LetteringStyles}
+      startupScreen={startupScreen}
+      onTransitionStart={transitionStart}
+      onTransitionEnd={transitionEnd}
+      onResetSlider={resetSlider}
+      onFirstMount={resetSlider}
+      screens={screens}
+    />
+  </AwesomeFrame>
 );
 
 const example = {
   title: 'Smooth Lettering',
-  items: [],
-  component,
+  items: [
+    {
+      title: 'Content Animation',
+      description: 'As with the component container, the content element also has it\'s own <b>moveRight</b> and <b>moveLeft</b> animation classes. You can use them to control the behaviour of the entering and exiting children elements.',
+      scss: `
+.aws-sld {
+  &__content {
+    p {
+      transform: translate3d(0, 0, 0);
+      opacity: 1;
+      transition: transform 0.45s cubic-bezier(0.15, 0.3, 0.15, 1), opacity 0.35s ease-out;
+    }
+    p:nth-child(2) {
+      transition-delay: 0.05s, 0.05s;
+    }
+    &--exit {
+      p {
+        transition: transform 0.225s cubic-bezier(0.85, 0, 0.85, 0.7), opacity 0.4s ease-out;
+      }
+      p:nth-child(2) {
+        transition-delay: 0.05s, 0.05s;
+      }
+    }
+    &--moveLeft {
+      p {
+        transform: translate3d(-50px, 0, 0);
+        opacity: 0;
+      }
+    }
+    &--moveRight {
+      p {
+        transform: translate3d(50px, 0, 0);
+        opacity: 0;
+      }
+    }
+  }
+}
+      `,
+    },
+  ],
+  component: Component,
   componentClass: LetteringStyles['aws-sld'],
 };
 

@@ -1,6 +1,3 @@
-import React from 'react';
-import { AwesomeSlider } from '../../src/index';
-
 export const properties = [
   {
     name: 'General',
@@ -108,7 +105,7 @@ export const features = [
   'OnClick bubble animation',
 ];
 
-export function examples(theme) {
+export function examples() {
   return [
     {
       title: 'Installation',

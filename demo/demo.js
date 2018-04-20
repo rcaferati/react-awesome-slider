@@ -10,7 +10,7 @@ import { Header, Customiser, Body, Composer, Page, PageRibbon } from './componen
 import Data from './data.json';
 import data from './examples';
 
-const DEFAULT_THEME = 'lettering';
+const DEFAULT_THEME = 'images';
 
 const DemoComponent = ({
   match,

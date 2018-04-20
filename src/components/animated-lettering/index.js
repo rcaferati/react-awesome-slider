@@ -1,21 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import AwesomeSlider from '../../index';
-import AwsSliderStyles from './styles.scss';
 
 export default class Lettering extends Component {
   static propTypes = {
-    name: PropTypes.string,
     screens: PropTypes.array.isRequired,
-    resetSlider: PropTypes.func,
-    transitionStart: PropTypes.func,
-    transitionEnd: PropTypes.func,
-  };
-  static defaultProps = {
-    name: 'awesome-slider',
-    resetSlider: null,
-    transitionStart: null,
-    transitionEnd: null,
   };
 
   renderScreens() {
@@ -34,14 +23,8 @@ export default class Lettering extends Component {
   render() {
     return (
       <AwesomeSlider
-        name="lettering"
-        cssModule={AwsSliderStyles}
-        organicArrows
         transitionDelay={100}
-        firstMount={this.props.resetSlider}
-        onResetSlider={this.props.resetSlider}
-        transitionStart={this.props.transitionStart}
-        transitionEnd={this.props.transitionEnd}
+        {...this.props}
       >
         {this.renderScreens()}
       </AwesomeSlider>

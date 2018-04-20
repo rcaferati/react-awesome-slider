@@ -2,14 +2,14 @@ import LetteringExample from './example/lettering';
 import ImageExample from './example/images';
 import CaptionedExample from './example/captioned';
 import ScalingExample from './example/scaling';
-import DelayedExample from './example/delayed';
+import FoldExample from './example/fold';
 
-const themes = {
+const examples = {
   lettering: LetteringExample,
   images: ImageExample,
   captioned: CaptionedExample,
   scaling: ScalingExample,
-  delayed: DelayedExample,
+  fold: FoldExample,
 };
 
-export default themes;
+export default examples;

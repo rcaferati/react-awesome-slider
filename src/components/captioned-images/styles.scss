@@ -1,4 +1,4 @@
-@import '../../core/react-awesome-slider.scss';
+@import '../../core/styles.scss';
 
 .#{$root-element} {
   --caption-background-color: rgba(0, 0, 0, 0.15);
@@ -37,7 +37,7 @@
     &--moveLeft {
       .caption {
         p {
-          transform: translate3d(50px, 0, 0.01px);
+          transform: translate3d(-50px, 0, 0.01px);
           opacity: 0;
         }
       }
@@ -46,7 +46,7 @@
     &--moveRight {
       .caption {
         p {
-          transform: translate3d(-50px, 0, 0.01px);
+          transform: translate3d(50px, 0, 0.01px);
           opacity: 0;
         }
       }

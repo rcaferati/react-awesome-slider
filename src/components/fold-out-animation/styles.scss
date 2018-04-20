@@ -1,19 +1,19 @@
-@import '../../core/react-awesome-slider.scss';
+@import '../../core/styles.scss';
 
 .#{$root-element} {
   &__container {
     perspective: 2000px;
   }
   &--exit {
-    &.#{$root-element}--moveLeft {
+    &.#{$root-element}--moveLeft, &.#{$root-element}--moveLeft {
       transform-style: preserve-3d;
       backface-visibility: hidden;
+    }
+    &.#{$root-element}--moveLeft {
       transform-origin: 100% 50%;
       transform: translate3d(-100%, 0, 0) rotateY(-90deg);
     }
     &.#{$root-element}--moveRight {
-      transform-style: preserve-3d;
-      backface-visibility: hidden;
       transform-origin: 0% 50%;
       transform: translate3d(100%, 0, 0) rotateY(90deg);
     }

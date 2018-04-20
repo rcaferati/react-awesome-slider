@@ -28,9 +28,9 @@ export default class AwesomeSlider extends React.Component {
     children: PropTypes.node,
     disabled: PropTypes.bool,
     organicArrows: PropTypes.bool,
-    firstMount: PropTypes.func,
-    transitionStart: PropTypes.func,
-    transitionEnd: PropTypes.func,
+    onFirstMount: PropTypes.func,
+    onTransitionStart: PropTypes.func,
+    onTransitionEnd: PropTypes.func,
     onResetSlider: PropTypes.func,
   };
   static defaultProps = {
@@ -46,10 +46,10 @@ export default class AwesomeSlider extends React.Component {
     className: null,
     children: null,
     disabled: false,
-    organicArrows: false,
-    firstMount: null,
-    transitionStart: null,
-    transitionEnd: null,
+    organicArrows: true,
+    onFirstMount: null,
+    onTransitionStart: null,
+    onTransitionEnd: null,
     onResetSlider: null,
   };
 
@@ -96,8 +96,8 @@ export default class AwesomeSlider extends React.Component {
         this.goTo({ index: 0, direction: true, touch: false });
       }, 250);
     }
-    if (this.props.firstMount) {
-      this.props.firstMount({
+    if (this.props.onFirstMount) {
+      this.props.onFirstMount({
         currentIndex: this.index,
         currentSlide: this[this.active],
         element: this.slider,
@@ -207,7 +207,7 @@ export default class AwesomeSlider extends React.Component {
     });
   }
 
-  animateMobileStart() {
+  startAnimationMobile() {
     const {
       cssModule,
     } = this.props;
@@ -223,8 +223,8 @@ export default class AwesomeSlider extends React.Component {
       getClassName(`${this.rootElement}__content--moveLeft`, cssModule);
     const contentStaticClass = getClassName(`${this.rootElement}__content--static`, cssModule);
     const contentExitClass = getClassName(`${this.rootElement}__content--exit`, cssModule);
-    if (this.props.transitionStart) {
-      this.props.transitionStart({
+    if (this.props.onTransitionStart) {
+      this.props.onTransitionStart({
         currentIndex: this.index,
         currentSlide: this[this.active],
         nextSlide: this[this.loader],
@@ -299,35 +299,34 @@ export default class AwesomeSlider extends React.Component {
     });
   }
 
-  animateStuff(direction, media, callback) {
+  startAnimation(direction, media, callback) {
     const {
       cssModule,
       transitionDelay,
     } = this.props;
     const active = this[this.active];
     const loader = this[this.loader];
-    active.style.removeProperty('transform');
-    loader.style.removeProperty('transform');
     const contentClass = getClassName(`${this.rootElement}__content`, cssModule);
     const animated = getClassName(`${this.rootElement}--animated`, cssModule);
-    const exitClass = getClassName(`${this.rootElement}--exit`, cssModule);
-    const loaderPosition = direction ?
-      getClassName(`${this.rootElement}--moveRight`, cssModule) :
-      getClassName(`${this.rootElement}--moveLeft`, cssModule);
-    const exitPosition = direction ?
-      getClassName(`${this.rootElement}--moveLeft`, cssModule) :
-      getClassName(`${this.rootElement}--moveRight`, cssModule);
-    const contentEnterMoveClass = direction ?
-      getClassName(`${this.rootElement}__content--moveLeft`, cssModule) :
-      getClassName(`${this.rootElement}__content--moveRight`, cssModule);
-    const contentExitMoveClass = direction ?
-      getClassName(`${this.rootElement}__content--moveRight`, cssModule) :
-      getClassName(`${this.rootElement}__content--moveLeft`, cssModule);
     const contentStaticClass = getClassName(`${this.rootElement}__content--static`, cssModule);
     const contentExitClass = getClassName(`${this.rootElement}__content--exit`, cssModule);
+    const exitClass = getClassName(`${this.rootElement}--exit`, cssModule);
+    const moveLeft = getClassName(`${this.rootElement}--moveLeft`, cssModule);
+    const moveRight = getClassName(`${this.rootElement}--moveRight`, cssModule);
+    const contentMoveLeft = getClassName(`${this.rootElement}__content--moveLeft`, cssModule);
+    const contentMoveRight = getClassName(`${this.rootElement}__content--moveRight`, cssModule);
+    const loaderPosition = direction ? moveRight : moveLeft;
+    const exitPosition = direction ? moveLeft : moveRight;
+    const contentEnterMoveClass = direction ? contentMoveRight : contentMoveLeft;
+    const contentExitMoveClass = direction ? contentMoveLeft : contentMoveRight;
+    const activeContentElement = active.querySelector(`.${contentClass}`);
+    const loaderContentElement = loader.querySelector(`.${contentClass}`);
 
-    if (this.props.transitionStart) {
-      this.props.transitionStart({
+    active.style.removeProperty('transform');
+    loader.style.removeProperty('transform');
+
+    if (this.props.onTransitionStart) {
+      this.props.onTransitionStart({
         currentIndex: this.index,
         currentSlide: this[this.active],
         nextSlide: this[this.loader],
@@ -336,10 +335,10 @@ export default class AwesomeSlider extends React.Component {
       });
     }
     this.loadContent(active, media.url, (bar) => {
-      loader.querySelector(`.${contentClass}`).classList.remove(contentStaticClass);
-      active.querySelector(`.${contentClass}`).classList.add(contentExitMoveClass);
-      active.querySelector(`.${contentClass}`).classList.add(contentExitClass);
-      loader.querySelector(`.${contentClass}`).classList.add(contentEnterMoveClass);
+      loaderContentElement.classList.remove(contentStaticClass);
+      activeContentElement.classList.add(contentExitMoveClass);
+      activeContentElement.classList.add(contentExitClass);
+      loaderContentElement.classList.add(contentEnterMoveClass);
       setTimeout(() => {
         DOMBreather().then(() => {
           loader.classList.add(loaderPosition);
@@ -357,9 +356,9 @@ export default class AwesomeSlider extends React.Component {
                 active.classList.remove(exitClass);
                 loader.classList.remove(animated);
                 active.classList.remove(animated);
-                active.querySelector(`.${contentClass}`).classList.remove(contentExitMoveClass);
-                active.querySelector(`.${contentClass}`).classList.remove(contentExitClass);
-                loader.querySelector(`.${contentClass}`).classList.remove(contentEnterMoveClass);
+                activeContentElement.classList.remove(contentExitMoveClass);
+                activeContentElement.classList.remove(contentExitClass);
+                loaderContentElement.classList.remove(contentEnterMoveClass);
                 // removeElement BAR;
                 if (bar) {
                   active.removeChild(bar);
@@ -376,7 +375,7 @@ export default class AwesomeSlider extends React.Component {
                     this.activeArrowClass = null;
                   });
                 }
-                // THIS THING *
+                // * INVERT BOXES *
                 this.active = this.active === 'boxA' ? 'boxB' : 'boxA';
                 this.loader = this.active === 'boxA' ? 'boxB' : 'boxA';
                 if (callback) {
@@ -400,11 +399,11 @@ export default class AwesomeSlider extends React.Component {
       this.activateArrows(direction, () => {
         this.chargeIndex(index, (media) => {
           this.renderedLoader = true;
-          this.animateStuff(direction, media, () => {
+          this.startAnimation(direction, media, () => {
             this.index = this.nextIndex;
             this.setState({ index: this.index });
-            if (this.props.transitionEnd) {
-              this.props.transitionEnd({
+            if (this.props.onTransitionEnd) {
+              this.props.onTransitionEnd({
                 currentIndex: this.index,
                 currentSlide: this[this.active],
                 element: this.slider,
@@ -419,7 +418,7 @@ export default class AwesomeSlider extends React.Component {
     } else {
       this.chargeIndex(index, () => {
         this.activateArrows(direction);
-        this.animateMobileStart();
+        this.startAnimationMobile();
       });
     }
   }
@@ -530,8 +529,8 @@ export default class AwesomeSlider extends React.Component {
     this.animateMobileEnd(() => {
       this.index = this.nextIndex;
       this.setState({ index: this.index });
-      if (this.props.transitionEnd) {
-        this.props.transitionEnd({
+      if (this.props.onTransitionEnd) {
+        this.props.onTransitionEnd({
           currentIndex: this.index,
           currentSlide: this[this.active],
           element: this.slider,

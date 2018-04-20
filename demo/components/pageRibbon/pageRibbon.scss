@@ -3,8 +3,8 @@
   position: fixed;
   right: 0;
   top: 0;
-  width: 200px;
-  height: 200px;
+  width: 100px;
+  height: 100px;
   z-index: 10;
   transform: translateX(calc(var(--customiser-transform) - 500px));
   transition: transform 0.25s ease-out;
@@ -19,9 +19,9 @@
   a {
     position: absolute;
     display: block;
-    width: 200%;
-    left: -20%;
-    top: -30%;
+    width: 400%;
+    left: -40%;
+    top: -60%;
     z-index: 901;
     cursor: pointer;
     background-color: #5c5c5c;
@@ -75,27 +75,27 @@
     }
 
     @media all and (max-width: 1460px) {
-      width: 200%;
-      left: -10%;
-      top: -32%;
+      width: 400%;
+      left: -115%;
+      top: -65%;
     }
 
     @media all and (max-width: 1024px) {
-      width: 200%;
-      left: -12%;
-      top: -29%;
+      width: 400%;
+      left: -105%;
+      top: -70%;
     }
 
     @media all and (max-width: 740px) {
-      width: 200%;
-      left: -10%;
-      top: -31%;
+      width: 400%;
+      left: -105%;
+      top: -70%;
     }
 
     @media all and (max-width: 560px) {
-      width: 200%;
-      left: -4%;
-      top: -37%;
+      width: 400%;
+      left: -105%;
+      top: -70%;
     }
   }
 }

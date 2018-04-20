@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { AwesomeButtonSocial } from 'react-awesome-button';
+import AwesomeButtonStyles from 'react-awesome-button/src/styles/themes/theme-blue';
 import Styles from './footer.scss';
 
 const Footer = ({ repository, article }) => (
@@ -7,12 +9,28 @@ const Footer = ({ repository, article }) => (
     <div>
       <img className="support" src="/images/support.svg" alt="Modern Web Browsers" title="Modern Web Browsers" />
     </div>
-    <small>
-      Promote and support this project on <a rel="noopener noreferrer" target="_blank" href={repository}>github</a>.
-    </small>
-    <small>
-      Read more and discuss at the <a rel="noopener noreferrer" target="_blank" href={article}>article page</a>.
-    </small>
+    <div className={Styles.follow}>
+      <hr />
+      <h5>Support it on social</h5>
+      <AwesomeButtonSocial
+        cssModule={AwesomeButtonStyles}
+        type="twitter"
+        size="medium"
+        target="_blank"
+        href="https://twitter.com/rcaferati"
+      >
+        Twitter
+      </AwesomeButtonSocial>
+      <AwesomeButtonSocial
+        cssModule={AwesomeButtonStyles}
+        type="github"
+        size="medium"
+        target="_blank"
+        href="https://github.com/rcaferati"
+      >
+        Github
+      </AwesomeButtonSocial>
+    </div>
   </footer>
 );
 
