@@ -36,7 +36,7 @@ export function serialize(obj, separator = '&') {
   return Object.entries(obj).map(([key, val]) => `${key}=${val}`).join(separator);
 }
 
-export function DOMBreather() {
+export function DOMNextPaint() {
   return new Promise((resolve) => {
     window.requestAnimationFrame(() => {
       window.requestAnimationFrame(() => {

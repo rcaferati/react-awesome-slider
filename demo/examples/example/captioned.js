@@ -123,7 +123,7 @@ const slider = (
     },
     {
       title: 'Captioned Component',
-      description: 'For this specific example I\'m using the Captioned component which is a basic styled wrapper that applies a simple caption strategy. You can check out all the available components <a target="_blank" href="https://github.com/rcaferati/react-awesome-slider/tree/master/src/components">here</a>.',
+      description: 'For this specific example I\'m using the Captioned component which is a basic styled wrapper hoc that applies a simple caption strategy. You can check out all the available components <a target="_blank" href="https://github.com/rcaferati/react-awesome-slider/tree/master/src/components">here</a>.',
       jsx: `
 import Captioned from 'react-awesome-slider/src/components/captioned';
 import CaptionedStyles from 'react-awesome-slider/src/components/captioned/styles.scss';

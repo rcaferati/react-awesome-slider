@@ -1,17 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  classToModules,
   getClassName,
-  DOMBreather,
+  DOMNextPaint,
   setCssEndEvent,
   MediaLoader,
 } from '../helpers/components';
+import {
+  getRootClassName,
+  setupClassNames,
+  transformChildren,
+} from './helpers';
 import Bullets from './bullets';
 import Buttons from './buttons';
+import Media from './media';
 
-const mediaLoader = new MediaLoader();
 const ROOTELM = 'aws-sld';
+const mediaLoader = new MediaLoader();
 
 export default class AwesomeSlider extends React.Component {
   static propTypes = {
@@ -33,6 +38,7 @@ export default class AwesomeSlider extends React.Component {
     onTransitionEnd: PropTypes.func,
     onResetSlider: PropTypes.func,
   };
+
   static defaultProps = {
     cssModule: null,
     rootElement: ROOTELM,
@@ -120,28 +126,13 @@ export default class AwesomeSlider extends React.Component {
   }
 
   getRootClassName() {
-    const { rootElement } = this;
-    const {
-      cssModule,
-      disabled,
-      organicArrows,
-    } = this.props;
-    const className = [
-      this.rootElement,
-    ];
-    if (organicArrows === true) {
-      className.push(`${rootElement}--organic-arrows`);
-    }
-    if (disabled === true) {
-      className.push(`${rootElement}--disabled`);
-    }
-    if (this.props.className) {
-      className.push(...this.props.className.split(' '));
-    }
-    if (cssModule && cssModule[this.rootElement]) {
-      return classToModules(className, cssModule);
-    }
-    return className.join(' ').trim().replace(/[\s]+/ig, ' ');
+    return getRootClassName({
+      rootElement: this.rootElement,
+      cssModule: this.props.cssModule,
+      disabled: this.props.disabled,
+      organicArrows: this.props.organicArrows,
+      className: this.props.className,
+    });
   }
 
   getBar() {
@@ -151,29 +142,7 @@ export default class AwesomeSlider extends React.Component {
   }
 
   setupClassNames(cssModule) {
-    const { rootElement } = this;
-    this.classNames = {
-      boxA: getClassName(`${this.rootElement}__boxA`, cssModule),
-      boxB: getClassName(`${this.rootElement}__boxB`, cssModule),
-      box: getClassName(`${this.rootElement}__box`, cssModule),
-      container: getClassName(`${rootElement}__container`, cssModule),
-      wrapper: getClassName(`${rootElement}__wrapper`, cssModule),
-      bar: getClassName(`${rootElement}__bar`, cssModule),
-      barActive: getClassName(`${rootElement}__bar--active`, cssModule),
-      barEnd: getClassName(`${rootElement}__bar--end`, cssModule),
-      content: getClassName(`${rootElement}__content`, cssModule),
-      contentStatic: getClassName(`${rootElement}__content--static`, cssModule),
-      contentMoveLeft: getClassName(`${rootElement}__content--moveLeft`, cssModule),
-      contentMoveRight: getClassName(`${rootElement}__content--moveRight`, cssModule),
-      controlsActive: getClassName(`${rootElement}__controls--active`, cssModule),
-      animated: getClassName(`${rootElement}--animated`, cssModule),
-      contentExit: getClassName(`${rootElement}__content--exit`, cssModule),
-      exit: getClassName(`${rootElement}--exit`, cssModule),
-      active: getClassName(`${rootElement}--active`, cssModule),
-      moveLeft: getClassName(`${rootElement}--moveLeft`, cssModule),
-      moveRight: getClassName(`${rootElement}--moveRight`, cssModule),
-      startUp: getClassName(`${rootElement}__startUp`, cssModule),
-    };
+    this.classNames = setupClassNames(this.rootElement, cssModule);
   }
 
   resetSlider(index = 0) {
@@ -196,31 +165,33 @@ export default class AwesomeSlider extends React.Component {
   checkChildren(props) {
     if (props.children) {
       if (props.children !== this.props.children || !this.media) {
-        this.media = this.transformChildren(props.children);
+        this.media = transformChildren(props.children);
       }
     } else if (props.media !== this.props.media) {
       this.media = props.media;
     }
   }
 
-  loadContent(active, url, callback) {
-    if (this.loaded.includes(url) || !url) {
-      callback(null);
-      return;
-    }
-    const bar = this.getBar();
-    active.appendChild(bar);
-    DOMBreather().then(() => {
-      DOMBreather().then(() => {
-        bar.classList.add(this.classNames.barActive);
-      });
-      mediaLoader.load(url).then(() => {
-        this.loaded.push(url);
-        DOMBreather().then(() => {
-          setCssEndEvent(bar, 'transition').then(() => {
-            callback(bar);
+  loadContent(active, url) {
+    return new Promise((resolve) => {
+      if (this.loaded.includes(url) || !url) {
+        resolve(null);
+        return;
+      }
+      const bar = this.getBar();
+      active.appendChild(bar);
+      DOMNextPaint().then(() => {
+        DOMNextPaint().then(() => {
+          bar.classList.add(this.classNames.barActive);
+        });
+        mediaLoader.load(url).then(() => {
+          this.loaded.push(url);
+          DOMNextPaint().then(() => {
+            setCssEndEvent(bar, 'transition').then(() => {
+              resolve(bar);
+            });
+            bar.classList.add(this.classNames.barEnd);
           });
-          bar.classList.add(this.classNames.barEnd);
         });
       });
     });
@@ -270,10 +241,10 @@ export default class AwesomeSlider extends React.Component {
     const activeContent = active.querySelector(`.${this.classNames.content}`);
 
     loaderContent.classList.remove(this.classNames.contentStatic);
-    DOMBreather().then(() => {
+    DOMNextPaint().then(() => {
       loader.classList.add(this.classNames.animated);
       active.classList.add(this.classNames.animated);
-      DOMBreather().then(() => {
+      DOMNextPaint().then(() => {
         loader.style.transform = 'translate3d(0, 0, 0)';
         active.style.transform = `translate3d(${this.direction ? '-' : ''}100%, 0, 0)`;
         setCssEndEvent(active, 'transition').then(() => {
@@ -289,7 +260,7 @@ export default class AwesomeSlider extends React.Component {
           activeContent.classList.remove(this.classNames.contentExit);
           loaderContent.classList.remove(contentEnterMoveClass);
           setTimeout(() => {
-            DOMBreather().then(() => {
+            DOMNextPaint().then(() => {
               this.buttons.element.classList.remove(this.classNames.controlsActive);
             });
           }, this.props.controlsReturnDelay);
@@ -335,18 +306,18 @@ export default class AwesomeSlider extends React.Component {
         element: this.slider,
       });
     }
-    this.loadContent(active, media.url, (bar) => {
+    this.loadContent(active, media.url).then((bar) => {
       loaderContentElement.classList.remove(this.classNames.contentStatic);
       activeContentElement.classList.add(contentExitMoveClass);
       activeContentElement.classList.add(this.classNames.contentExit);
       loaderContentElement.classList.add(contentEnterMoveClass);
       setTimeout(() => {
-        DOMBreather().then(() => {
+        DOMNextPaint().then(() => {
           loader.classList.add(loaderPosition);
-          DOMBreather().then(() => {
+          DOMNextPaint().then(() => {
             loader.classList.add(this.classNames.animated);
             active.classList.add(this.classNames.animated);
-            DOMBreather().then(() => {
+            DOMNextPaint().then(() => {
               loader.classList.remove(loaderPosition);
               active.classList.add(this.classNames.exit);
               active.classList.add(exitPosition);
@@ -365,12 +336,12 @@ export default class AwesomeSlider extends React.Component {
                   active.removeChild(bar);
                 }
                 setTimeout(() => {
-                  DOMBreather().then(() => {
+                  DOMNextPaint().then(() => {
                     this.buttons.element.classList.remove(this.classNames.controlsActive);
                   });
                 }, this.props.controlsReturnDelay);
                 if (this.activeArrow) {
-                  DOMBreather().then(() => {
+                  DOMNextPaint().then(() => {
                     this.activeArrow.classList.remove(this.activeArrowClass);
                     this.activeArrow = null;
                     this.activeArrowClass = null;
@@ -410,7 +381,7 @@ export default class AwesomeSlider extends React.Component {
                 element: this.slider,
               });
             }
-            DOMBreather().then(() => {
+            DOMNextPaint().then(() => {
               this.loading = false;
             });
           });
@@ -449,12 +420,14 @@ export default class AwesomeSlider extends React.Component {
     const dirName = direction ? 'right' : 'left';
     this.activeArrow = activeArrow.querySelector('span');
     this.activeArrowClass = getClassName(`${this.rootElement}__controls__arrow-${dirName}--active`, this.props.cssModule);
-    // This needs to be done due to the usage of the pseudo animated elements
+
+    // This needs to be done due to the usage of pseudo elements animation
     setCssEndEvent(this.activeArrow, 'transition', this.index === null ? 0 : 2).then(() => {
       if (callback) {
         callback();
       }
     });
+
     this.buttons.element.classList.add(this.classNames.controlsActive);
     this.activeArrow.classList.add(this.activeArrowClass);
   }
@@ -545,24 +518,15 @@ export default class AwesomeSlider extends React.Component {
 
   bulletClick = (event) => {
     const button = event.currentTarget;
-    button.classList.add(getClassName(`${this.rootElement}__bullets--loading`, this.props.cssModule));
     const index = parseInt(button.getAttribute('data-index'), 10);
-    const direction = !(this.index > index);
-    this.goTo({ index, direction });
-  }
-
-  transformChildren(children) {
-    const media = [];
-    children.forEach((child) => {
-      const item = {
-        ...child.props,
-      };
-      if (child.props['data-src']) {
-        item.url = child.props['data-src'];
-      }
-      media.push(item);
+    this.goTo({
+      index,
+      direction: !(this.index > index),
+    }, () => {
+      DOMNextPaint().then(() => {
+        button.classList.add(this.classNames.bulletsLoading);
+      });
     });
-    return media;
   }
 
   renderBox(box) {
@@ -574,48 +538,13 @@ export default class AwesomeSlider extends React.Component {
         onTouchMove={this.touchMove}
         onTouchEnd={this.touchEnd}
       >
-        {this.state[`box${box}`] && this.renderMedia(this.state[`box${box}`])}
-      </div>
-    );
-  }
-
-  renderMedia(media) {
-    let background = null;
-    const className = [
-      this.classNames.content,
-    ];
-    if (media.url) {
-      if (media.url.match(/gif|jpg|png|webp/)) {
-        background = (
-          <img
-            alt={media.alt || media.title || null}
-            src={media.url}
-          />);
-      }
-      if (media.url.match(/mp4/)) {
-        background = (
-          <video
-            title={media.title}
-            src={media.url}
-            type="video/mp4"
-            controls
+        {
+          this.state[`box${box}`] &&
+          <Media
+            media={this.state[`box${box}`]}
+            className={this.classNames.content}
           />
-        );
-      }
-    }
-    return (
-      <div
-        className={className.join(' ')}
-        style={media.style || null}
-      >
-        {background}
-        {media.children && (
-          <div
-            className={media.className || null}
-          >
-            {media.children}
-          </div>
-        )}
+        }
       </div>
     );
   }
