@@ -2,7 +2,7 @@
 
 [![Travis](https://img.shields.io/travis/rcaferati/react-awesome-slider/master.svg)](https://travis-ci.org/rcaferati/react-awesome-slider) ![NPM](https://img.shields.io/npm/v/react-awesome-slider.svg)
 
-`react-awesome-button` is a 60fps, extendable, highly customisable, production ready React Component that renders a media (image/video) gallery slider/carousel.
+`react-awesome-slider` is a 60fps, extendable, highly customisable, production ready React Component that renders a media (image/video) gallery slider/carousel.
 
 ## Live demo
 
@@ -22,34 +22,32 @@
 
 ## Examples
 
-### With react-awesome-button and plain CSS
+### Basic usage with and plain CSS
 ```jsx
-  import { AwesomeSlider } from 'react-awesome-slider';
+  import AwesomeSlider from 'react-awesome-slider';
   import 'react-awesome-slider/dist/styles.css';
 
-  function Button() {
-    return (
-      <AwesomeSlider
-        media={[]}
-        type="iOS"
-      />
-    );
-  }
+  const slider = (
+    <AwesomeSlider>
+      <div data-src="/path/to/image-0.png" />
+      <div data-src="/path/to/image-1.png" />
+      <div data-src="/path/to/image-2.jpg" />
+    </AwesomeSlider>
+  );
 ```
 
-### With react-awesome-button CSS Modules
+### Basic usage with CSS Modules
 ```jsx
-  import AwesomeButton from 'react-awesome-button';
-  import AwesomeButtonStyles from 'react-awesome-button/src/styles.scss'
+  import AwesomeSlider from 'react-awesome-slider';
+  import AwsSliderStyles from 'react-awesome-slider/src/styles.scss';
 
-  function Button() {
-    return (
-      <AwesomeSlider
-        media={[]}
-        type="iOS"
-      />
-    );
-  }
+  const slider = (
+    <AwesomeSlider cssModule={styles}>
+      <div data-src="/path/to/image-0.png" />
+      <div data-src="/path/to/image-1.png" />
+      <div data-src="/path/to/image-2.jpg" />
+    </AwesomeSlider>
+  );
 ```
 
 ## Contributions wanted
