@@ -1,9 +1,11 @@
 export class MediaLoader {
   constructor() {
-    this.image = new Image();
-    this.resolve = null;
-    this.video = document.createElement('video');
-    this.events();
+    if (typeof window !== 'undefined') {
+      this.image = new Image();
+      this.resolve = null;
+      this.video = document.createElement('video');
+      this.events();
+    }
   }
   events() {
     this.video.addEventListener('loadeddata', () => this.resolve && this.resolve(true));

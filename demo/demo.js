@@ -19,6 +19,9 @@ const DemoComponent = ({
   popoverText,
 }) => {
   const theme = match.params.theme || DEFAULT_THEME;
+  console.log('2');
+  console.log(theme);
+  console.log('--0--')
   return (
     <Page
       theme={data[theme]}
@@ -32,6 +35,9 @@ const DemoComponent = ({
 
 const ComposerComponent = ({ match, handlePopover }) => {
   const theme = match.params.theme || DEFAULT_THEME;
+  console.log('3');
+  console.log(theme);
+  console.log('--1--')
   return (
     <Customiser
       theme={theme}
@@ -89,6 +95,9 @@ class Demo extends React.Component {
       location,
     } = this.props;
     const Router = server === true ? StaticRouter : BrowserRouter;
+
+    console.log('1');
+
     return (
       <Router
         location={location}
@@ -101,7 +110,7 @@ class Demo extends React.Component {
             className={styles.ribbon}
             delay={1250}
           >
-            <span>Support it on Github</span><span role="img" aria-label="hi?">🙌🏻</span>
+            <span>Support it on Github 123</span><span role="img" aria-label="hi?">🙌🏻</span>
           </PageRibbon>
           <Body>
             <Route path={`${Data.domain}/:theme?`} component={HeaderComponent} />

@@ -1,6 +1,6 @@
 {
   "name": "react-awesome-slider",
-  "version": "0.1.0",
+  "version": "0.4.0",
   "description": "60fps performant, extendable, highly customisable, production ready React Component that renders a media (image/video) gallery slider/carousel.",
   "main": "dist/index.js",
   "author": "Rafael Caferati",
@@ -17,6 +17,8 @@
     "start": "webpack-dev-server -d --config webpack.demo.config.js",
     "build": "NODE_ENV=production webpack",
     "build:scss": "NODE_ENV=production webpack --config webpack.scss.config.js && rm ./dist/styles.js",
+    "build:website": "webpack -p --config webpack.website.config.js",
+    "build:server": "webpack -p --config webpack.server.config.js",
     "test": "BABEL_JEST_STAGE=0 jest",
     "lint": "eslint src/**",
     "prepublish": "npm run build && npm run build:scss"

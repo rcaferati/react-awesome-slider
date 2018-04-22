@@ -1,15 +1,16 @@
-const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const webpack = require('webpack');
 const path = require('path');
 
 const config = {
   entry: {
-    styles: ['./src/styles.js'],
+    'react-awesome-slider': ['./demo/index.js'],
   },
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'demo/public/website'),
     filename: '[name].js',
     libraryTarget: 'umd',
+    library: 'react-awesome-slider',
   },
   module: {
     rules: [
@@ -20,18 +21,21 @@ const config = {
         options: {
           presets: ['es2015', 'react', 'stage-0'],
         },
-      }, {
+      },
+      {
         test: /\.scss$/i,
         loader: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
             {
               loader: 'css-loader',
-              options: { minimize: true },
+              options: {
+                modules: true,
+                localIdentName: '[hash:base64:4]',
+              },
             },
             'postcss-loader',
-            'sass-loader',
-          ],
+            'sass-loader'],
         }),
       },
       {
@@ -44,11 +48,16 @@ const config = {
     ],
   },
   plugins: [
+    new ExtractTextPlugin({
+      filename: 'react-awesome-slider.css',
+    }),
     new webpack.optimize.UglifyJsPlugin({
       comments: false,
     }),
-    new ExtractTextPlugin({
-      filename: 'styles.css',
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production'),
+      },
     }),
   ],
 };

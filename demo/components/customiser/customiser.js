@@ -29,7 +29,9 @@ class Customiser extends React.Component {
       customized: false,
       popoverOpened: false,
     };
-    window.setElement = this.setElement;
+    if (typeof window !== 'undefined') {
+      window.setElement = this.setElement;
+    }
   }
 
   state = {
