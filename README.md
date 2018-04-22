@@ -18,7 +18,20 @@
 
 [<img width="400" alt="react-awesome-slider demo" src="https://github.com/rcaferati/react-awesome-slider/blob/master/demo/public/images/demo-bojack-mobile.gif?raw=true">](https://caferati.me/demo/react-awesome-slider)
 
-## Install
+## Live demo
+
+Checkout the `CSS customizer` at <a title="React Awesome Slider - CSS Customizer" href="https://caferati.me/demo/react-awesome-slider" target="_blank">my portfolio</a>
+
+[<img src="https://github.com/rcaferati/react-awesome-slider/blob/master/demo/public/images/css-customizer.png?raw=true" width="800" />](https://caferati.me/demo/react-awesome-slider)
+
+### Installing
+```
+npm install --save react-awesome-slider
+```
+or
+```
+yarn add react-awesome-slider
+```
 
 ## Examples
 
