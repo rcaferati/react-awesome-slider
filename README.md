@@ -53,7 +53,7 @@
 ```
 
 ## Contributions wanted
-Create your own `hoc feature` or `animation style` and send it up via PR to the `src/components` folder.
+If you have an idea for a missing feature or animation just craft your own `hoc feature` or `animation style` and send it up via PR to the `src/components` folder.
 
 ## Key Features
 
