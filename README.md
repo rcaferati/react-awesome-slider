@@ -4,10 +4,6 @@
 
 `react-awesome-slider` is a 60fps, extendable, highly customisable, production ready React Component that renders a media (image/video) gallery slider/carousel.
 
-## Live demo
-
-+ <a title="Live demo" href="https://caferati.me/demo/react-awesome-slider" target="_blank">On my portfolio</a>
-
 [<img width="400" alt="react-awesome-slider demo" src="https://github.com/rcaferati/react-awesome-slider/blob/master/demo/public/images/demo-lettering.gif?raw=true">](https://caferati.me/demo/react-awesome-slider)
 [<img width="400" alt="react-awesome-slider demo" src="https://github.com/rcaferati/react-awesome-slider/blob/master/demo/public/images/demo-bojack.gif?raw=true">](https://caferati.me/demo/react-awesome-slider)
 
@@ -22,7 +18,7 @@
 
 Checkout the `CSS customizer` at <a title="React Awesome Slider - CSS Customizer" href="https://caferati.me/demo/react-awesome-slider" target="_blank">my portfolio</a>
 
-[<img src="https://github.com/rcaferati/react-awesome-slider/blob/master/demo/public/images/css-customizer.png?raw=true" width="800" />](https://caferati.me/demo/react-awesome-slider)
+[<img src="https://github.com/rcaferati/react-awesome-slider/blob/master/demo/public/images/css-customiser.png?raw=true" width="800" />](https://caferati.me/demo/react-awesome-slider)
 
 ### Installing
 ```
