@@ -52,13 +52,17 @@
   }
 ```
 
+## Contributions wanted
+Create your own `hoc feature` or `animation style` and send it up via PR to the `src/components` folder.
+
 ## Key Features
 
-+ Look and feel customisable and extendable via SASS variables and lists ([scss config file](https://github.com/rcaferati/react-awesome-slider/blob/master/src/styles))
-+
-+
-+
-+
++ Look and feel customisable and extendable via SASS and CSS Variables (custom-properties) ([scss main file](https://github.com/rcaferati/react-awesome-slider/blob/master/src/styles))
++ Media pre-loader
++ Touch enabled
++ 60fps animations
++ Animated transition recipes
++ Extendable via custom plugin HOC components
 
 ## License
 
