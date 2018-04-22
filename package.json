@@ -19,7 +19,7 @@
     "build:scss": "NODE_ENV=production webpack --config webpack.scss.config.js && rm ./dist/styles.js",
     "build:website": "webpack -p --config webpack.website.config.js",
     "build:server": "webpack -p --config webpack.server.config.js",
-    "test": "BABEL_JEST_STAGE=0 jest",
+    "test": "echo \"No test specified ATM\"",
     "lint": "eslint src/**",
     "prepublish": "npm run build && npm run build:scss"
   },
