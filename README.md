@@ -22,7 +22,7 @@
 
 Checkout the `CSS customizer` at <a title="React Awesome Slider - CSS Customizer" href="https://caferati.me/demo/react-awesome-slider" target="_blank">my portfolio</a>
 
-[<img src="https://github.com/rcaferati/react-awesome-slider/blob/master/demo/public/images/css-customizer.png?raw=true" width="800" />](https://caferati.me/demo/react-awesome-slider)
+[<img src="https://github.com/rcaferati/react-awesome-slider/blob/master/demo/public/images/css-customiser.png?raw=true" width="800" />](https://caferati.me/demo/react-awesome-slider)
 
 ### Installing
 ```
