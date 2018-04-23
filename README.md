@@ -97,4 +97,4 @@ If you have an idea for a missing feature or animation just craft your own `hoc 
 
 ## License
 
-MIT. Copyright (c) 2017 Rafael Caferati.
+MIT. Copyright (c) 2018 Rafael Caferati.
