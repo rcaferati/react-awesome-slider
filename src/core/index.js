@@ -132,15 +132,6 @@ export default class AwesomeSlider extends React.Component {
     }
   }
 
-  startup() {
-    this.started = true;
-    setTimeout(() => {
-      DOMNextPaint().then(() => {
-        this.goTo({ index: 0, direction: true, touch: false });
-      });
-    }, 125);
-  }
-
   getRootClassName() {
     return getRootClassName({
       rootElement: this.rootElement,
@@ -159,6 +150,15 @@ export default class AwesomeSlider extends React.Component {
 
   setupClassNames(cssModule) {
     this.classNames = setupClassNames(this.rootElement, cssModule);
+  }
+
+  startup() {
+    this.started = true;
+    setTimeout(() => {
+      DOMNextPaint().then(() => {
+        this.goTo({ index: 0, direction: true, touch: false });
+      });
+    }, 125);
   }
 
   resetSlider(index = 0) {

@@ -80,12 +80,12 @@ class Demo extends React.Component {
       popoverText: '',
       startup: true,
     };
-    if (typeof window !== undefined) {
+    if (typeof window !== 'undefined') {
       window.startup = () => {
         this.setState({
-          startup: true
+          startup: true,
         });
-      }
+      };
     }
   }
 
