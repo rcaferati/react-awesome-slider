@@ -75,24 +75,28 @@ const startupScreen = (
   </div>
 );
 
-const component = (
-  <div>
-    <AwesomeFrame
-      cssModule={AwsFrameStyles}
-      title="Adult Swim &mdash; Rick and Morty"
-    >
-      <Captioned
-        name="captioned-mixed"
-        startupScreen={startupScreen}
-        cssModule={CaptionedStyles}
-        screens={media}
-        onFirstMount={resetSlider}
-        onResetSlider={resetSlider}
-        onTransitionStart={transitionStart}
-        onTransitionEnd={transitionEnd}
-      />
-    </AwesomeFrame>
-  </div>);
+function Component({ startup }) {
+  return (
+    <div>
+      <AwesomeFrame
+        cssModule={AwsFrameStyles}
+        title="Adult Swim &mdash; Rick and Morty"
+      >
+        <Captioned
+          startup={startup}
+          name="captioned-mixed"
+          startupScreen={startupScreen}
+          cssModule={CaptionedStyles}
+          screens={media}
+          onFirstMount={resetSlider}
+          onResetSlider={resetSlider}
+          onTransitionStart={transitionStart}
+          onTransitionEnd={transitionEnd}
+        />
+      </AwesomeFrame>
+    </div>
+  );
+}
 
 const example = {
   title: 'Captioned Images',
@@ -150,7 +154,7 @@ const component = (
       `,
     },
   ],
-  component,
+  Component,
   componentClass: CaptionedStyles['aws-sld'],
 };
 

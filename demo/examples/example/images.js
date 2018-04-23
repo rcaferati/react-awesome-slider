@@ -48,14 +48,15 @@ const startupScreen = (
   </div>
 );
 
-const component = (
-  <div>
+function Component({ startup }) {
+  return (
     <AwesomeFrame
       cssModule={AwsFrameStyles}
       title="Netflix &mdash; Bojack Horseman"
     >
       <AwesomeSlider
         name="images"
+        startup={startup}
         cssModule={AwsSliderStyles}
         startupScreen={startupScreen}
         onFirstMount={resetSlider}
@@ -77,7 +78,8 @@ const component = (
         />
       </AwesomeSlider>
     </AwesomeFrame>
-  </div>);
+  );
+}
 
 const example = {
   title: 'Basic Usage',
@@ -157,7 +159,7 @@ const slider = (
       `,
     },
   ],
-  component,
+  Component,
   componentClass: AwsSliderStyles['aws-sld'],
 };
 

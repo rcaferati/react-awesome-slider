@@ -10,6 +10,7 @@ class PageRibbon extends React.Component {
     title: PropTypes.string.isRequired,
     target: PropTypes.string.isRequired,
     delay: PropTypes.number.isRequired,
+    startup: PropTypes.bool.isRequired,
   };
 
   constructor(props) {
@@ -21,11 +22,21 @@ class PageRibbon extends React.Component {
   }
 
   componentDidMount() {
-    this.timer = setTimeout(() => {
+    if (this.props.startup) {
+      this.timer = setTimeout(() => {
+        this.setState({
+          hidden: false,
+        });
+      }, this.props.delay);
+    }
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (this.props.startup === false && newProps.startup === true) {
       this.setState({
         hidden: false,
       });
-    }, this.props.delay);
+    }
   }
 
   componentWillUnmount() {

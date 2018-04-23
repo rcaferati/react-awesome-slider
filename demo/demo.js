@@ -17,15 +17,14 @@ const DemoComponent = ({
   handlePopover,
   popoverOpened,
   popoverText,
+  startup,
 }) => {
   const theme = match.params.theme || DEFAULT_THEME;
-  console.log('2');
-  console.log(theme);
-  console.log('--0--')
   return (
     <Page
       theme={data[theme]}
       data={Data}
+      startup={startup}
       handlePopover={handlePopover}
       popoverOpened={popoverOpened}
       popoverText={popoverText}
@@ -35,9 +34,6 @@ const DemoComponent = ({
 
 const ComposerComponent = ({ match, handlePopover }) => {
   const theme = match.params.theme || DEFAULT_THEME;
-  console.log('3');
-  console.log(theme);
-  console.log('--1--')
   return (
     <Customiser
       theme={theme}
@@ -82,7 +78,15 @@ class Demo extends React.Component {
     this.state = {
       popoverOpened: false,
       popoverText: '',
+      startup: true,
     };
+    if (typeof window !== undefined) {
+      window.startup = () => {
+        this.setState({
+          startup: true
+        });
+      }
+    }
   }
 
   handlePopover = (popover) => {
@@ -96,8 +100,6 @@ class Demo extends React.Component {
     } = this.props;
     const Router = server === true ? StaticRouter : BrowserRouter;
 
-    console.log('1');
-
     return (
       <Router
         location={location}
@@ -108,6 +110,7 @@ class Demo extends React.Component {
             title="Github Repository"
             target="_blank"
             className={styles.ribbon}
+            startup={this.state.startup}
             delay={1250}
           >
             <span>Support it on Github</span><span role="img" aria-label="hi?">🙌🏻</span>
@@ -119,6 +122,7 @@ class Demo extends React.Component {
               render={({ match }) => (
                 <DemoComponent
                   match={match}
+                  startup={this.state.startup}
                   popoverOpened={this.state.popoverOpened}
                   popoverText={this.state.popoverText}
                   handlePopover={this.handlePopover}

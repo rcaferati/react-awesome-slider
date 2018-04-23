@@ -11,7 +11,7 @@ import Styles from './example.scss';
 class Example extends React.Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
-    component: PropTypes.object.isRequired,
+    Component: PropTypes.func.isRequired,
     examples: PropTypes.array,
   };
   static defaultProps = {
@@ -95,7 +95,7 @@ class Example extends React.Component {
   render() {
     const {
       title,
-      component,
+      Component,
       examples,
     } = this.props;
 
@@ -105,7 +105,9 @@ class Example extends React.Component {
           {title && <h3>{title}</h3>}
         </div>
         <div data-role="customizable" className={Styles.component}>
-          {component}
+          <Component
+            startup={this.props.startup}
+          />
         </div>
         {this.renderExamples(examples)}
       </div>

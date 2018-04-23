@@ -13,13 +13,15 @@ const Page = ({
   popoverOpened,
   popoverText,
   handlePopover,
+  startup,
 }) => {
   return (
     <Section>
       <Example
+        startup={startup}
         title={theme.example.title}
         description={theme.example.description}
-        component={theme.example.component}
+        Component={theme.example.Component}
         examples={theme.example.items}
       />
       <Footer
@@ -39,6 +41,7 @@ Page.propTypes = {
   theme: PropTypes.object.isRequired,
   data: PropTypes.object.isRequired,
   popoverOpened: PropTypes.bool.isRequired,
+  startup: PropTypes.bool.isRequired,
   popoverText: PropTypes.string.isRequired,
   handlePopover: PropTypes.func.isRequired,
 };

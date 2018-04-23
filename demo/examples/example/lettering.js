@@ -73,23 +73,26 @@ const startupScreen = (
   </div>
 );
 
-const Component = (
-  <AwesomeFrame
-    cssModule={AwsFrameStyles}
-    title="Damien Rice &mdash; Blower's Daughter ♪"
-  >
-    <Lettering
-      name="lettering"
-      cssModule={LetteringStyles}
-      startupScreen={startupScreen}
-      onTransitionStart={transitionStart}
-      onTransitionEnd={transitionEnd}
-      onResetSlider={resetSlider}
-      onFirstMount={resetSlider}
-      screens={screens}
-    />
-  </AwesomeFrame>
-);
+function Component({ startup }) {
+  return (
+    <AwesomeFrame
+      cssModule={AwsFrameStyles}
+      title="Damien Rice &mdash; Blower's Daughter ♪"
+    >
+      <Lettering
+        name="lettering"
+        startup={startup}
+        cssModule={LetteringStyles}
+        startupScreen={startupScreen}
+        onTransitionStart={transitionStart}
+        onTransitionEnd={transitionEnd}
+        onResetSlider={resetSlider}
+        onFirstMount={resetSlider}
+        screens={screens}
+      />
+    </AwesomeFrame>
+  );
+}
 
 const example = {
   title: 'Smooth Lettering',
@@ -133,7 +136,7 @@ const example = {
       `,
     },
   ],
-  component: Component,
+  Component,
   componentClass: LetteringStyles['aws-sld'],
 };
 

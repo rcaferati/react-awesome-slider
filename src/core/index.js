@@ -20,43 +20,45 @@ const mediaLoader = new MediaLoader();
 
 export default class AwesomeSlider extends React.Component {
   static propTypes = {
-    cssModule: PropTypes.object,
-    rootElement: PropTypes.string,
-    name: PropTypes.string,
-    style: PropTypes.object,
-    media: PropTypes.array,
-    className: PropTypes.string,
-    startupScreen: PropTypes.object,
-    transitionDelay: PropTypes.number,
-    controlsReturnDelay: PropTypes.number,
-    selected: PropTypes.number,
+    startup: PropTypes.bool,
     children: PropTypes.node,
+    className: PropTypes.string,
+    controlsReturnDelay: PropTypes.number,
+    cssModule: PropTypes.object,
     disabled: PropTypes.bool,
-    organicArrows: PropTypes.bool,
+    media: PropTypes.array,
+    name: PropTypes.string,
     onFirstMount: PropTypes.func,
-    onTransitionStart: PropTypes.func,
-    onTransitionEnd: PropTypes.func,
     onResetSlider: PropTypes.func,
+    onTransitionEnd: PropTypes.func,
+    onTransitionStart: PropTypes.func,
+    organicArrows: PropTypes.bool,
+    rootElement: PropTypes.string,
+    selected: PropTypes.number,
+    startupScreen: PropTypes.object,
+    style: PropTypes.object,
+    transitionDelay: PropTypes.number,
   };
 
   static defaultProps = {
+    startup: true,
+    children: null,
+    className: null,
+    controlsReturnDelay: 0,
     cssModule: null,
-    rootElement: ROOTELM,
+    disabled: false,
+    media: [],
     name: 'awesome-slider',
+    onFirstMount: null,
+    onResetSlider: null,
+    onTransitionEnd: null,
+    onTransitionStart: null,
+    organicArrows: true,
+    rootElement: ROOTELM,
+    selected: 0,
     startupScreen: null,
     style: {},
-    media: [],
     transitionDelay: 0,
-    selected: 0,
-    controlsReturnDelay: 0,
-    className: null,
-    children: null,
-    disabled: false,
-    organicArrows: true,
-    onFirstMount: null,
-    onTransitionStart: null,
-    onTransitionEnd: null,
-    onResetSlider: null,
   };
 
   constructor(props) {
@@ -70,6 +72,7 @@ export default class AwesomeSlider extends React.Component {
     this.nextIndex = null;
     this.loading = false;
     this.media = null;
+    this.started = false;
     this.checkChildren(props);
     this.setupClassNames(props.cssModule);
     if (props.startupScreen) {
@@ -96,9 +99,9 @@ export default class AwesomeSlider extends React.Component {
     this.boxA.classList.add(this.classNames.active);
     if (this.props.startupScreen) {
       this.buttons.element.classList.add(this.classNames.controlsActive);
-      setTimeout(() => {
-        this.goTo({ index: 0, direction: true, touch: false });
-      }, 250);
+      if (this.props.startup === true) {
+        this.startup();
+      }
     }
     if (this.props.onFirstMount) {
       this.props.onFirstMount({
@@ -116,6 +119,10 @@ export default class AwesomeSlider extends React.Component {
       this.resetSlider(newProps.selected);
       return;
     }
+    if (newProps.startup === true && this.started === false) {
+      this.startup();
+      return;
+    }
     if (newProps.selected !== this.props.selected) {
       const index = newProps.selected;
       this.goTo({
@@ -123,6 +130,15 @@ export default class AwesomeSlider extends React.Component {
         direction: !(this.index > index),
       });
     }
+  }
+
+  startup() {
+    this.started = true;
+    setTimeout(() => {
+      DOMNextPaint().then(() => {
+        this.goTo({ index: 0, direction: true, touch: false });
+      });
+    }, 125);
   }
 
   getRootClassName() {
