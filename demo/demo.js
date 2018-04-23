@@ -110,7 +110,7 @@ class Demo extends React.Component {
             className={styles.ribbon}
             delay={1250}
           >
-            <span>Support it on Github 123</span><span role="img" aria-label="hi?">🙌🏻</span>
+            <span>Support it on Github</span><span role="img" aria-label="hi?">🙌🏻</span>
           </PageRibbon>
           <Body>
             <Route path={`${Data.domain}/:theme?`} component={HeaderComponent} />

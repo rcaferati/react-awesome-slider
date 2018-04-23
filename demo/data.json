@@ -7,7 +7,7 @@
   "size": "~6KB compressed",
   "repository": "https://github.com/rcaferati/react-awesome-slider",
   "article": "//caferati.me/labs/awesome-button",
-  "domain": "/demo/react-awesome-slider",
+  "domain": "",
   "themes": [
     {
       "name": "Basic Usage",

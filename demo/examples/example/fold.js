@@ -1,6 +1,6 @@
 import React from 'react';
-import AwesomeSlider from '../../../src/components/fold-out-animation';
-import AwsSliderStyles from '../../../src/components/fold-out-animation/styles.scss';
+import AwesomeSlider from '../../../src';
+import AwsSliderStyles from '../../../src/components/styled/fold-out-animation/styles.scss';
 import AwesomeFrame from '../../../src/components/react-awesome-frame';
 import AwsFrameStyles from '../../../src/components/react-awesome-frame/styles.scss';
 import { shadeRGBColor } from '../../helpers/examples';

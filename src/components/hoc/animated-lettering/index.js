@@ -1,12 +1,12 @@
 import React from 'react';
 import Hoc from './hoc';
-import AwesomeSlider from '../../index';
+import AwesomeSlider from '../../../index';
 
-const CaptionedComponent = Hoc(AwesomeSlider);
+const LetteringComponent = Hoc(AwesomeSlider);
 
 export default function (props) {
   return (
-    <CaptionedComponent
+    <LetteringComponent
       transitionDelay={100}
       {...props}
     />

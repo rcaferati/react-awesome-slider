@@ -1,7 +1,7 @@
 import React from 'react';
 import AwesomeFrame from '../../../src/components/react-awesome-frame';
-import Lettering from '../../../src/components/animated-lettering';
-import LetteringStyles from '../../../src/components/animated-lettering/styles.scss';
+import Lettering from '../../../src/components/hoc/animated-lettering';
+import LetteringStyles from '../../../src/components/hoc/animated-lettering/styles.scss';
 import AwsFrameStyles from '../../../src/components/react-awesome-frame/styles.scss';
 import { shadeRGBColor } from '../../helpers/examples';
 import {
