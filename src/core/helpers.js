@@ -58,6 +58,7 @@ export function setupClassNames(rootElement, cssModule) {
     contentMoveRight: getClassName(`${rootElement}__content--moveRight`, cssModule),
     controlsActive: getClassName(`${rootElement}__controls--active`, cssModule),
     animated: getClassName(`${rootElement}--animated`, cssModule),
+    animatedMobile: getClassName(`${rootElement}--animated-mobile`, cssModule),
     contentExit: getClassName(`${rootElement}__content--exit`, cssModule),
     exit: getClassName(`${rootElement}--exit`, cssModule),
     active: getClassName(`${rootElement}--active`, cssModule),

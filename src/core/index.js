@@ -73,6 +73,7 @@ export default class AwesomeSlider extends React.Component {
     this.loading = false;
     this.media = null;
     this.started = false;
+    this.touchEnabled = false;
     this.checkChildren(props);
     this.setupClassNames(props.cssModule);
     if (props.startupScreen) {
@@ -218,11 +219,11 @@ export default class AwesomeSlider extends React.Component {
     const active = this[this.active];
     const loader = this[this.loader];
     const contentEnterMoveClass = direction ?
-      this.classNames.contentMoveLeft :
-      this.classNames.contentMoveRight;
-    const contentExitMoveClass = direction ?
       this.classNames.contentMoveRight :
       this.classNames.contentMoveLeft;
+    const contentExitMoveClass = direction ?
+      this.classNames.contentMoveLeft :
+      this.classNames.contentMoveRight;
     if (this.props.onTransitionStart) {
       this.props.onTransitionStart({
         currentIndex: this.index,
@@ -248,51 +249,49 @@ export default class AwesomeSlider extends React.Component {
       this.classNames.moveLeft :
       this.classNames.moveRight;
     const contentEnterMoveClass = direction ?
-      this.classNames.contentMoveLeft :
-      this.classNames.contentMoveRight;
-    const contentExitMoveClass = direction ?
       this.classNames.contentMoveRight :
       this.classNames.contentMoveLeft;
+    const contentExitMoveClass = direction ?
+      this.classNames.contentMoveLeft :
+      this.classNames.contentMoveRight;
     const loaderContent = loader.querySelector(`.${this.classNames.content}`);
     const activeContent = active.querySelector(`.${this.classNames.content}`);
 
     loaderContent.classList.remove(this.classNames.contentStatic);
+    loader.classList.add(this.classNames.animatedMobile);
+    active.classList.add(this.classNames.animatedMobile);
     DOMNextPaint().then(() => {
-      loader.classList.add(this.classNames.animated);
-      active.classList.add(this.classNames.animated);
-      DOMNextPaint().then(() => {
-        loader.style.transform = 'translate3d(0, 0, 0)';
-        active.style.transform = `translate3d(${this.direction ? '-' : ''}100%, 0, 0)`;
-        setCssEndEvent(active, 'transition').then(() => {
-          if (!this.loading) {
-            return;
-          }
-          loader.classList.add(this.classNames.active);
-          active.classList.remove(this.classNames.active);
-          active.classList.remove(exitPosition);
-          loader.classList.remove(this.classNames.animated);
-          active.classList.remove(this.classNames.animated);
-          activeContent.classList.remove(contentExitMoveClass);
-          activeContent.classList.remove(this.classNames.contentExit);
-          loaderContent.classList.remove(contentEnterMoveClass);
-          setTimeout(() => {
-            DOMNextPaint().then(() => {
-              this.buttons.element.classList.remove(this.classNames.controlsActive);
-            });
-          }, this.props.controlsReturnDelay);
+      loader.style.transform = 'translate3d(0, 0, 0)';
+      active.style.transform = `translate3d(${this.direction ? '-' : ''}100%, 0, 0)`;
+      setCssEndEvent(active, 'transition').then(() => {
+        if (!this.loading) {
+          return;
+        }
+        loader.classList.add(this.classNames.active);
+        active.classList.remove(this.classNames.active);
+        active.classList.remove(exitPosition);
+        loader.classList.remove(this.classNames.animatedMobile);
+        active.classList.remove(this.classNames.animatedMobile);
+        activeContent.classList.remove(contentExitMoveClass);
+        activeContent.classList.remove(this.classNames.contentExit);
+        loaderContent.classList.remove(contentEnterMoveClass);
+        setTimeout(() => {
+          DOMNextPaint().then(() => {
+            this.buttons.element.classList.remove(this.classNames.controlsActive);
+          });
+        }, this.props.controlsReturnDelay);
 
-          if (this.activeArrow) {
-            this.activeArrow.classList.remove(this.activeArrowClass);
-            this.activeArrow = null;
-            this.activeArrowClass = null;
-          }
-          /* INVERT BOXES */
-          this.active = this.active === 'boxA' ? 'boxB' : 'boxA';
-          this.loader = this.active === 'boxA' ? 'boxB' : 'boxA';
-          if (callback) {
-            callback();
-          }
-        });
+        if (this.activeArrow) {
+          this.activeArrow.classList.remove(this.activeArrowClass);
+          this.activeArrow = null;
+          this.activeArrowClass = null;
+        }
+        /* INVERT BOXES */
+        this.active = this.active === 'boxA' ? 'boxB' : 'boxA';
+        this.loader = this.active === 'boxA' ? 'boxB' : 'boxA';
+        if (callback) {
+          callback();
+        }
       });
     });
   }
@@ -466,6 +465,9 @@ export default class AwesomeSlider extends React.Component {
     if (this.animating) {
       return;
     }
+    if (this.index === null) {
+      return;
+    }
     const native = event.nativeEvent;
     this.touchStartPoint = native.touches[0].clientX;
   }
@@ -475,12 +477,18 @@ export default class AwesomeSlider extends React.Component {
       return;
     }
     const native = event.nativeEvent;
-    let diff = this.latestX - this.touchStartPoint;
+    let diff = native.touches[0].clientX - this.touchStartPoint;
     const active = this[this.active];
     const loader = this[this.loader];
     const direction = !(diff > 0);
     const abs = Math.abs(diff);
-    this.latestX = native.touches[0].clientX;
+    if (this.touchEnabled === false) {
+      if (abs > 20) {
+        this.touchEnabled = true;
+        this.touchStartPoint = native.touches[0].clientX;
+      }
+      return;
+    }
     if (abs >= 10) {
       if (this.loading === false) {
         this.goTo({
@@ -516,6 +524,7 @@ export default class AwesomeSlider extends React.Component {
     }
     this.touchStartPoint = null;
     this.animating = true;
+    this.touchEnabled = false;
     this.animateMobileEnd(() => {
       this.index = this.nextIndex;
       this.setState({ index: this.index });

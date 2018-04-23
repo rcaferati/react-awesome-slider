@@ -23,6 +23,15 @@
         transition: transform 0.425s cubic-bezier(0.05, 0.65, 0.1, 0.95), opacity 300ms ease-out;
         transform: translate3d(0, 0, 0);
         opacity: 1;
+
+        @media all and (max-width: 600px) {
+          font-size: 16px;
+          line-height: 18px;
+        }
+        @media all and (max-width: 400px) {
+          font-size: 12px;
+          line-height: 14px;
+        }
       }
     }
 

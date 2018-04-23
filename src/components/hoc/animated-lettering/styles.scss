@@ -10,6 +10,15 @@
       line-height: 36px;
       color: rgba(0, 0, 0, 0.25);
       transition: transform 0.45s cubic-bezier(0.15, 0.3, 0.15, 1), opacity 0.35s ease-out;
+
+      @media all and (max-width: 600px) {
+        font-size: 22px;
+        line-height: 28px;
+      }
+      @media all and (max-width: 400px) {
+        font-size: 18px;
+        line-height: 24px;
+      }
     }
     p:nth-child(2) {
       transition-delay: 0.05s, 0.05s;
