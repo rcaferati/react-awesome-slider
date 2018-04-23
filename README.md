@@ -73,6 +73,19 @@ yarn add react-awesome-slider
 + Animated transition recipes
 + Extendable via custom plugin HOC components
 
+## Main Props
+
+| Attributes            | Type          | Default         | Description |
+| :---------            | :--:          | :-----:         | :----------- |
+| className             | `string`      | `null`          | Add a className to the component container |
+| cssModule             | `object`      | `null`          | CSS Module object if you choose to use this styling approach |
+| name                  | `string`      | `awesome-slider`| Unique name of the rendered slider. Useful if you're navigating between multiple pages that contains a slider component. |
+| selected              | `number`      | `0`       | Sets the current active/selected screen |
+| onFirstMount          | `function`    | `null`      | Runs on componentDidMount passing the slider reference as an argument|
+| onTransitionEnd       | `function`    | `null`      | Runs on at the slider transition end event passing the slider reference as an argument|
+| onTransitionStart     | `function`    | `null`      | Runs on slider transition start passing the slider reference as an argument |
+| startupScreen         | `node`        | `null`    | Set's the startup screen element to be shown before the first screen is loaded |
+
 ## Contribute
 If you have an idea for a missing feature or animation just craft your own `hoc feature` or `animation style` and send it up via PR to the `src/components` folder.
 
