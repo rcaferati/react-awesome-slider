@@ -35,6 +35,7 @@ export default class AwesomeSlider extends React.Component {
     organicArrows: PropTypes.bool,
     rootElement: PropTypes.string,
     selected: PropTypes.number,
+    infinite: PropTypes.bool,
     startupScreen: PropTypes.object,
     style: PropTypes.object,
     transitionDelay: PropTypes.number,
@@ -47,6 +48,7 @@ export default class AwesomeSlider extends React.Component {
     controlsReturnDelay: 0,
     cssModule: null,
     disabled: false,
+    infinite: true,
     media: [],
     name: 'awesome-slider',
     onFirstMount: null,
@@ -140,6 +142,9 @@ export default class AwesomeSlider extends React.Component {
       disabled: this.props.disabled,
       organicArrows: this.props.organicArrows,
       className: this.props.className,
+      current: this.state.index,
+      total: this.media.length,
+      infinite: this.props.infinite,
     });
   }
 
