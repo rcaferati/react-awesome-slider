@@ -34,8 +34,6 @@ export function getRootClassName({
     classNames.push(...className.split(' '));
   }
   if (cssModule && cssModule[rootElement]) {
-    console.log(classNames);
-    console.log(classToModules(classNames, cssModule));
     return classToModules(classNames, cssModule);
   }
   return classNames.join(' ').trim().replace(/[\s]+/ig, ' ');
