@@ -215,6 +215,16 @@ $content-background-color: #2f2f2f;
   &--exit {
     z-index: 0;
   }
+  &--first {
+    .#{$root-element}__prev {
+      visibility: hidden;
+    }
+  }
+  &--last {
+    .#{$root-element}__next {
+      visibility: hidden;
+    }
+  }
 
   &__bullets {
     position: absolute;

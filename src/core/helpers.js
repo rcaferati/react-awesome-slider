@@ -9,6 +9,9 @@ export function getRootClassName({
   disabled,
   organicArrows,
   className,
+  total,
+  current,
+  infinite,
 }) {
   const classNames = [
     rootElement,
@@ -19,10 +22,20 @@ export function getRootClassName({
   if (disabled === true) {
     classNames.push(`${rootElement}--disabled`);
   }
+  if (infinite === false) {
+    if (current === 0) {
+      classNames.push(`${rootElement}--first`);
+    }
+    if (current === total - 1) {
+      classNames.push(`${rootElement}--last`);
+    }
+  }
   if (className) {
     classNames.push(...className.split(' '));
   }
   if (cssModule && cssModule[rootElement]) {
+    console.log(classNames);
+    console.log(classToModules(classNames, cssModule));
     return classToModules(classNames, cssModule);
   }
   return classNames.join(' ').trim().replace(/[\s]+/ig, ' ');
