@@ -10,15 +10,11 @@ export default class Buttons extends React.Component {
     onNext: PropTypes.func.isRequired,
     onPrev: PropTypes.func.isRequired,
     organicArrows: PropTypes.bool,
-    current: PropTypes.number,
-    total: PropTypes.number,
   };
 
   static defaultProps = {
     cssModule: null,
     organicArrows: true,
-    current: 0,
-    total: 0,
   };
 
   componentDidMount() {

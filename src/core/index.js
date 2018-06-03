@@ -611,8 +611,6 @@ export default class AwesomeSlider extends React.Component {
             onNext={this.clickNext}
             onPrev={this.clickPrev}
             organicArrows={organicArrows}
-            current={this.state.index}
-            total={this.media.length}
           />
         </div>
         <Bullets
