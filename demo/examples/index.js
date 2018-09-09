@@ -3,6 +3,7 @@ import ImageExample from './example/images';
 import CaptionedExample from './example/captioned';
 import ScalingExample from './example/scaling';
 import FoldExample from './example/fold';
+import FullScreen from './example/fullscreen';
 
 const examples = {
   lettering: LetteringExample,
@@ -10,6 +11,7 @@ const examples = {
   captioned: CaptionedExample,
   scaling: ScalingExample,
   fold: FoldExample,
+  fullscreen: FullScreen,
 };
 
 export default examples;

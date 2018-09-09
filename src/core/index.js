@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  getClassName,
-  DOMNextPaint,
   setCssEndEvent,
+  onceNextCssLayout,
+} from 'web-animation-club';
+import {
+  getClassName,
   MediaLoader,
 } from '../helpers/components';
 import {
@@ -14,6 +16,9 @@ import {
 import Bullets from './bullets';
 import Buttons from './buttons';
 import Media from './media';
+
+console.log(setCssEndEvent);
+console.log(onceNextCssLayout);
 
 const ROOTELM = 'aws-sld';
 const mediaLoader = new MediaLoader();
@@ -26,6 +31,7 @@ export default class AwesomeSlider extends React.Component {
     controlsReturnDelay: PropTypes.number,
     cssModule: PropTypes.object,
     disabled: PropTypes.bool,
+    expanded: PropTypes.bool,
     media: PropTypes.array,
     name: PropTypes.string,
     onFirstMount: PropTypes.func,
@@ -48,6 +54,7 @@ export default class AwesomeSlider extends React.Component {
     controlsReturnDelay: 0,
     cssModule: null,
     disabled: false,
+    expanded: false,
     infinite: true,
     media: [],
     name: 'awesome-slider',
@@ -139,6 +146,7 @@ export default class AwesomeSlider extends React.Component {
     return getRootClassName({
       rootElement: this.rootElement,
       cssModule: this.props.cssModule,
+      expanded: this.props.expanded,
       disabled: this.props.disabled,
       organicArrows: this.props.organicArrows,
       className: this.props.className,
@@ -161,7 +169,7 @@ export default class AwesomeSlider extends React.Component {
   startup() {
     this.started = true;
     setTimeout(() => {
-      DOMNextPaint().then(() => {
+      onceNextCssLayout().then(() => {
         this.goTo({ index: 0, direction: true, touch: false });
       });
     }, 125);
@@ -202,13 +210,13 @@ export default class AwesomeSlider extends React.Component {
       }
       const bar = this.getBar();
       active.appendChild(bar);
-      DOMNextPaint().then(() => {
-        DOMNextPaint().then(() => {
+      onceNextCssLayout().then(() => {
+        onceNextCssLayout().then(() => {
           bar.classList.add(this.classNames.barActive);
         });
         mediaLoader.load(url).then(() => {
           this.loaded.push(url);
-          DOMNextPaint().then(() => {
+          onceNextCssLayout().then(() => {
             setCssEndEvent(bar, 'transition').then(() => {
               resolve(bar);
             });
@@ -265,7 +273,7 @@ export default class AwesomeSlider extends React.Component {
     loaderContent.classList.remove(this.classNames.contentStatic);
     loader.classList.add(this.classNames.animatedMobile);
     active.classList.add(this.classNames.animatedMobile);
-    DOMNextPaint().then(() => {
+    onceNextCssLayout().then(() => {
       loader.style.transform = 'translate3d(0, 0, 0)';
       active.style.transform = `translate3d(${this.direction ? '-' : ''}100%, 0, 0)`;
       setCssEndEvent(active, 'transition').then(() => {
@@ -281,7 +289,7 @@ export default class AwesomeSlider extends React.Component {
         activeContent.classList.remove(this.classNames.contentExit);
         loaderContent.classList.remove(contentEnterMoveClass);
         setTimeout(() => {
-          DOMNextPaint().then(() => {
+          onceNextCssLayout().then(() => {
             this.buttons.element.classList.remove(this.classNames.controlsActive);
           });
         }, this.props.controlsReturnDelay);
@@ -332,12 +340,12 @@ export default class AwesomeSlider extends React.Component {
       activeContentElement.classList.add(this.classNames.contentExit);
       loaderContentElement.classList.add(contentEnterMoveClass);
       setTimeout(() => {
-        DOMNextPaint().then(() => {
+        onceNextCssLayout().then(() => {
           loader.classList.add(loaderPosition);
-          DOMNextPaint().then(() => {
+          onceNextCssLayout().then(() => {
             loader.classList.add(this.classNames.animated);
             active.classList.add(this.classNames.animated);
-            DOMNextPaint().then(() => {
+            onceNextCssLayout().then(() => {
               loader.classList.remove(loaderPosition);
               active.classList.add(this.classNames.exit);
               active.classList.add(exitPosition);
@@ -356,12 +364,12 @@ export default class AwesomeSlider extends React.Component {
                   active.removeChild(bar);
                 }
                 setTimeout(() => {
-                  DOMNextPaint().then(() => {
+                  onceNextCssLayout().then(() => {
                     this.buttons.element.classList.remove(this.classNames.controlsActive);
                   });
                 }, this.props.controlsReturnDelay);
                 if (this.activeArrow) {
-                  DOMNextPaint().then(() => {
+                  onceNextCssLayout().then(() => {
                     this.activeArrow.classList.remove(this.activeArrowClass);
                     this.activeArrow = null;
                     this.activeArrowClass = null;
@@ -401,7 +409,7 @@ export default class AwesomeSlider extends React.Component {
                 element: this.slider,
               });
             }
-            DOMNextPaint().then(() => {
+            onceNextCssLayout().then(() => {
               this.loading = false;
             });
           });
@@ -442,7 +450,7 @@ export default class AwesomeSlider extends React.Component {
     this.activeArrowClass = getClassName(`${this.rootElement}__controls__arrow-${dirName}--active`, this.props.cssModule);
 
     // This needs to be done due to the usage of pseudo elements animation
-    setCssEndEvent(this.activeArrow, 'transition', this.index === null ? 0 : 2).then(() => {
+    setCssEndEvent(this.activeArrow, 'transition', { tolerance: this.index === null ? 0 : 2 }).then(() => {
       if (callback) {
         callback();
       }
@@ -553,7 +561,7 @@ export default class AwesomeSlider extends React.Component {
       index,
       direction: !(this.index > index),
     }, () => {
-      DOMNextPaint().then(() => {
+      onceNextCssLayout().then(() => {
         button.classList.add(this.classNames.bulletsLoading);
       });
     });

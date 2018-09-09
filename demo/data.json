@@ -28,6 +28,10 @@
     {
       "name": "Smooth Lettering",
       "slug": "lettering"
+    },
+    {
+      "name": "Full Screen",
+      "slug": "fullscreen"
     }
   ]
 }

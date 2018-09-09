@@ -25,7 +25,8 @@
   },
   "dependencies": {
     "prop-types": "^15.6.0",
-    "react": "^16.2.0"
+    "react": "^16.2.0",
+    "web-animation-club": "^0.1.2"
   },
   "devDependencies": {
     "autoprefixer": "^7.0.1",

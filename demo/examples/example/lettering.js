@@ -1,8 +1,8 @@
 import React from 'react';
-import AwesomeFrame from '../../../src/components/react-awesome-frame';
+import AwesomeFrame from '../../../src/components/wrapper/awesome-frame';
 import Lettering from '../../../src/components/hoc/animated-lettering';
 import LetteringStyles from '../../../src/components/hoc/animated-lettering/styles.scss';
-import AwsFrameStyles from '../../../src/components/react-awesome-frame/styles.scss';
+import AwsFrameStyles from '../../../src/components/wrapper/awesome-frame/styles.scss';
 import { shadeRGBColor } from '../../helpers/examples';
 import {
   features,

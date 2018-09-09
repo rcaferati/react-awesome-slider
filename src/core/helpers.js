@@ -7,6 +7,7 @@ export function getRootClassName({
   rootElement,
   cssModule,
   disabled,
+  expanded,
   organicArrows,
   className,
   total,
@@ -21,6 +22,9 @@ export function getRootClassName({
   }
   if (disabled === true) {
     classNames.push(`${rootElement}--disabled`);
+  }
+  if (expanded === true) {
+    classNames.push(`${rootElement}--expanded`);
   }
   if (infinite === false) {
     if (current === 0) {

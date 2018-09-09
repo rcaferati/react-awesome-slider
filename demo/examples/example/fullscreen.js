@@ -1,24 +1,56 @@
 import React from 'react';
-import AwesomeSlider from '../../../src';
 import AwsSliderStyles from '../../../src/components/styled/fold-out-animation/styles.scss';
+import LetteringStyles from '../../../src/components/hoc/animated-lettering/styles.scss';
+import FullScreen from '../../../src/components/wrapper/full-screen';
 import AwesomeFrame from '../../../src/components/wrapper/awesome-frame';
+import Lettering from '../../../src/components/hoc/animated-lettering';
 import AwsFrameStyles from '../../../src/components/wrapper/awesome-frame/styles.scss';
 import { shadeRGBColor } from '../../helpers/examples';
-
 import {
   features,
   properties,
   // examples,
 } from '../common';
 
+const screens = [
+  {
+    backgroundColor: 'INDIANRED',
+    children: [
+      'On the first part of the journey ♪',
+      'I was looking at all the life',
+    ],
+  },
+  {
+    backgroundColor: 'LIGHTSTEELBLUE',
+    children: [
+      'There were plants and birds and rocks and things',
+      'There was sand and hills and rings ♪',
+    ],
+  },
+  {
+    backgroundColor: 'LIGHTGREEN',
+    children: [
+      'The first thing I met was a fly with a buzz',
+      'And the sky with no clouds ♪',
+    ],
+  },
+  {
+    backgroundColor: 'PALETURQUOISE',
+    children: [
+      'The heat was hot and the ground was dry',
+      'But the air was full of sound',
+      '♪ ♪ ♪',
+    ],
+  },
+];
+
 function resetSlider(slider) {
   clearTimeout(window.transitionUpdateTimer);
   const divs = slider.currentSlide.querySelectorAll('div');
   const color = getComputedStyle(divs[0]).backgroundColor;
-  slider.element.style.setProperty('--transition-bezier', 'cubic-bezier(0.45, 0, 0.2, 1)');
-  slider.element.style.setProperty('--slider-transition-duration', '770ms');
   slider.element.style.setProperty('--organic-arrow-color', shadeRGBColor(color, -0.2));
   slider.element.style.setProperty('--control-bullet-active-color', shadeRGBColor(color, -0.2));
+  slider.element.style.setProperty('--slider-transition-duration', '525ms');
   slider.element.style.setProperty('--control-bullet-color', color);
   window.setElement(slider.element);
 }
@@ -40,52 +72,58 @@ function transitionEnd(slider) {
 }
 
 const startupScreen = (
-  <div style={{ backgroundColor: '#000' }}>
-    <img
-      alt="bojack"
-      src="/images/series/stranger-things-loader.jpg"
-    />
+  <div style={{ backgroundColor: 'ALICEBLUE' }}>
+    <span style={{ fontSize: '72px', color: 'rgba(0, 0, 0, 0.25)' }}>♪</span>
   </div>
 );
 
-function Component({ startup }) {
-  return (
-    <AwesomeFrame
-      cssModule={AwsFrameStyles}
-      title="Netflix &mdash; Stranger Things"
-    >
-      <AwesomeSlider
-        name="images"
-        cssModule={AwsSliderStyles}
-        startup={startup}
-        startupScreen={startupScreen}
-        onFirstMount={resetSlider}
-        onResetSlider={resetSlider}
-        onTransitionStart={transitionStart}
-        onTransitionEnd={transitionEnd}
+class Component extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    const {
+      startup,
+    } = this.props;
+
+    return (
+      <FullScreen
+        onEnter={() => {
+          document.documentElement.style.setProperty('--customiser-transform', '500px');
+        }}
+        onExit={() => {
+          document.documentElement.style.setProperty('--customiser-transform', '0px');
+        }}
+        title="Netflix &mdash; Stranger Things"
       >
-        <div
-          style={{ backgroundColor: '#fad0ce' }}
-          data-src="/images/series/stranger-things-4.jpg"
-        />
-        <div
-          style={{ backgroundColor: '#5ed6ff' }}
-          data-src="/images/series/stranger-things-3.jpg"
-        />
-        <div
-          style={{ backgroundColor: '#f09297' }}
-          data-src="/images/series/stranger-things-2.jpg"
-        />
-      </AwesomeSlider>
-    </AwesomeFrame>
-  );
+        <AwesomeFrame
+          cssModule={AwsFrameStyles}
+          title="Netflix &mdash; Bojack Horseman"
+        >
+          <Lettering
+            name="lettering"
+            startup={startup}
+            cssModule={LetteringStyles}
+            startupScreen={startupScreen}
+            onTransitionStart={transitionStart}
+            onTransitionEnd={transitionEnd}
+            onResetSlider={resetSlider}
+            onFirstMount={resetSlider}
+            screens={screens}
+          />
+        </AwesomeFrame>
+      </FullScreen>
+    );
+  }
 }
 
 const example = {
-  title: 'Fold Animation',
+  title: 'Full Screen',
   items: [
     {
-      title: 'Styling the fold animation',
+      title: 'Full Screen Wrapper Component',
       description: 'The animation out styling is pretty simple. We just apply the folding with translate + rotation on exit moveLeft and exit moveRight classes. Checkout this component\'s source <a target="_blank" href="https://github.com/rcaferati/react-awesome-slider/tree/master/src/components/fold-out-animation">here</a>.',
       scss: `
 .aws-sld {

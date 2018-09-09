@@ -38,16 +38,6 @@ export function serialize(obj, separator = '&') {
   return Object.entries(obj).map(([key, val]) => `${key}=${val}`).join(separator);
 }
 
-export function DOMNextPaint() {
-  return new Promise((resolve) => {
-    window.requestAnimationFrame(() => {
-      window.requestAnimationFrame(() => {
-        resolve();
-      });
-    });
-  });
-}
-
 export function classToModules(className = [], cssModule) {
   if (!cssModule) {
     return className.join(' ').trim();
@@ -68,37 +58,4 @@ export function getClassName(className = '', cssModule) {
     return cssModule[className] || className;
   }
   return className;
-}
-
-
-export function setCssEndEvent(element, type, tolerance = 0) {
-  return new Promise((resolve) => {
-    if (!element) {
-      resolve(false);
-      return;
-    }
-    let eventName = null;
-    const capitalized = type.charAt(0).toUpperCase() + type.slice(1);
-    let run = 0;
-    function end(event) {
-      const target = event.srcElement || event.target;
-      if (target === element) {
-        if (run >= tolerance) {
-          element.removeEventListener(eventName, end);
-          resolve();
-        }
-        run += 1;
-      }
-    }
-    if (element.style[`Webkit${capitalized}`] !== undefined) {
-      eventName = `webkit${capitalized}End`;
-    }
-    if (element.style.OTransition !== undefined) {
-      eventName = `o${type}End`;
-    }
-    if (element.style[type] !== undefined) {
-      eventName = `${type}end`;
-    }
-    element.addEventListener(eventName, end);
-  });
 }

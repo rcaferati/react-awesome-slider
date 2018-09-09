@@ -1,8 +1,8 @@
 import React from 'react';
 import AwesomeSlider from '../../../src/index';
-import AwesomeFrame from '../../../src/components/react-awesome-frame';
+import AwesomeFrame from '../../../src/components/wrapper/awesome-frame';
 import AwsSliderStyles from '../../../src/core/styles.scss';
-import AwsFrameStyles from '../../../src/components/react-awesome-frame/styles.scss';
+import AwsFrameStyles from '../../../src/components/wrapper/awesome-frame/styles.scss';
 import { shadeRGBColor } from '../../helpers/examples';
 
 import {

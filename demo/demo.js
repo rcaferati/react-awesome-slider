@@ -47,7 +47,9 @@ const ComposerComponent = ({ match, handlePopover }) => {
 };
 
 const HeaderComponent = ({ match }) => {
+  console.log(match.params.theme);
   const theme = match.params.theme || DEFAULT_THEME;
+  console.log(theme);
   return (
     <Header
       title={Data.title}

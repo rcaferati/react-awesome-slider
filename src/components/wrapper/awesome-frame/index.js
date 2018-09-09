@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   classToModules,
   getClassName,
-} from '../../helpers/components';
+} from '../../../helpers/components';
 
 const ROOTELM = 'aws-frm';
 
