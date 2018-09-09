@@ -17,7 +17,7 @@
     "start": "webpack-dev-server -d --config webpack.demo.config.js",
     "build": "NODE_ENV=production webpack",
     "build:scss": "NODE_ENV=production webpack --config webpack.scss.config.js && rm ./dist/styles.js",
-    "build:website": "webpack -p --config webpack.website.config.js",
+    "build:website": "webpack --config webpack.website.config.js",
     "build:server": "webpack -p --config webpack.server.config.js",
     "test": "echo \"No test specified ATM\"",
     "lint": "eslint src/**",

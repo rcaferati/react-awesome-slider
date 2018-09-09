@@ -24,6 +24,12 @@ const config = {
       commonjs2: 'prop-types',
       amd: 'prop-types',
     },
+    'web-animation-club': {
+      root: 'WAC',
+      commonjs: 'web-animation-club',
+      commonjs2: 'web-animation-club',
+      amd: 'web-animation-club',
+    },
   },
   module: {
     rules: [{

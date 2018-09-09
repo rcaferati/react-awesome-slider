@@ -51,9 +51,6 @@ const config = {
     new ExtractTextPlugin({
       filename: 'react-awesome-slider.css',
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      comments: false,
-    }),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('production'),
