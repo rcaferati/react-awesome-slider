@@ -1,7 +1,4 @@
-import {
-  classToModules,
-  getClassName,
-} from '../helpers/components';
+import { classToModules, getClassName } from '../helpers/components';
 
 export function getRootClassName({
   rootElement,
@@ -12,15 +9,17 @@ export function getRootClassName({
   total,
   current,
   infinite,
+  fillParent,
 }) {
-  const classNames = [
-    rootElement,
-  ];
+  let classNames = [rootElement];
   if (organicArrows === true) {
     classNames.push(`${rootElement}--organic-arrows`);
   }
   if (disabled === true) {
     classNames.push(`${rootElement}--disabled`);
+  }
+  if (fillParent) {
+    classNames.push(`${rootElement}--fill-parent`);
   }
   if (infinite === false) {
     if (current === 0) {
@@ -30,18 +29,21 @@ export function getRootClassName({
       classNames.push(`${rootElement}--last`);
     }
   }
+  if (cssModule && cssModule[rootElement]) {
+    classNames = classToModules(classNames, cssModule);
+  }
   if (className) {
     classNames.push(...className.split(' '));
   }
-  if (cssModule && cssModule[rootElement]) {
-    return classToModules(classNames, cssModule);
-  }
-  return classNames.join(' ').trim().replace(/[\s]+/ig, ' ');
+  return classNames
+    .join(' ')
+    .trim()
+    .replace(/[\s]+/gi, ' ');
 }
 
 export function transformChildren(children) {
   const media = [];
-  children.forEach((child) => {
+  children.forEach(child => {
     const item = {
       ...child.props,
     };
@@ -65,8 +67,14 @@ export function setupClassNames(rootElement, cssModule) {
     barEnd: getClassName(`${rootElement}__bar--end`, cssModule),
     content: getClassName(`${rootElement}__content`, cssModule),
     contentStatic: getClassName(`${rootElement}__content--static`, cssModule),
-    contentMoveLeft: getClassName(`${rootElement}__content--moveLeft`, cssModule),
-    contentMoveRight: getClassName(`${rootElement}__content--moveRight`, cssModule),
+    contentMoveLeft: getClassName(
+      `${rootElement}__content--moveLeft`,
+      cssModule
+    ),
+    contentMoveRight: getClassName(
+      `${rootElement}__content--moveRight`,
+      cssModule
+    ),
     controlsActive: getClassName(`${rootElement}__controls--active`, cssModule),
     animated: getClassName(`${rootElement}--animated`, cssModule),
     animatedMobile: getClassName(`${rootElement}--animated-mobile`, cssModule),

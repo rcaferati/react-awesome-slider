@@ -13,7 +13,8 @@ const config = {
         options: {
           presets: ['es2015', 'react', 'stage-0'],
         },
-      }, {
+      },
+      {
         test: /\.scss$/i,
         loader: ExtractTextPlugin.extract({
           fallback: 'style-loader',
@@ -26,7 +27,8 @@ const config = {
               },
             },
             'postcss-loader',
-            'sass-loader'],
+            'sass-loader',
+          ],
         }),
       },
       {
