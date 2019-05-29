@@ -13,21 +13,23 @@ import {
 
 function resetSlider(slider) {
   clearTimeout(window.transitionUpdateTimer);
-  const divs = slider.currentSlide.querySelectorAll('div');
-  const color = getComputedStyle(divs[0]).backgroundColor;
-  slider.element.style.setProperty('--transition-bezier', 'cubic-bezier(0.45, 0, 0.2, 1)');
+  slider.element.style.setProperty(
+    '--transition-bezier',
+    'cubic-bezier(0.45, 0, 0.2, 1)'
+  );
   slider.element.style.setProperty('--slider-transition-duration', '770ms');
-  slider.element.style.setProperty('--organic-arrow-color', shadeRGBColor(color, -0.2));
-  slider.element.style.setProperty('--control-bullet-active-color', shadeRGBColor(color, -0.2));
-  slider.element.style.setProperty('--control-bullet-color', color);
   window.setElement(slider.element);
 }
 
 function transitionStart(slider) {
   const divs = slider.nextSlide.querySelectorAll('div');
   const color = getComputedStyle(divs[0]).backgroundColor;
+
   window.transitionUpdateTimer = setTimeout(() => {
-    slider.element.style.setProperty('--control-bullet-active-color', shadeRGBColor(color, -0.15));
+    slider.element.style.setProperty(
+      '--control-bullet-active-color',
+      shadeRGBColor(color, -0.15)
+    );
     slider.element.style.setProperty('--control-bullet-color', color);
   }, 400);
 }
@@ -35,16 +37,17 @@ function transitionStart(slider) {
 function transitionEnd(slider) {
   const divs = slider.currentSlide.querySelectorAll('div');
   const color = getComputedStyle(divs[0]).backgroundColor;
-  slider.element.style.setProperty('--organic-arrow-color', shadeRGBColor(color, -0.15));
+
+  slider.element.style.setProperty(
+    '--organic-arrow-color',
+    shadeRGBColor(color, -0.15)
+  );
   window.setElement(slider.element);
 }
 
 const startupScreen = (
   <div style={{ backgroundColor: '#000' }}>
-    <img
-      alt="bojack"
-      src="/images/series/stranger-things-loader.jpg"
-    />
+    <img alt="bojack" src="/images/series/stranger-things-loader.jpg" />
   </div>
 );
 
@@ -58,6 +61,7 @@ function Component({ startup }) {
         name="images"
         cssModule={AwsSliderStyles}
         startup={startup}
+        // fillParent
         startupScreen={startupScreen}
         onFirstMount={resetSlider}
         onResetSlider={resetSlider}
@@ -86,7 +90,8 @@ const example = {
   items: [
     {
       title: 'Styling the fold animation',
-      description: 'The animation out styling is pretty simple. We just apply the folding with translate + rotation on exit moveLeft and exit moveRight classes. Checkout this component\'s source <a target="_blank" href="https://github.com/rcaferati/react-awesome-slider/tree/master/src/components/fold-out-animation">here</a>.',
+      description:
+        'The animation out styling is pretty simple. We just apply the folding with translate + rotation on exit moveLeft and exit moveRight classes. Checkout this component\'s source <a target="_blank" href="https://github.com/rcaferati/react-awesome-slider/tree/master/src/components/fold-out-animation">here</a>.',
       scss: `
 .aws-sld {
   &__container {

@@ -4,20 +4,15 @@ import AwsSliderStyles from '../../../src/components/styled/scale-out-animation/
 import AwesomeFrame from '../../../src/components/react-awesome-frame';
 import AwsFrameStyles from '../../../src/components/react-awesome-frame/styles.scss';
 import { shadeRGBColor } from '../../helpers/examples';
-import {
-  features,
-  properties,
-} from '../common';
+import { features, properties } from '../common';
 
 function resetSlider(slider) {
   clearTimeout(window.transitionUpdateTimer);
-  const divs = slider.currentSlide.querySelectorAll('div');
-  const color = getComputedStyle(divs[0]).backgroundColor;
-  slider.element.style.setProperty('--transition-bezier', 'cubic-bezier(0.45, 0, 0.2, 1)');
+  slider.element.style.setProperty(
+    '--transition-bezier',
+    'cubic-bezier(0.45, 0, 0.2, 1)'
+  );
   slider.element.style.setProperty('--slider-transition-duration', '670ms');
-  slider.element.style.setProperty('--organic-arrow-color', shadeRGBColor(color, -0.2));
-  slider.element.style.setProperty('--control-bullet-active-color', shadeRGBColor(color, -0.2));
-  slider.element.style.setProperty('--control-bullet-color', color);
   slider.element.style.setProperty('--organic-arrow-thickness', '6px');
   window.setElement(slider.element);
 }
@@ -26,7 +21,10 @@ function transitionStart(slider) {
   const divs = slider.nextSlide.querySelectorAll('div');
   const color = getComputedStyle(divs[0]).backgroundColor;
   window.transitionUpdateTimer = setTimeout(() => {
-    slider.element.style.setProperty('--control-bullet-active-color', shadeRGBColor(color, -0.15));
+    slider.element.style.setProperty(
+      '--control-bullet-active-color',
+      shadeRGBColor(color, -0.15)
+    );
     slider.element.style.setProperty('--control-bullet-color', color);
   }, 400);
 }
@@ -34,16 +32,16 @@ function transitionStart(slider) {
 function transitionEnd(slider) {
   const divs = slider.currentSlide.querySelectorAll('div');
   const color = getComputedStyle(divs[0]).backgroundColor;
-  slider.element.style.setProperty('--organic-arrow-color', shadeRGBColor(color, -0.15));
+  slider.element.style.setProperty(
+    '--organic-arrow-color',
+    shadeRGBColor(color, -0.15)
+  );
   window.setElement(slider.element);
 }
 
 const startupScreen = (
   <div style={{ backgroundColor: '#EFEFEF' }}>
-    <img
-      alt="south park"
-      src="/images/series/south-park-loader.png"
-    />
+    <img alt="south park" src="/images/series/south-park-loader.png" />
   </div>
 );
 
@@ -89,7 +87,8 @@ const example = {
   items: [
     {
       title: 'Scale Animation Styles',
-      description: 'For this example I\'m using the ScaleOutAnimation component ',
+      description:
+        "For this example I'm using the ScaleOutAnimation component ",
       jsx: `
 import AwesomeSlider from 'react-awesome-slider';
 import AwesomeSliderStyles from 'react-awesome-slider/src/components/scale-out-animation/styles.scss';
@@ -106,7 +105,8 @@ const Slider = (
     },
     {
       title: 'ScaleOutAnimation Styles',
-      description: 'The animation out styling on the <b>scale-out-animation</b> .scss file is pretty simple. We just apply the scaling down on exit moveLeft and exit moveRight classes of the current box container.',
+      description:
+        'The animation out styling on the <b>scale-out-animation</b> .scss file is pretty simple. We just apply the scaling down on exit moveLeft and exit moveRight classes of the current box container.',
       scss: `
 .aws-slr {
   &--exit {

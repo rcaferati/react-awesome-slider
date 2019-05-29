@@ -13,13 +13,11 @@ import {
 
 function resetSlider(slider) {
   clearTimeout(window.transitionUpdateTimer);
-  const divs = slider.currentSlide.querySelectorAll('div');
-  const color = getComputedStyle(divs[0]).backgroundColor;
-  slider.element.style.setProperty('--transition-bezier', 'cubic-bezier(0.45, 0, 0.2, 1)');
+  slider.element.style.setProperty(
+    '--transition-bezier',
+    'cubic-bezier(0.45, 0, 0.2, 1)'
+  );
   slider.element.style.setProperty('--slider-transition-duration', '700ms');
-  slider.element.style.setProperty('--organic-arrow-color', shadeRGBColor(color, -0.2));
-  slider.element.style.setProperty('--control-bullet-active-color', shadeRGBColor(color, -0.2));
-  slider.element.style.setProperty('--control-bullet-color', color);
   window.setElement(slider.element);
 }
 
@@ -27,7 +25,10 @@ function transitionStart(slider) {
   const divs = slider.nextSlide.querySelectorAll('div');
   const color = getComputedStyle(divs[0]).backgroundColor;
   window.transitionUpdateTimer = setTimeout(() => {
-    slider.element.style.setProperty('--control-bullet-active-color', shadeRGBColor(color, -0.15));
+    slider.element.style.setProperty(
+      '--control-bullet-active-color',
+      shadeRGBColor(color, -0.15)
+    );
     slider.element.style.setProperty('--control-bullet-color', color);
   }, 400);
 }
@@ -35,16 +36,16 @@ function transitionStart(slider) {
 function transitionEnd(slider) {
   const divs = slider.currentSlide.querySelectorAll('div');
   const color = getComputedStyle(divs[0]).backgroundColor;
-  slider.element.style.setProperty('--organic-arrow-color', shadeRGBColor(color, -0.15));
+  slider.element.style.setProperty(
+    '--organic-arrow-color',
+    shadeRGBColor(color, -0.15)
+  );
   window.setElement(slider.element);
 }
 
 const startupScreen = (
   <div style={{ backgroundColor: '#EFEFEF' }}>
-    <img
-      alt="bojack"
-      src="/images/series/bojack-loader.png"
-    />
+    <img alt="bojack" src="/images/series/bojack-loader.png" />
   </div>
 );
 
@@ -105,7 +106,8 @@ const slider = (
     },
     {
       title: 'Startup Screen',
-      description: 'The <b>startupScreen</b> prop defines the first screen that\'s rendered when the component mounts, it works like a pre-load screen. If not defined the component will default to the first child screen or to the screen defined on the <b>selected</b> prop.',
+      description:
+        "The <b>startupScreen</b> prop defines the first screen that's rendered when the component mounts, it works like a pre-load screen. If not defined the component will default to the first child screen or to the screen defined on the <b>selected</b> prop.",
       jsx: `
 import AwesomeSlider from 'react-awesome-slider';
 import AwsSliderStyles from 'react-awesome-slider/src/styles.scss';
@@ -128,7 +130,8 @@ const slider = (
     },
     {
       title: 'Animation hooks',
-      description: 'The three main hooks are <b>onFirstMount</b>, <b>onAnimationStart</b> and <b>onAnimationEnd</b>. They\'re called with an object containing the component main <b>element</b>, <b>currentIndex</b>, <b>nextIndex</b>, <b>currentScreen</b> and <b>nextScreen</b>',
+      description:
+        "The three main hooks are <b>onFirstMount</b>, <b>onAnimationStart</b> and <b>onAnimationEnd</b>. They're called with an object containing the component main <b>element</b>, <b>currentIndex</b>, <b>nextIndex</b>, <b>currentScreen</b> and <b>nextScreen</b>",
       jsx: `
 const onAnimationStart = ({
   element,

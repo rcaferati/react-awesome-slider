@@ -14,13 +14,16 @@ function resetSlider(slider) {
   clearTimeout(window.transitionUpdateTimer);
   const divs = slider.currentSlide.querySelectorAll('div');
   const color = getComputedStyle(divs[0]).backgroundColor;
-  slider.element.style.setProperty('--transition-bezier', 'cubic-bezier(0.45, 0, 0.2, 1)');
+  slider.element.style.setProperty(
+    '--transition-bezier',
+    'cubic-bezier(0.45, 0, 0.2, 1)'
+  );
   slider.element.style.setProperty('--slider-transition-duration', '770ms');
   slider.element.style.setProperty('--slider-height-percentage', '60%');
-  slider.element.style.setProperty('--organic-arrow-color', shadeRGBColor(color, -0.2));
-  slider.element.style.setProperty('--control-bullet-active-color', shadeRGBColor(color, -0.2));
-  slider.element.style.setProperty('--caption-background-color', shadeRGBColor(color, -0.2));
-  slider.element.style.setProperty('--control-bullet-color', color);
+  slider.element.style.setProperty(
+    '--caption-background-color',
+    shadeRGBColor(color, -0.2)
+  );
   window.setElement(slider.element);
 }
 
@@ -28,7 +31,10 @@ function transitionStart(slider) {
   const divs = slider.nextSlide.querySelectorAll('div');
   const color = getComputedStyle(divs[0]).backgroundColor;
   window.transitionUpdateTimer = setTimeout(() => {
-    slider.element.style.setProperty('--control-bullet-active-color', shadeRGBColor(color, -0.15));
+    slider.element.style.setProperty(
+      '--control-bullet-active-color',
+      shadeRGBColor(color, -0.15)
+    );
     slider.element.style.setProperty('--control-bullet-color', color);
   }, 400);
 }
@@ -36,8 +42,13 @@ function transitionStart(slider) {
 function transitionEnd(slider) {
   const divs = slider.currentSlide.querySelectorAll('div');
   const color = getComputedStyle(divs[0]).backgroundColor;
-  const captionColor = shadeRGBColor(color, -0.2).replace('rgb', 'rgba').replace(')', ', 0.75)');
-  slider.element.style.setProperty('--organic-arrow-color', shadeRGBColor(color, -0.15));
+  const captionColor = shadeRGBColor(color, -0.2)
+    .replace('rgb', 'rgba')
+    .replace(')', ', 0.75)');
+  slider.element.style.setProperty(
+    '--organic-arrow-color',
+    shadeRGBColor(color, -0.15)
+  );
   slider.element.style.setProperty('--caption-background-color', captionColor);
   window.setElement(slider.element);
 }
@@ -51,7 +62,7 @@ const media = [
   {
     backgroundColor: '#463277',
     media: '/images/series/ricknmorty-1.jpg',
-    caption: 'The answer is -- Don\'t think about it.',
+    caption: "The answer is -- Don't think about it.",
   },
   {
     backgroundColor: '#faf3d5',
@@ -127,7 +138,8 @@ const slider = (
     },
     {
       title: 'Captioned Component',
-      description: 'For this specific example I\'m using the Captioned component which is a basic styled wrapper hoc that applies a simple caption strategy. You can check out all the available components <a target="_blank" href="https://github.com/rcaferati/react-awesome-slider/tree/master/src/components">here</a>.',
+      description:
+        'For this specific example I\'m using the Captioned component which is a basic styled wrapper hoc that applies a simple caption strategy. You can check out all the available components <a target="_blank" href="https://github.com/rcaferati/react-awesome-slider/tree/master/src/components">here</a>.',
       jsx: `
 import Captioned from 'react-awesome-slider/src/components/captioned';
 import CaptionedStyles from 'react-awesome-slider/src/components/captioned/styles.scss';
