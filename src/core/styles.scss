@@ -68,14 +68,15 @@ $content-background-color: #2f2f2f;
 .#{$root-element} {
   display: block;
   position: relative;
-  overflow: hidden;
   width: 100%;
   max-width: 100%;
 
   &__wrapper {
-    // display: block;
-    // overflow: hidden;
-    // position: relative;
+    display: block;
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+    width: 100%;
   }
   &__container {
     display: block;

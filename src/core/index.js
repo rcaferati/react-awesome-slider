@@ -52,8 +52,8 @@ export default class AwesomeSlider extends React.Component {
     disabled: false,
     infinite: true,
     media: [],
-    bullets: false,
-    fillParent: true,
+    bullets: true,
+    fillParent: false,
     name: 'awesome-slider',
     onFirstMount: null,
     onResetSlider: null,
@@ -140,16 +140,24 @@ export default class AwesomeSlider extends React.Component {
   }
 
   getRootClassName() {
+    const {
+      fillParent,
+      infinite,
+      className,
+      organicArrows,
+      disabled,
+      cssModule,
+    } = this.props;
     return getRootClassName({
+      cssModule,
+      disabled,
+      organicArrows,
+      className,
+      infinite,
+      fillParent,
       rootElement: this.rootElement,
-      cssModule: this.props.cssModule,
-      disabled: this.props.disabled,
-      organicArrows: this.props.organicArrows,
-      className: this.props.className,
       current: this.state.index,
       total: this.media.length,
-      infinite: this.props.infinite,
-      fillParent: this.props.fillParent,
     });
   }
 
