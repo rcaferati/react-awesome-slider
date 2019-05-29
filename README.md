@@ -25,10 +25,13 @@ Checkout the `CSS customizer` at <a title="React Awesome Slider - CSS Customizer
 [<img src="https://github.com/rcaferati/react-awesome-slider/blob/master/demo/public/images/css-customiser.png?raw=true" width="800" />](https://caferati.me/demo/react-awesome-slider)
 
 ### Installing
+
 ```
 npm install --save react-awesome-slider
 ```
+
 or
+
 ```
 yarn add react-awesome-slider
 ```
@@ -36,64 +39,72 @@ yarn add react-awesome-slider
 ## Examples
 
 ### Basic usage with and plain CSS
-```jsx
-  import AwesomeSlider from 'react-awesome-slider';
-  import 'react-awesome-slider/dist/styles.css';
 
-  const slider = (
-    <AwesomeSlider>
-      <div data-src="/path/to/image-0.png" />
-      <div data-src="/path/to/image-1.png" />
-      <div data-src="/path/to/image-2.jpg" />
-    </AwesomeSlider>
-  );
+```jsx
+import AwesomeSlider from 'react-awesome-slider';
+import 'react-awesome-slider/dist/styles.css';
+
+const slider = (
+  <AwesomeSlider>
+    <div data-src="/path/to/image-0.png" />
+    <div data-src="/path/to/image-1.png" />
+    <div data-src="/path/to/image-2.jpg" />
+  </AwesomeSlider>
+);
 ```
 
 ### Basic usage with CSS Modules
+
 ```jsx
-  import AwesomeSlider from 'react-awesome-slider';
-  import AwsSliderStyles from 'react-awesome-slider/src/styles.scss';
+import AwesomeSlider from 'react-awesome-slider';
+import AwsSliderStyles from 'react-awesome-slider/src/styles.scss';
 
-  const slider = (
-    <AwesomeSlider cssModule={styles}>
-      <div data-src="/path/to/image-0.png" />
-      <div data-src="/path/to/image-1.png" />
-      <div data-src="/path/to/image-2.jpg" />
-    </AwesomeSlider>
-  );
+const slider = (
+  <AwesomeSlider cssModule={styles}>
+    <div data-src="/path/to/image-0.png" />
+    <div data-src="/path/to/image-1.png" />
+    <div data-src="/path/to/image-2.jpg" />
+  </AwesomeSlider>
+);
 ```
-
 
 ## Key Features
 
-+ Look and feel customisable and extendable via SASS and CSS Variables (custom-properties) ([scss main file](https://github.com/rcaferati/react-awesome-slider/blob/master/src/styles))
-+ Media pre-loader
-+ Touch enabled
-+ 60fps animations
-+ Animated transition recipes
-+ Extendable via custom plugin HOC components
+- Look and feel customisable and extendable via SASS and CSS Variables (custom-properties) ([scss main file](https://github.com/rcaferati/react-awesome-slider/blob/master/src/styles))
+- Media pre-loader
+- Touch enabled
+- 60fps animations
+- Animated transition recipes
+- Extendable via custom plugin HOC components
 
 ## Main Props
 
-| Attributes            | Type          | Default         | Description |
-| :---------            | :--:          | :-----:         | :----------- |
-| className             | `string`      | `null`          | Add a className to the component container |
-| cssModule             | `object`      | `null`          | CSS Module object if you choose to use this styling approach |
-| name                  | `string`      | `awesome-slider`| Unique name of the rendered slider. Useful if you're navigating between multiple pages that contains a slider component. |
-| selected              | `number`      | `0`       | Sets the current active/selected screen |
-| onFirstMount          | `function`    | `null`      | Runs on componentDidMount passing the slider reference as an argument|
-| onTransitionEnd       | `function`    | `null`      | Runs on at the slider transition end event passing the slider reference as an argument|
-| onTransitionStart     | `function`    | `null`      | Runs on slider transition start passing the slider reference as an argument |
-| startupScreen         | `node`        | `null`    | Set's the startup screen element to be shown before the first screen is loaded |
+| Attributes        |    Type    |     Default      | Description                                                                                                                        |
+| :---------------- | :--------: | :--------------: | :--------------------------------------------------------------------------------------------------------------------------------- |
+| className         |  `string`  |      `null`      | Add a className to the component container                                                                                         |
+| cssModule         |  `object`  |      `null`      | CSS Module object if you choose to use this styling approach                                                                       |
+| name              |  `string`  | `awesome-slider` | Unique name of the rendered slider. Useful if you're navigating between multiple pages that contains a slider component.           |
+| selected          |  `number`  |       `0`        | Sets the current active/selected screen                                                                                            |
+| bullets           | `boolean`  |      `true`      | When set to true show the bullet controls underneath the slider                                                                    |
+| organicArrows     | `boolean`  |      `true`      | When set to true show the organic arrow `next` and `prev` controls                                                                 |
+| fillParent        | `boolean`  |     `false`      | When set to true the slider will fill the dimensions of the parent element. Usefull for using it in full-screen mode.              |
+| transitionDelay   |  `number`  |       `0`        | Sets a delay in `ms` between the slide transitions. Useful if you're waiting for an exit animation to finish in the current slide. |
+| startupScreen     |   `node`   |      `null`      | Set's the startup screen element to be shown before the first screen is loaded                                                     |
+| onFirstMount      | `function` |      `null`      | Runs on componentDidMount passing the slider reference as an argument                                                              |
+| onTransitionEnd   | `function` |      `null`      | Runs on at the slider transition end event passing the slider reference as an argument                                             |
+| onTransitionStart | `function` |      `null`      | Runs on slider transition start passing the slider reference as an argument                                                        |
 
 ## Contribute
+
 If you have an idea for a missing feature or animation just craft your own `hoc feature` or `animation style` and send it up via PR to the `src/components` folder.
 
 ## Author
+
 #### Rafael Caferati
-+ Checkout my <a href="https://caferati.me" title="Full-Stack Web Developer, UI/UX Javascript Specialist" target="_blank">Full-Stack Web Developer Website</a>
-+ Other open source projects @ <a title="Web Software Developer Code Laboratory" target="_blank" href="https://caferati.me/labs">Code Laboratory</a>
-+ A scope of my work @ <a title="Web Software Developer Portfolio" target="_blank" href="https://caferati.me/portfolio">Web Portfolio</a>
+
+- Checkout my <a href="https://caferati.me" title="Full-Stack Web Developer, UI/UX Javascript Specialist" target="_blank">Full-Stack Web Developer Website</a>
+- Other open source projects @ <a title="Web Software Developer Code Laboratory" target="_blank" href="https://caferati.me/labs">Code Laboratory</a>
+- A scope of my work @ <a title="Web Software Developer Portfolio" target="_blank" href="https://caferati.me/portfolio">Web Portfolio</a>
 
 ## License
 
