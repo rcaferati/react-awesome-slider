@@ -1,5 +1,5 @@
-$root-element: "aws-sld";
-$cos45: 0.70710;
+$root-element: 'aws-sld';
+$cos45: 0.7071;
 $transition-bezier: cubic-bezier(0.5, 0.075, 0.25, 0.95);
 $slider-height-percentage: 60%;
 $slider-transition-duration: 575ms;
@@ -67,13 +67,15 @@ $content-background-color: #2f2f2f;
 
 .#{$root-element} {
   display: block;
-  width: 100%;
   position: relative;
+  overflow: hidden;
+  width: 100%;
   max-width: 100%;
+
   &__wrapper {
-    display: block;
-    overflow: hidden;
-    position: relative;
+    // display: block;
+    // overflow: hidden;
+    // position: relative;
   }
   &__container {
     display: block;
@@ -114,7 +116,8 @@ $content-background-color: #2f2f2f;
     display: flex;
     align-items: center;
     justify-content: center;
-    > img, > video {
+    > img,
+    > video {
       object-fit: cover;
       width: 100%;
       height: 100%;
@@ -140,7 +143,7 @@ $content-background-color: #2f2f2f;
       top: calc(50% - (0.5 * var(--control-button-height)));
       border: none;
       background-color: var(--control-button-background);
-      color: #FFF;
+      color: #fff;
       cursor: pointer;
       .#{$root-element}__controls__arrow-left,
       .#{$root-element}__controls__arrow-right {
@@ -197,7 +200,8 @@ $content-background-color: #2f2f2f;
     @extend %fill-parent;
   }
   &--animated {
-    transition: transform var(--slider-transition-duration) var(--transition-bezier);
+    transition: transform var(--slider-transition-duration)
+      var(--transition-bezier);
   }
   &--animated-mobile {
     transition: transform 325ms cubic-bezier(0.15, 0.65, 0.1, 1);
@@ -225,7 +229,18 @@ $content-background-color: #2f2f2f;
       visibility: hidden;
     }
   }
+  &--fill-parent {
+    position: absolute !important;
+    width: 100% !important;
+    height: 100% !important;
+    top: 0;
+    left: 0;
 
+    .#{$root-element}__container {
+      height: 100%;
+      padding: 0;
+    }
+  }
   &__bullets {
     position: absolute;
     bottom: -40px;
@@ -246,23 +261,22 @@ $content-background-color: #2f2f2f;
       overflow: hidden;
       cursor: pointer;
       border: none;
-      transition:
-        transform 0.225s cubic-bezier(0.8, 1.35, 0.75, 1.45),
+      transition: transform 0.225s cubic-bezier(0.8, 1.35, 0.75, 1.45),
         background-color 0.175s ease-out;
 
       &:hover {
-        transform: scale(1.20);
+        transform: scale(1.2);
       }
     }
     .#{$root-element}__bullets--loading {
-      transform: scale(1.20);
+      transform: scale(1.2);
     }
     .#{$root-element}__bullets--active {
-      transform: scale(1.50);
+      transform: scale(1.5);
       background: var(--control-bullet-active-color);
 
       &:hover {
-        transform: scale(1.50);
+        transform: scale(1.5);
       }
     }
   }
@@ -273,16 +287,23 @@ $content-background-color: #2f2f2f;
     height: var(--organic-arrow-height);
     position: relative;
     display: block;
-    transition: transform .2s ease-out .125s, opacity .2s ease-out;
-    &:before, &:after {
-      content: " ";
+    transition: transform 0.2s ease-out 0.125s, opacity 0.2s ease-out;
+    &:before,
+    &:after {
+      content: ' ';
       position: absolute;
-      right: calc(50% - (#{$cos45} * (var(--organic-arrow-height) + var(--organic-arrow-thickness))) / 2);
+      right: calc(
+        50% -
+          (
+            #{$cos45} * (var(--organic-arrow-height) +
+                  var(--organic-arrow-thickness))
+          ) / 2
+      );
       height: 100%;
       border-radius: var(--organic-arrow-border-radius);
       width: var(--organic-arrow-thickness);
       background-color: var(--organic-arrow-color);
-      transition: transform .15s ease-out, background-color .15s ease-out;
+      transition: transform 0.15s ease-out, background-color 0.15s ease-out;
     }
     &:before {
       transform-origin: 100% 100% 0;
@@ -309,9 +330,16 @@ $content-background-color: #2f2f2f;
     }
   }
   &__controls__arrow-left {
-    &:before, &:after {
+    &:before,
+    &:after {
       right: auto;
-      left: calc(50% - (#{$cos45} * (var(--organic-arrow-height) + var(--organic-arrow-thickness))) / 2);
+      left: calc(
+        50% -
+          (
+            #{$cos45} * (var(--organic-arrow-height) +
+                  var(--organic-arrow-thickness))
+          ) / 2
+      );
     }
     &:before {
       transform-origin: 0 100% 0;

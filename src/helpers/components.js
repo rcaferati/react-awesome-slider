@@ -8,13 +8,19 @@ export class MediaLoader {
     }
   }
   events() {
-    this.video.addEventListener('loadeddata', () => this.resolve && this.resolve(true));
-    this.video.addEventListener('loadeddata', () => this.resolve && this.resolve(false));
+    this.video.addEventListener(
+      'loadeddata',
+      () => this.resolve && this.resolve(true)
+    );
+    this.video.addEventListener(
+      'loadeddata',
+      () => this.resolve && this.resolve(false)
+    );
     this.image.onload = () => this.resolve && this.resolve(true);
     this.image.onerror = () => this.resolve && this.resolve(false);
   }
   load(url) {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       if (!url) {
         resolve(true);
       }
@@ -35,11 +41,13 @@ export class MediaLoader {
 }
 
 export function serialize(obj, separator = '&') {
-  return Object.entries(obj).map(([key, val]) => `${key}=${val}`).join(separator);
+  return Object.entries(obj)
+    .map(([key, val]) => `${key}=${val}`)
+    .join(separator);
 }
 
 export function DOMNextPaint() {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     window.requestAnimationFrame(() => {
       window.requestAnimationFrame(() => {
         resolve();
@@ -48,19 +56,21 @@ export function DOMNextPaint() {
   });
 }
 
-export function classToModules(className = [], cssModule) {
+export function classToModules(classNames = [], cssModule) {
+  console.log('----');
+  console.log(classNames);
   if (!cssModule) {
-    return className.join(' ').trim();
+    return classNames.join(' ').trim();
   }
-  const ClassName = [];
-  let i = className.length;
+  const result = [];
+  let i = classNames.length;
   // eslint-disable-next-line
   while (i--) {
-    if (cssModule[className[i]]) {
-      ClassName.push(cssModule[className[i]]);
+    if (cssModule[classNames[i]]) {
+      result.push(cssModule[classNames[i]]);
     }
   }
-  return ClassName.join(' ').trim();
+  return result;
 }
 
 export function getClassName(className = '', cssModule) {
@@ -70,9 +80,8 @@ export function getClassName(className = '', cssModule) {
   return className;
 }
 
-
 export function setCssEndEvent(element, type, tolerance = 0) {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     if (!element) {
       resolve(false);
       return;
