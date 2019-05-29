@@ -60,7 +60,7 @@ import AwesomeSlider from 'react-awesome-slider';
 import AwsSliderStyles from 'react-awesome-slider/src/styles.scss';
 
 const slider = (
-  <AwesomeSlider cssModule={styles}>
+  <AwesomeSlider cssModule={AwsSliderStyles}>
     <div data-src="/path/to/image-0.png" />
     <div data-src="/path/to/image-1.png" />
     <div data-src="/path/to/image-2.jpg" />
@@ -70,7 +70,7 @@ const slider = (
 
 ## Key Features
 
-- Look and feel customisable and extendable via SASS and CSS Variables (custom-properties) ([scss main file](https://github.com/rcaferati/react-awesome-slider/blob/master/src/styles))
+- Look and feel customisable and extendable via SASS and CSS Variables ([custom-properties](https://github.com/rcaferati/react-awesome-slider/blob/master/src/core/styles.scss#L48)) ([scss main file](https://github.com/rcaferati/react-awesome-slider/blob/master/src/core/styles.scss))
 - Media pre-loader
 - Touch enabled
 - 60fps animations
