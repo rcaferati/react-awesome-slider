@@ -82,7 +82,7 @@ export default class AwesomeSlider extends React.Component {
     this.touchEnabled = false;
     this.checkChildren(props);
     this.setupClassNames(props.cssModule);
-    if (props.startupScreen) {
+    if (props.startupScreen && !props.selected) {
       this.index = null;
       this.state = {
         index: null,
@@ -104,7 +104,7 @@ export default class AwesomeSlider extends React.Component {
 
   componentDidMount() {
     this.boxA.classList.add(this.classNames.active);
-    if (this.props.startupScreen) {
+    if (this.props.startupScreen && !this.props.selected) {
       this.buttons.element.classList.add(this.classNames.controlsActive);
       if (this.props.startup === true) {
         this.startup();
