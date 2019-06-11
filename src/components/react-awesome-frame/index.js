@@ -36,20 +36,21 @@ export default class AwesomeFrame extends React.Component {
     const {
       cssModule,
       disabled,
+      className,
     } = this.props;
-    const className = [
+    let classNames = [
       this.rootElement,
     ];
     if (disabled === true) {
-      className.push(`${rootElement}--disabled`);
-    }
-    if (this.props.className) {
-      className.push(...this.props.className.split(' '));
+      classNames.push(`${rootElement}--disabled`);
     }
     if (cssModule && cssModule[this.rootElement]) {
-      return classToModules(className, cssModule);
+      classNames = classToModules(classNames, cssModule);
     }
-    return className.join(' ').trim().replace(/[\s]+/ig, ' ');
+    if (className) {
+      classNames.push(...className.split(' '));
+    }
+    return classNames.join(' ').trim().replace(/[\s]+/ig, ' ');
   }
 
   renderBar() {
