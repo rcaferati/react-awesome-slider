@@ -168,8 +168,6 @@ export default class AwesomeSlider extends React.Component {
   }
 
   setupClassNames(cssModule) {
-    console.log(cssModule);
-    console.log(this.rootElement);
     this.classNames = setupClassNames(this.rootElement, cssModule);
   }
 

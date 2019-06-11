@@ -57,8 +57,6 @@ export function DOMNextPaint() {
 }
 
 export function classToModules(classNames = [], cssModule) {
-  console.log('----');
-  console.log(classNames);
   if (!cssModule) {
     return classNames.join(' ').trim();
   }
