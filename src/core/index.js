@@ -482,6 +482,10 @@ export default class AwesomeSlider extends React.Component {
     const activeArrow = direction ? this.buttons.next : this.buttons.prev;
     const dirName = direction ? 'right' : 'left';
     this.activeArrow = activeArrow.querySelector('span');
+    if (!this.activeArrow) {
+      callback();
+      return;
+    }
     this.activeArrowClass = getClassName(
       `${this.rootElement}__controls__arrow-${dirName}--active`,
       this.props.cssModule
