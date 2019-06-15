@@ -201,10 +201,12 @@ $content-background-color: #2f2f2f;
     @extend %fill-parent;
   }
   &--animated {
+    will-change: transform;
     transition: transform var(--slider-transition-duration)
       var(--transition-bezier);
   }
   &--animated-mobile {
+    will-change: transform;
     transition: transform 325ms cubic-bezier(0.15, 0.65, 0.1, 1);
   }
   &--active {
