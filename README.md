@@ -24,6 +24,12 @@ Checkout the `CSS customizer` at <a title="React Awesome Slider - CSS Customizer
 
 [<img src="https://github.com/rcaferati/react-awesome-slider/blob/master/demo/public/images/css-customiser.png?raw=true" width="800" />](https://caferati.me/demo/react-awesome-slider)
 
+## Figma File
+
+Import it directly into your [Figma](https://www.figma.com/file/Ug8sNPzmevU3ZQus9Klu5aHq/react-awesome-button-theme-blue) project.
+
+[<img src="https://github.com/rcaferati/react-awesome-slider/blob/master/demo/public/images/figma.png?raw=true" width="800" />](https://www.figma.com/file/VItcmlJtKZxyGJhClk4Lg0kQ/react-awesome-slider)
+
 ### Installing
 
 ```
