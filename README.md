@@ -26,7 +26,7 @@ Checkout the `CSS customizer` at <a title="React Awesome Slider - CSS Customizer
 
 ## Figma File
 
-Import it directly into your [Figma](https://www.figma.com/file/VItcmlJtKZxyGJhClk4Lg0kQ/react-awesome-slider) project.
+Import the component directly into your [Figma](https://www.figma.com/file/VItcmlJtKZxyGJhClk4Lg0kQ/react-awesome-slider) project.
 
 [<img src="https://github.com/rcaferati/react-awesome-slider/blob/master/demo/public/images/figma.png?raw=true" width="800" />](https://www.figma.com/file/VItcmlJtKZxyGJhClk4Lg0kQ/react-awesome-slider)
 
