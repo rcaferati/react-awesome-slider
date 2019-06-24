@@ -5,11 +5,12 @@ export function shadeRGBColor(color, percent) {
   const R = parseInt(f[0].slice(4), 10);
   const G = parseInt(f[1], 10);
   const B = parseInt(f[2], 10);
-  return `rgb(${Math.round((t - R) * p) + R}, ${Math.round((t - G) * p) + G}, ${Math.round((t - B) * p) + B})`;
+  return `rgb(${Math.round((t - R) * p) + R}, ${Math.round((t - G) * p) +
+    G}, ${Math.round((t - B) * p) + B})`;
 }
 
 export function setCssEndEvent(element, type) {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     if (!element) {
       resolve(false);
       return;
@@ -17,11 +18,9 @@ export function setCssEndEvent(element, type) {
     let eventName = null;
     const capitalized = type.charAt(0).toUpperCase() + type.slice(1);
     function end(event) {
-      console.timeStamp('TRYING TO END THINGS');
       element.removeEventListener(eventName, end);
       const target = event.srcElement || event.target;
       if (target === element) {
-        console.timeStamp('ENDING THINGS');
         resolve();
       }
     }
@@ -43,7 +42,7 @@ function hex(number) {
     return false;
   }
   const str = Number(number).toString(16);
-  return (`0${str}`).slice(-2);
+  return `0${str}`.slice(-2);
 }
 
 export function rgba2hex(rgba) {
