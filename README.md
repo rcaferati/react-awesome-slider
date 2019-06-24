@@ -52,9 +52,10 @@ import 'react-awesome-slider/dist/styles.css';
 
 const slider = (
   <AwesomeSlider>
-    <div data-src="/path/to/image-0.png" />
-    <div data-src="/path/to/image-1.png" />
-    <div data-src="/path/to/image-2.jpg" />
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
   </AwesomeSlider>
 );
 ```
