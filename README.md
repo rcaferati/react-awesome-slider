@@ -83,6 +83,7 @@ const slider = (
 - 60fps animations
 - Animated transition recipes
 - Extendable via custom plugin HOC components
+- FullScreen achieved through the `fillParent` prop
 
 ## Main Props
 
