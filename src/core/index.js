@@ -89,6 +89,7 @@ export default class AwesomeSlider extends React.Component {
         boxB: null,
       };
     } else {
+      this.started = true;
       this.index = this.props.selected;
       this.state = {
         index: this.index,
@@ -103,6 +104,7 @@ export default class AwesomeSlider extends React.Component {
     if (this.props.startupScreen && !this.props.selected) {
       this.buttons.element.classList.add(this.classNames.controlsActive);
       if (this.props.startup === true) {
+        alert('fope');
         this.startup();
       }
     }
@@ -630,7 +632,7 @@ export default class AwesomeSlider extends React.Component {
   }
 
   render() {
-    const { cssModule, organicArrows, bullets } = this.props;
+    const { cssModule, organicArrows, bullets, style } = this.props;
     const { rootElement } = this;
 
     return (
@@ -639,6 +641,7 @@ export default class AwesomeSlider extends React.Component {
           this.slider = slider;
         }}
         className={this.getRootClassName()}
+        style={style}
       >
         <div
           ref={wrapper => {
