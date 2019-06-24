@@ -46,16 +46,6 @@ export function serialize(obj, separator = '&') {
     .join(separator);
 }
 
-export function DOMNextPaint() {
-  return new Promise(resolve => {
-    window.requestAnimationFrame(() => {
-      window.requestAnimationFrame(() => {
-        resolve();
-      });
-    });
-  });
-}
-
 export function classToModules(classNames = [], cssModule) {
   if (!cssModule) {
     return classNames.join(' ').trim();
@@ -76,6 +66,16 @@ export function getClassName(className = '', cssModule) {
     return cssModule[className] || className;
   }
   return className;
+}
+
+export function DOMNextPaint() {
+  return new Promise(resolve => {
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        resolve();
+      });
+    });
+  });
 }
 
 export function setCssEndEvent(element, type, tolerance = 0) {

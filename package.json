@@ -78,5 +78,8 @@
     "component",
     "UI component",
     "javascript"
-  ]
+  ],
+  "dependencies": {
+    "web-animation-club": "^0.2.2"
+  }
 }
