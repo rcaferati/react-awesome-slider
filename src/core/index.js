@@ -104,7 +104,6 @@ export default class AwesomeSlider extends React.Component {
     if (this.props.startupScreen && !this.props.selected) {
       this.buttons.element.classList.add(this.classNames.controlsActive);
       if (this.props.startup === true) {
-        alert('fope');
         this.startup();
       }
     }

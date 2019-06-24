@@ -58,7 +58,6 @@ function Component({ startup }) {
       <AwesomeSlider
         name="images"
         startup={startup}
-        selected={1}
         cssModule={AwsSliderStyles}
         startupScreen={startupScreen}
         onFirstMount={resetSlider}
