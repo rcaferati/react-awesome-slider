@@ -64,7 +64,7 @@ const slider = (
 
 ```jsx
 import AwesomeSlider from 'react-awesome-slider';
-import AwsSliderStyles from 'react-awesome-slider/src/styles.scss';
+import AwsSliderStyles from 'react-awesome-slider/src/styles';
 
 const slider = (
   <AwesomeSlider cssModule={AwsSliderStyles}>
