@@ -81,9 +81,9 @@ const slider = (
 - Media pre-loader
 - Touch enabled
 - 60fps animations
-- FullScreen achieved through the `fillParent` prop
 - Animated transition recipes
 - Extendable via custom plugin HOC components
+- FullScreen achieved through the `fillParent` prop
 
 ## Main Props
 
