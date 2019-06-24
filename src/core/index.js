@@ -1,11 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  getClassName,
-  DOMNextPaint,
-  setCssEndEvent,
-  MediaLoader,
-} from '../helpers/components';
+import { onceNextCssLayout, onceTransitionEnd } from 'web-animation-club';
+import { getClassName, MediaLoader } from '../helpers/components';
 import {
   getRootClassName,
   setupClassNames,
@@ -174,7 +170,7 @@ export default class AwesomeSlider extends React.Component {
   startup() {
     this.started = true;
     setTimeout(() => {
-      DOMNextPaint().then(() => {
+      onceNextCssLayout().then(() => {
         this.goTo({ index: 0, direction: true, touch: false });
       });
     }, 125);
@@ -218,14 +214,14 @@ export default class AwesomeSlider extends React.Component {
       }
       const bar = this.getBar();
       active.appendChild(bar);
-      DOMNextPaint().then(() => {
-        DOMNextPaint().then(() => {
+      onceNextCssLayout().then(() => {
+        onceNextCssLayout().then(() => {
           bar.classList.add(this.classNames.barActive);
         });
         mediaLoader.load(url).then(() => {
           this.loaded.push(url);
-          DOMNextPaint().then(() => {
-            setCssEndEvent(bar, 'transition').then(() => {
+          onceNextCssLayout().then(() => {
+            onceTransitionEnd(bar).then(() => {
               resolve(bar);
             });
             bar.classList.add(this.classNames.barEnd);
@@ -281,12 +277,12 @@ export default class AwesomeSlider extends React.Component {
     loaderContent.classList.remove(this.classNames.contentStatic);
     loader.classList.add(this.classNames.animatedMobile);
     active.classList.add(this.classNames.animatedMobile);
-    DOMNextPaint().then(() => {
+    onceNextCssLayout().then(() => {
       loader.style.transform = 'translate3d(0, 0, 0)';
       active.style.transform = `translate3d(${
         this.direction ? '-' : ''
       }100%, 0, 0)`;
-      setCssEndEvent(active, 'transition').then(() => {
+      onceTransitionEnd(active).then(() => {
         if (!this.loading) {
           return;
         }
@@ -299,7 +295,7 @@ export default class AwesomeSlider extends React.Component {
         activeContent.classList.remove(this.classNames.contentExit);
         loaderContent.classList.remove(contentEnterMoveClass);
         setTimeout(() => {
-          DOMNextPaint().then(() => {
+          onceNextCssLayout().then(() => {
             this.buttons.element.classList.remove(
               this.classNames.controlsActive
             );
@@ -362,19 +358,19 @@ export default class AwesomeSlider extends React.Component {
       loaderContentElement.classList.add(contentEnterMoveClass);
       loaderContentElement.classList.add(this.classNames.contentStatic);
       setTimeout(() => {
-        DOMNextPaint().then(() => {
+        onceNextCssLayout().then(() => {
           loader.classList.add(loaderPosition);
-          DOMNextPaint().then(() => {
+          onceNextCssLayout().then(() => {
             loader.classList.add(this.classNames.animated);
             active.classList.add(this.classNames.animated);
             loaderContentElement.classList.remove(
               this.classNames.contentStatic
             );
-            DOMNextPaint().then(() => {
+            onceNextCssLayout().then(() => {
               loader.classList.remove(loaderPosition);
               active.classList.add(this.classNames.exit);
               active.classList.add(exitPosition);
-              setCssEndEvent(active, 'transition').then(() => {
+              onceTransitionEnd(active).then(() => {
                 loader.classList.add(this.classNames.active);
                 active.classList.remove(this.classNames.active);
                 active.classList.remove(exitPosition);
@@ -391,14 +387,14 @@ export default class AwesomeSlider extends React.Component {
                   active.removeChild(bar);
                 }
                 setTimeout(() => {
-                  DOMNextPaint().then(() => {
+                  onceNextCssLayout().then(() => {
                     this.buttons.element.classList.remove(
                       this.classNames.controlsActive
                     );
                   });
                 }, this.props.controlsReturnDelay);
                 if (this.activeArrow) {
-                  DOMNextPaint().then(() => {
+                  onceNextCssLayout().then(() => {
                     this.activeArrow.classList.remove(this.activeArrowClass);
                     this.activeArrow = null;
                     this.activeArrowClass = null;
@@ -438,7 +434,7 @@ export default class AwesomeSlider extends React.Component {
                 element: this.slider,
               });
             }
-            DOMNextPaint().then(() => {
+            onceNextCssLayout().then(() => {
               this.loading = false;
             });
           });
@@ -490,11 +486,9 @@ export default class AwesomeSlider extends React.Component {
     );
 
     // This needs to be done due to the usage of pseudo elements animation
-    setCssEndEvent(
-      this.activeArrow,
-      'transition',
-      this.index === null ? 0 : 2
-    ).then(() => {
+    onceTransitionEnd(this.activeArrow, {
+      tolerance: this.index === null ? 0 : 2,
+    }).then(() => {
       if (callback) {
         callback();
       }
@@ -607,7 +601,7 @@ export default class AwesomeSlider extends React.Component {
         direction: !(this.index > index),
       },
       () => {
-        DOMNextPaint().then(() => {
+        onceNextCssLayout().then(() => {
           button.classList.add(this.classNames.bulletsLoading);
         });
       }
