@@ -16,7 +16,7 @@
   "scripts": {
     "start": "webpack-dev-server -d --config webpack.demo.config.js",
     "build": "NODE_ENV=production webpack",
-    "build:scss": "NODE_ENV=production webpack --config webpack.scss.config.js && rm ./dist/styles.js",
+    "build:scss": "gulp && NODE_ENV=production webpack --config webpack.scss.config.js && rm ./dist/styles.js",
     "build:website": "webpack -p --config webpack.website.config.js",
     "build:server": "webpack -p --config webpack.server.config.js",
     "test": "echo \"No test specified ATM\"",
@@ -47,6 +47,8 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
     "extract-text-webpack-plugin": "^3.0.2",
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
     "jest": "^22.0.4",
     "node-sass": "^4.7.2",
     "postcss-loader": "^2.0.10",
