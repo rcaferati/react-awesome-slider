@@ -133,7 +133,9 @@ export default class AwesomeSlider extends React.Component {
         index,
         direction: !(this.index > index),
       });
+      return;
     }
+    this.refreshSlider();
   }
 
   getRootClassName() {
@@ -159,6 +161,9 @@ export default class AwesomeSlider extends React.Component {
   }
 
   getBar() {
+    if (!document) {
+      return {};
+    }
     const bar = document.createElement('div');
     bar.className = this.classNames.bar;
     return bar;
@@ -166,6 +171,18 @@ export default class AwesomeSlider extends React.Component {
 
   setupClassNames(cssModule) {
     this.classNames = setupClassNames(this.rootElement, cssModule);
+  }
+
+  refreshSlider() {
+    if (this.loading === true) {
+      return;
+    }
+    const { index } = this;
+    this.setState({
+      index,
+      boxA: this.media[index],
+      boxB: this.media[index],
+    });
   }
 
   startup() {
