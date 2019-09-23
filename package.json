@@ -80,6 +80,6 @@
     "javascript"
   ],
   "dependencies": {
-    "web-animation-club": "^0.2.2"
+    "web-animation-club": "^0.3.0"
   }
 }
