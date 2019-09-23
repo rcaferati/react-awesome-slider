@@ -174,6 +174,9 @@ export default class AwesomeSlider extends React.Component {
   }
 
   refreshSlider() {
+    if (this.loading === true) {
+      return;
+    }
     const { index } = this;
     this.setState({
       index,
