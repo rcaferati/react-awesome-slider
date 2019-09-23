@@ -86,27 +86,41 @@ const startupScreen = (
   </div>
 );
 
-function Component({ startup }) {
-  return (
-    <div>
-      <AwesomeFrame
-        cssModule={AwsFrameStyles}
-        title="Adult Swim &mdash; Rick and Morty"
-      >
-        <Captioned
-          startup={startup}
-          name="captioned-mixed"
-          startupScreen={startupScreen}
-          cssModule={CaptionedStyles}
-          screens={media}
-          onFirstMount={resetSlider}
-          onResetSlider={resetSlider}
-          onTransitionStart={transitionStart}
-          onTransitionEnd={transitionEnd}
-        />
-      </AwesomeFrame>
-    </div>
-  );
+class Component extends React.Component {
+  state = {
+    media,
+  };
+  changeMedia = () => {
+    media[0].caption = 'new caption';
+    this.setState({
+      media,
+    });
+  };
+  render() {
+    const { startup } = this.props;
+
+    return (
+      <div>
+        <button onClick={this.changeMedia}>Change media</button>
+        <AwesomeFrame
+          cssModule={AwsFrameStyles}
+          title="Adult Swim &mdash; Rick and Morty"
+        >
+          <Captioned
+            startup={startup}
+            name="captioned-mixed"
+            startupScreen={startupScreen}
+            cssModule={CaptionedStyles}
+            screens={this.state.media}
+            onFirstMount={resetSlider}
+            onResetSlider={resetSlider}
+            onTransitionStart={transitionStart}
+            onTransitionEnd={transitionEnd}
+          />
+        </AwesomeFrame>
+      </div>
+    );
+  }
 }
 
 const example = {

@@ -43,7 +43,8 @@ export function getRootClassName({
 
 export function transformChildren(children) {
   const media = [];
-  children.forEach(child => {
+  const items = children.constructor === Array ? children : [children];
+  items.forEach(child => {
     const item = {
       ...child.props,
     };
