@@ -26,19 +26,21 @@ const config = {
     },
   },
   module: {
-    rules: [{
-      test: /\.js$/,
-      exclude: /node_modules/,
-      loader: 'babel-loader',
-      options: {
-        presets: ['es2015', 'react', 'stage-0'],
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+        options: {
+          presets: ['es2015', 'react', 'stage-0'],
+        },
       },
-    }],
+    ],
+  },
+  optimization: {
+    minimize: true,
   },
   plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      comments: false,
-    }),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('production'),
