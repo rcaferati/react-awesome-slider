@@ -15,7 +15,7 @@ export default class Media extends React.Component {
 
     let background = null;
     if (media.url) {
-      if (media.url.match(/gif|jpg|png|webp/)) {
+      if (media.url.match(/gif|jp(e)?g|png|webp/)) {
         background = (
           <img
             alt={media.alt || media.title || null}
