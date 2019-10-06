@@ -1,6 +1,6 @@
 import React from 'react';
 import AwesomeSlider from 'src';
-import AwsSliderStyles from 'src/components/styled/fold-out-animation/styles.scss';
+import AwsSliderStyles from 'src/components/styled/fall-animation/styles.scss';
 import AwesomeFrame from 'src/components/react-awesome-frame';
 import AwsFrameStyles from 'src/components/react-awesome-frame/styles.scss';
 import { transitionStart, transitionEnd, resetSlider } from 'helpers/examples';
@@ -36,6 +36,7 @@ function Component({ startup }) {
               name="images"
               cssModule={AwsSliderStyles}
               startup={startup}
+              // fillParent
               startupScreen={startupScreen}
               onFirstMount={reset}
               onResetSlider={reset}

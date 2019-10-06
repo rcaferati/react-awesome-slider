@@ -1,0 +1,21 @@
+.container {
+  width: 20px;
+  height: 20px;
+  border-radius: 12px;
+  background-color: #fff;
+  outline: none;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.75);
+  }
+
+  input {
+    display: none !important;
+  }
+
+  &.checked {
+    background-color: #1e88e5;
+  }
+}

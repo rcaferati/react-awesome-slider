@@ -1,8 +1,18 @@
+const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const config = {
   entry: {
     'react-awesome-button': ['./demo/index.js'],
+  },
+  resolve: {
+    alias: {
+      components: path.resolve(__dirname, 'demo/components/'),
+      examples: path.resolve(__dirname, 'demo/examples'),
+      helpers: path.resolve(__dirname, 'demo/helpers'),
+      context: path.resolve(__dirname, 'demo/context'),
+      src: path.resolve(__dirname, 'src'),
+    },
   },
   module: {
     rules: [

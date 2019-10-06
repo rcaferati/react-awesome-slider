@@ -1,42 +1,21 @@
 import React from 'react';
-import AwesomeSlider from '../../../src';
-import AwsSliderStyles from '../../../src/components/styled/scale-out-animation/styles.scss';
-import AwesomeFrame from '../../../src/components/react-awesome-frame';
-import AwsFrameStyles from '../../../src/components/react-awesome-frame/styles.scss';
-import { shadeRGBColor } from '../../helpers/examples';
-import { features, properties } from '../common';
+import AwesomeSlider from 'src';
+import AwsSliderStyles from 'src/components/styled/scale-out-animation/styles.scss';
+import AwesomeFrame from 'src/components/react-awesome-frame';
+import AwsFrameStyles from 'src/components/react-awesome-frame/styles.scss';
+import { resetSlider, transitionStart, transitionEnd } from 'helpers/examples';
+import { GeneralContext } from 'context/GeneralContext';
+import { features, properties, globalProps } from 'examples/common';
 
-function resetSlider(slider) {
-  clearTimeout(window.transitionUpdateTimer);
-  slider.element.style.setProperty(
-    '--transition-bezier',
-    'cubic-bezier(0.45, 0, 0.2, 1)'
-  );
-  slider.element.style.setProperty('--slider-transition-duration', '670ms');
-  slider.element.style.setProperty('--organic-arrow-thickness', '6px');
-  window.setElement(slider.element);
-}
-
-function transitionStart(slider) {
-  const divs = slider.nextSlide.querySelectorAll('div');
-  const color = getComputedStyle(divs[0]).backgroundColor;
-  window.transitionUpdateTimer = setTimeout(() => {
+function reset(slider) {
+  resetSlider(slider, function() {
     slider.element.style.setProperty(
-      '--control-bullet-active-color',
-      shadeRGBColor(color, -0.15)
+      '--transition-bezier',
+      'cubic-bezier(0.45, 0, 0.2, 1)'
     );
-    slider.element.style.setProperty('--control-bullet-color', color);
-  }, 400);
-}
-
-function transitionEnd(slider) {
-  const divs = slider.currentSlide.querySelectorAll('div');
-  const color = getComputedStyle(divs[0]).backgroundColor;
-  slider.element.style.setProperty(
-    '--organic-arrow-color',
-    shadeRGBColor(color, -0.15)
-  );
-  window.setElement(slider.element);
+    slider.element.style.setProperty('--slider-transition-duration', '670ms');
+    slider.element.style.setProperty('--organic-arrow-thickness', '6px');
+  });
 }
 
 const startupScreen = (
@@ -47,38 +26,47 @@ const startupScreen = (
 
 function Component({ startup }) {
   return (
-    <AwesomeFrame
-      cssModule={AwsFrameStyles}
-      title="Comedy Central &mdash; South Park"
-    >
-      <AwesomeSlider
-        name="images"
-        cssModule={AwsSliderStyles}
-        startup={startup}
-        startupScreen={startupScreen}
-        onFirstMount={resetSlider}
-        onResetSlider={resetSlider}
-        onTransitionStart={transitionStart}
-        onTransitionEnd={transitionEnd}
-      >
-        <div
-          style={{ backgroundColor: '#a3b9d0' }}
-          data-src="/images/series/south-park-1.jpg"
-        />
-        <div
-          style={{ backgroundColor: '#f46b34' }}
-          data-src="/images/series/south-park-2.jpg"
-        />
-        <div
-          style={{ backgroundColor: '#d63b6b' }}
-          data-src="/images/series/south-park-3.jpg"
-        />
-        <div
-          style={{ backgroundColor: '#d63b6b' }}
-          data-src="/images/series/south-park-0.jpg"
-        />
-      </AwesomeSlider>
-    </AwesomeFrame>
+    <GeneralContext.Consumer>
+      {context => {
+        return (
+          <AwesomeFrame
+            cssModule={AwsFrameStyles}
+            title="Comedy Central &mdash; South Park"
+          >
+            <AwesomeSlider
+              name="images"
+              cssModule={AwsSliderStyles}
+              startup={startup}
+              startupScreen={startupScreen}
+              onFirstMount={reset}
+              onResetSlider={reset}
+              onTransitionStart={transitionStart}
+              onTransitionEnd={transitionEnd}
+              organicArrows={context.general['--organicArrows']}
+              bullets={context.general['--bullets']}
+              fillParent={context.general['--fillParent']}
+            >
+              <div
+                style={{ backgroundColor: '#a3b9d0' }}
+                data-src="/images/series/south-park-1.jpg"
+              />
+              <div
+                style={{ backgroundColor: '#f46b34' }}
+                data-src="/images/series/south-park-2.jpg"
+              />
+              <div
+                style={{ backgroundColor: '#d63b6b' }}
+                data-src="/images/series/south-park-3.jpg"
+              />
+              <div
+                style={{ backgroundColor: '#d63b6b' }}
+                data-src="/images/series/south-park-0.jpg"
+              />
+            </AwesomeSlider>
+          </AwesomeFrame>
+        );
+      }}
+    </GeneralContext.Consumer>
   );
 }
 
@@ -126,6 +114,7 @@ const Slider = (
 };
 
 export default {
+  globalProps,
   features,
   example,
   module,

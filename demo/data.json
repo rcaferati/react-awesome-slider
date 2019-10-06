@@ -14,20 +14,36 @@
       "slug": "images"
     },
     {
-      "name": "Captioned Images",
-      "slug": "captioned"
-    },
-    {
-      "name": "Scale Out Animation",
+      "name": "Scale-out animation",
       "slug": "scaling"
     },
     {
-      "name": "Fold Out Animation",
+      "name": "Fold-out animation",
       "slug": "fold"
     },
     {
-      "name": "Smooth Lettering",
+      "name": "Cube animation",
+      "slug": "cube"
+    },
+    {
+      "name": "Open animation",
+      "slug": "open"
+    },
+    {
+      "name": "Fall animation",
+      "slug": "fall"
+    },
+    {
+      "name": "Captioned images HOC",
+      "slug": "captioned"
+    },
+    {
+      "name": "Smooth lettering HOC",
       "slug": "lettering"
+    },
+    {
+      "name": "Autoplay HOC",
+      "slug": "autoplay"
     }
   ]
 }

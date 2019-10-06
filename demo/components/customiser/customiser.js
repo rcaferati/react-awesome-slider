@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { AwesomeButton, AwesomeButtonSocial } from 'react-awesome-button';
 import AwesomeButtonStyles from 'react-awesome-button/src/styles/themes/theme-blue';
+import { rgba2hex } from 'helpers/examples';
+import { ColorPicker, BorderPicker, Checkbox } from 'components';
+import { GeneralContext } from 'context/GeneralContext';
 import Styles from './customiser.scss';
-import { rgba2hex } from '../../helpers/examples';
-import { ColorPicker, BorderPicker } from '../index';
 
 function applyStyles(elements, { property, value }) {
-  elements.forEach((element) => {
+  elements.forEach(element => {
     element.style.setProperty(property, value);
   });
 }
@@ -20,11 +21,11 @@ class Customiser extends React.Component {
     theme: PropTypes.string.isRequired,
     componentClass: PropTypes.string.isRequired,
     properties: PropTypes.array.isRequired,
+    globalProps: PropTypes.array.isRequired,
   };
 
   constructor(props) {
     super(props);
-    this.values = {};
     this.state = {
       customized: false,
       popoverOpened: false,
@@ -47,7 +48,6 @@ class Customiser extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    this.values = {};
     if (this.props.theme !== newProps.theme) {
       this.updateValues = true;
     }
@@ -61,17 +61,20 @@ class Customiser extends React.Component {
     }
   }
 
-  setElement = (element) => {
+  setElement = element => {
     this.element = element;
     this.updateAllValues(this.props);
-  }
+  };
 
   getStylesText() {
     const text = ['<p><b>.aws-btn</b> {</p><ul>'];
-    this.props.properties.forEach((section) => {
-      section.props.forEach((prop) => {
+    this.props.properties.forEach(section => {
+      section.props.forEach(prop => {
         const name = `--${prop.name}`;
-        text.push(`<li><b>${name}</b>: <em>${this.state[name]}${prop.suffix || ''}</em>;</li>`);
+        text.push(
+          `<li><b>${name}</b>: <em>${this.state[name]}${prop.suffix ||
+            ''}</em>;</li>`
+        );
       });
     });
     text.push('</ul><p>}</p>');
@@ -85,25 +88,32 @@ class Customiser extends React.Component {
     if (!this.element) {
       return false;
     }
-    newProps.properties.forEach((section) => {
-      section.props.forEach((prop) => {
+    newProps.properties.forEach(section => {
+      section.props.forEach(prop => {
         const name = `--${prop.name}`;
-        let style = getComputedStyle(this.element).getPropertyValue(name).trim();
+        let style = getComputedStyle(this.element)
+          .getPropertyValue(name)
+          .trim();
         if (style.match(/(#)([a-z0-9]{3})($)/)) {
           style = style.replace(/(#)([a-z0-9]{3})/, '$1$2$2');
         }
         if (style.match(/(px|em|ms|s|%)$/)) {
-          style = style.replace(/px|em|ms|s|%/ig, '');
+          style = style.replace(/px|em|ms|s|%/gi, '');
         }
         if (style.match(/rgb/)) {
           style = rgba2hex(style);
         }
         state[name] = style;
         if (typeof window !== 'undefined') {
-          applyStyles(document.querySelectorAll(`[data-role="customizable"] .${this.props.componentClass}`), {
-            property: name,
-            value: style + (prop.suffix || ''),
-          });
+          applyStyles(
+            document.querySelectorAll(
+              `[data-role="customizable"] .${this.props.componentClass}`
+            ),
+            {
+              property: name,
+              value: style + (prop.suffix || ''),
+            }
+          );
         }
       });
     });
@@ -114,8 +124,8 @@ class Customiser extends React.Component {
   updateProperties(newProps) {
     if (newProps.properties) {
       const state = {};
-      newProps.properties.forEach((section) => {
-        section.props.forEach((prop) => {
+      newProps.properties.forEach(section => {
+        section.props.forEach(prop => {
           state[`--${prop.name}`] = null;
         });
       });
@@ -135,18 +145,26 @@ class Customiser extends React.Component {
     });
     this.updateElement(this.props.componentClass);
     this.updateAllValues(this.props);
+    this.resetContext();
+  };
+
+  resetContext() {
+    this.context.resetGeneral();
   }
 
   exportStyles = () => {
-    this.setState({
-      popoverOpened: true,
-    }, () => {
-      this.props.handlePopover({
+    this.setState(
+      {
         popoverOpened: true,
-        popoverText: this.getStylesText(),
-      });
-    });
-  }
+      },
+      () => {
+        this.props.handlePopover({
+          popoverOpened: true,
+          popoverText: this.getStylesText(),
+        });
+      }
+    );
+  };
 
   updatePopoverText() {
     this.props.handlePopover({
@@ -155,78 +173,118 @@ class Customiser extends React.Component {
   }
 
   renderInputs(props) {
-    return props.map((cssProperty) => {
-      const { name, type } = cssProperty;
+    return props.map(cssProperty => {
+      const { name, type, global, defaultValue } = cssProperty;
       const buttonName = `--${name}`;
       const extraProps = {};
       extraProps.type = type;
+
+      let inputValue = this.state[buttonName] || '';
+
+      let displayValue = this.state[buttonName]
+        ? `${this.state[buttonName]}${cssProperty.suffix || ''}` || ''
+        : '';
+
+      if (global) {
+        inputValue = this.context.general.hasOwnProperty(buttonName)
+          ? this.context.general[buttonName]
+          : defaultValue;
+      }
+
+      if (type === 'checkbox') {
+        inputValue = inputValue || false;
+        displayValue = inputValue ? 'true' : 'false';
+      }
+
       if (type === 'range') {
         extraProps.type = type;
         extraProps.min = cssProperty.min || 0;
         extraProps.max = cssProperty.max || 10;
         extraProps.step = cssProperty.step || 1;
       }
-      const onChange = (event) => {
+
+      const onChange = event => {
         if (this.state.customized === false) {
           this.setState({ customized: true });
         }
+        const { target } = event;
         const state = {};
-        let { value } = event.target;
+        let value = type === 'checkbox' ? target.checked : target.value;
+
         state[buttonName] = value;
+
         this.setState(state, () => {
           this.updatePopoverText();
         });
+
+        if (global) {
+          this.context.setGeneral({
+            ...this.context.general,
+            [`${buttonName}`]: value,
+          });
+        }
+
         if (typeof window !== 'undefined') {
           if (cssProperty.suffix) {
             value = `${value}${cssProperty.suffix}`;
           }
-          applyStyles(document.querySelectorAll(`[data-role="customizable"] .${this.props.componentClass}`), {
-            property: buttonName,
-            value,
-          });
+          applyStyles(
+            document.querySelectorAll(
+              `[data-role="customizable"] .${this.props.componentClass}`
+            ),
+            {
+              property: buttonName,
+              value,
+            }
+          );
         }
       };
+
       let input = null;
       switch (type) {
         case 'color':
           input = (
             <ColorPicker
-              value={this.state[buttonName] || this.values[buttonName] || ''}
+              value={inputValue}
               setTransparency={onChange}
               onChange={onChange}
-              {... extraProps}
+              {...extraProps}
             />
           );
           break;
         case 'border':
           input = (
             <BorderPicker
-              value={this.state[buttonName] || this.values[buttonName] || ''}
+              value={inputValue}
               onChange={onChange}
-              {... extraProps}
+              {...extraProps}
             />
+          );
+          break;
+        case 'checkbox':
+          input = (
+            <Checkbox
+              checked={inputValue}
+              onChange={onChange}
+              {...extraProps}
+            />
+            // <input checked={inputValue} onChange={onChange} {...extraProps} />
           );
           break;
         default:
           input = (
-            <input
-              value={this.state[buttonName] || this.values[buttonName] || ''}
-              onChange={onChange}
-              {... extraProps}
-            />
+            <input value={inputValue} onChange={onChange} {...extraProps} />
           );
       }
-      const buttonValue = this.state[buttonName] ? `${this.state[buttonName] || this.values[buttonName]}${cssProperty.suffix || ''}` || '' : '';
+
       return (
         <li key={buttonName}>
           <label>
             <code>{name}</code>
           </label>
+          <div>{input}</div>
           <div>
-            {input}
-          </div>
-          <div>
-            <span>{buttonValue}</span>
+            <span>{displayValue}</span>
           </div>
         </li>
       );
@@ -236,10 +294,8 @@ class Customiser extends React.Component {
   renderSection(section) {
     return (
       <section key={section.name}>
-        <h3>{section.name}</h3>
-        <ul>
-          {this.renderInputs(section.props)}
-        </ul>
+        <h4>{section.name}</h4>
+        <ul>{this.renderInputs(section.props)}</ul>
       </section>
     );
   }
@@ -250,52 +306,75 @@ class Customiser extends React.Component {
 
   render() {
     return (
-      <section className={Styles.container}>
-        <header>
-          <h2>Custom Properties</h2>
-          <p>Basic customization through CSS custom-properties.</p>
-          <div
-            ref={(control) => { this.control = control; }}
-            className={Styles.control}
-          >
-            <AwesomeButton
-              size="medium"
-              disabled={!this.state.customized}
-              action={this.resetStyles}
-              cssModule={AwesomeButtonStyles}
-            >
-              Reset Styles
-            </AwesomeButton>
-            <AwesomeButtonSocial
-              size="medium"
-              href={this.props.repository}
-              target="_blank"
-              type="github"
-              cssModule={AwesomeButtonStyles}
-            >
-              Source
-            </AwesomeButtonSocial>
-            <div
-              style={{ display: 'none' }}
-              className={this.props.componentClass}
-            />
-          </div>
-        </header>
-        <ul>
-          { this.renderSections(this.props.properties) }
-        </ul>
-        <footer>
-          <div className={Styles.export}>
-            <AwesomeButton
-              action={this.exportStyles}
-              cssModule={AwesomeButtonStyles}
-            >
-              Export Custom-Properties
-            </AwesomeButton>
-          </div>
-          <p>Access the source on <a target="_blank" href={this.props.repository}>github</a> to check all customisable options</p>
-        </footer>
-      </section>
+      <GeneralContext.Consumer>
+        {context => {
+          this.context = context;
+          console.log(context.general);
+          return (
+            <section className={Styles.container}>
+              <header>
+                <h2>Customisation</h2>
+                <p>
+                  Basic customization through PROPS and CSS custom-properties.
+                </p>
+                <div
+                  ref={control => {
+                    this.control = control;
+                  }}
+                  className={Styles.control}
+                >
+                  <AwesomeButton
+                    size="medium"
+                    disabled={!this.state.customized}
+                    action={this.resetStyles}
+                    cssModule={AwesomeButtonStyles}
+                  >
+                    Reset Styles
+                  </AwesomeButton>
+                  <AwesomeButtonSocial
+                    size="medium"
+                    href={this.props.repository}
+                    target="_blank"
+                    type="github"
+                    cssModule={AwesomeButtonStyles}
+                  >
+                    Source
+                  </AwesomeButtonSocial>
+                  <div
+                    style={{ display: 'none' }}
+                    className={this.props.componentClass}
+                  />
+                </div>
+              </header>
+              <header>
+                <h3>Global Props</h3>
+              </header>
+              <ul>{this.renderSections(this.props.globalProps)}</ul>
+              <header>
+                <h3>CSS Custom Properties</h3>
+              </header>
+              <ul>{this.renderSections(this.props.properties)}</ul>
+              <footer>
+                <div className={Styles.export}>
+                  <AwesomeButton
+                    action={this.exportStyles}
+                    cssModule={AwesomeButtonStyles}
+                  >
+                    Export Custom-Properties
+                  </AwesomeButton>
+                </div>
+                <p>
+                  Access the source on{' '}
+                  <a target="_blank" href={this.props.repository}>
+                    github
+                  </a>{' '}
+                  to check all customisable options
+                </p>
+              </footer>
+            </section>
+          );
+        }}
+      </GeneralContext.Consumer>
     );
   }
 }

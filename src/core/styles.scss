@@ -127,8 +127,10 @@ $content-background-color: #2f2f2f;
       left: 0;
     }
     &--enter {
+      // On content enter
     }
     &--exit {
+      // On content exit
     }
   }
   &__controls {
@@ -202,8 +204,8 @@ $content-background-color: #2f2f2f;
   }
   &--animated {
     will-change: transform;
-    transition: transform var(--slider-transition-duration)
-      var(--transition-bezier);
+    // transition: transform var(--slider-transition-duration)
+    //   var(--transition-bezier);
   }
   &--animated-mobile {
     will-change: transform;
@@ -214,13 +216,24 @@ $content-background-color: #2f2f2f;
     transform: translate3d(0, 0, 0);
   }
   &--moveRight {
-    transform: translate3d(100%, 0, 0);
+    // transform: translate3d(100%, 0, 0);
+    animation: slideFromRight var(--slider-transition-duration) both
+      var(--transition-bezier);
   }
   &--moveLeft {
-    transform: translate3d(-100%, 0, 0);
+    animation: slideFromLeft var(--slider-transition-duration) both
+      var(--transition-bezier);
   }
   &--exit {
     z-index: 0;
+    &.#{$root-element}--moveLeft {
+      animation: slideToLeft var(--slider-transition-duration) both
+        var(--transition-bezier);
+    }
+    &.#{$root-element}--moveRight {
+      animation: slideToRight var(--slider-transition-duration) both
+        var(--transition-bezier);
+    }
   }
   &--first {
     .#{$root-element}__prev {
@@ -388,5 +401,41 @@ $content-background-color: #2f2f2f;
         }
       }
     }
+  }
+}
+
+@keyframes slideFromLeft {
+  from {
+    transform: translate3d(-100%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideFromRight {
+  from {
+    transform: translate3d(100%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideToLeft {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@keyframes slideToRight {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(100%, 0, 0);
   }
 }

@@ -1,15 +1,20 @@
 import React from 'react';
-import Captioned from '../../../src/components/hoc/captioned-images';
-import CaptionedStyles from '../../../src/components/hoc/captioned-images/styles.scss';
-import AwesomeFrame from '../../../src/components/react-awesome-frame';
-import AwsFrameStyles from '../../../src/components/react-awesome-frame/styles.scss';
-import { shadeRGBColor } from '../../helpers/examples';
+import Captioned from 'src/components/hoc/captioned-images';
+import CaptionedStyles from 'src/components/hoc/captioned-images/styles.scss';
+import AwesomeFrame from 'src/components/react-awesome-frame';
+import AwsFrameStyles from 'src/components/react-awesome-frame/styles.scss';
+import { shadeRGBColor } from 'helpers/examples';
+import { GeneralContext } from 'context/GeneralContext';
 import {
   features,
   properties,
+  globalProps,
   // examples,
-} from '../common';
+} from 'examples/common';
 
+/**
+ * START CUSTOM RESETS
+ */
 function resetSlider(slider) {
   clearTimeout(window.transitionUpdateTimer);
   const divs = slider.currentSlide.querySelectorAll('div');
@@ -53,6 +58,10 @@ function transitionEnd(slider) {
   window.setElement(slider.element);
 }
 
+/**
+ * END CUSTOM RESETS
+ */
+
 const media = [
   {
     backgroundColor: '#4a9c8c',
@@ -88,24 +97,31 @@ const startupScreen = (
 
 function Component({ startup }) {
   return (
-    <div>
-      <AwesomeFrame
-        cssModule={AwsFrameStyles}
-        title="Adult Swim &mdash; Rick and Morty"
-      >
-        <Captioned
-          startup={startup}
-          name="captioned-mixed"
-          startupScreen={startupScreen}
-          cssModule={CaptionedStyles}
-          screens={media}
-          onFirstMount={resetSlider}
-          onResetSlider={resetSlider}
-          onTransitionStart={transitionStart}
-          onTransitionEnd={transitionEnd}
-        />
-      </AwesomeFrame>
-    </div>
+    <GeneralContext.Consumer>
+      {context => {
+        return (
+          <AwesomeFrame
+            cssModule={AwsFrameStyles}
+            title="Adult Swim &mdash; Rick and Morty"
+          >
+            <Captioned
+              startup={startup}
+              name="captioned-mixed"
+              startupScreen={startupScreen}
+              cssModule={CaptionedStyles}
+              screens={media}
+              onFirstMount={resetSlider}
+              onResetSlider={resetSlider}
+              onTransitionStart={transitionStart}
+              onTransitionEnd={transitionEnd}
+              organicArrows={context.general['--organicArrows']}
+              bullets={context.general['--bullets']}
+              fillParent={context.general['--fillParent']}
+            />
+          </AwesomeFrame>
+        );
+      }}
+    </GeneralContext.Consumer>
   );
 }
 
@@ -171,6 +187,7 @@ const component = (
 };
 
 export default {
+  globalProps,
   features,
   example,
   module,

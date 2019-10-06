@@ -4,18 +4,40 @@
   &__container {
     perspective: 2000px;
   }
+
   &--exit {
-    &.#{$root-element}--moveLeft, &.#{$root-element}--moveLeft {
+    &.#{$root-element}--moveLeft,
+    &.#{$root-element}--moveRight {
       transform-style: preserve-3d;
       backface-visibility: hidden;
     }
     &.#{$root-element}--moveLeft {
       transform-origin: 100% 50%;
-      transform: translate3d(-100%, 0, 0) rotateY(-90deg);
+      animation: foldLeft var(--slider-transition-duration) both
+        var(--transition-bezier);
     }
     &.#{$root-element}--moveRight {
       transform-origin: 0% 50%;
-      transform: translate3d(100%, 0, 0) rotateY(90deg);
+      animation: foldRight var(--slider-transition-duration) both
+        var(--transition-bezier);
     }
+  }
+}
+
+@keyframes foldLeft {
+  from {
+    transform: translate3d(0, 0, 0) rotateY(0deg);
+  }
+  to {
+    transform: translate3d(-100%, 0, 0) rotateY(-90deg);
+  }
+}
+
+@keyframes foldRight {
+  from {
+    transform: translate3d(0, 0, 0) rotateY(0deg);
+  }
+  to {
+    transform: translate3d(100%, 0, 0) rotateY(90deg);
   }
 }

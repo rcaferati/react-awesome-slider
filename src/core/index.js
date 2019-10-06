@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { onceNextCssLayout, onceTransitionEnd } from 'web-animation-club';
+import {
+  onceNextCssLayout,
+  onceTransitionEnd,
+  onceAnimationEnd,
+} from 'web-animation-club';
 import { getClassName, MediaLoader } from '../helpers/components';
 import {
   getRootClassName,
@@ -30,6 +34,7 @@ export default class AwesomeSlider extends React.Component {
     onResetSlider: PropTypes.func,
     onTransitionEnd: PropTypes.func,
     onTransitionStart: PropTypes.func,
+    onTransitionRequest: PropTypes.func,
     organicArrows: PropTypes.bool,
     rootElement: PropTypes.string,
     selected: PropTypes.number,
@@ -55,6 +60,7 @@ export default class AwesomeSlider extends React.Component {
     onResetSlider: null,
     onTransitionEnd: null,
     onTransitionStart: null,
+    onTransitionRequest: null,
     organicArrows: true,
     rootElement: ROOTELM,
     selected: 0,
@@ -76,32 +82,12 @@ export default class AwesomeSlider extends React.Component {
     this.media = null;
     this.started = false;
     this.touchEnabled = false;
-    this.checkChildren(props);
-    this.setupClassNames(props.cssModule);
-    if (props.startupScreen && !props.selected) {
-      this.index = null;
-      this.state = {
-        index: null,
-        boxA: {
-          className: this.classNames.startUp,
-          children: props.startupScreen,
-        },
-        boxB: null,
-      };
-    } else {
-      this.started = true;
-      this.index = this.props.selected;
-      this.state = {
-        index: this.index,
-        boxA: this.media[this.index] || null,
-        boxB: null,
-      };
-    }
+    this.setupStartup(props);
   }
 
   componentDidMount() {
     this.boxA.classList.add(this.classNames.active);
-    if (this.props.startupScreen && !this.props.selected) {
+    if (this.props.startupScreen) {
       this.buttons.element.classList.add(this.classNames.controlsActive);
       if (this.props.startup === true) {
         this.startup();
@@ -109,9 +95,7 @@ export default class AwesomeSlider extends React.Component {
     }
     if (this.props.onFirstMount) {
       this.props.onFirstMount({
-        currentIndex: this.index,
-        currentSlide: this[this.active],
-        element: this.slider,
+        ...this.getInfo(),
       });
     }
   }
@@ -127,11 +111,19 @@ export default class AwesomeSlider extends React.Component {
       this.startup();
       return;
     }
-    if (newProps.selected !== this.props.selected) {
+    if (
+      newProps.selected !== this.props.selected
+      // || newProps.selected !== this.index
+    ) {
       const index = newProps.selected;
+      // FORCED RIGHT WING WHEN INFINITE === 0
+      const direction =
+        newProps.infinite === true && index === 0
+          ? true
+          : !(this.index > index);
       this.goTo({
         index,
-        direction: !(this.index > index),
+        direction,
       });
       return;
     }
@@ -160,6 +152,39 @@ export default class AwesomeSlider extends React.Component {
     });
   }
 
+  setupStartup(props) {
+    this.checkChildren(props);
+    this.setupClassNames(props.cssModule);
+    if (props.startupScreen) {
+      this.index = null;
+      this.state = {
+        index: this.index,
+        boxA: {
+          className: this.classNames.startUp,
+          children: props.startupScreen,
+        },
+        boxB: null,
+      };
+    } else {
+      this.started = true;
+      this.index = this.props.selected;
+      this.state = {
+        index: this.index,
+        boxA: this.media[this.index] || null,
+        boxB: null,
+      };
+    }
+  }
+
+  getInfo() {
+    return {
+      slides: this.media.length,
+      currentIndex: this.index,
+      currentSlide: this[this.active],
+      element: this.slider,
+    };
+  }
+
   getBar() {
     if (!document) {
       return {};
@@ -174,7 +199,7 @@ export default class AwesomeSlider extends React.Component {
   }
 
   refreshSlider() {
-    if (this.loading === true) {
+    if (this.loading === true || this.props.startup === false) {
       return;
     }
     const { index } = this;
@@ -189,7 +214,11 @@ export default class AwesomeSlider extends React.Component {
     this.started = true;
     setTimeout(() => {
       onceNextCssLayout().then(() => {
-        this.goTo({ index: 0, direction: true, touch: false });
+        this.goTo({
+          index: this.props.selected,
+          direction: true,
+          touch: false,
+        });
       });
     }, 125);
   }
@@ -205,9 +234,7 @@ export default class AwesomeSlider extends React.Component {
       () => {
         if (this.props.onResetSlider) {
           this.props.onResetSlider({
-            currentIndex: this.index,
-            currentSlide: this[this.active],
-            element: this.slider,
+            ...this.getInfo(),
           });
         }
       }
@@ -261,11 +288,9 @@ export default class AwesomeSlider extends React.Component {
       : this.classNames.contentMoveRight;
     if (this.props.onTransitionStart) {
       this.props.onTransitionStart({
-        currentIndex: this.index,
-        currentSlide: this[this.active],
+        ...this.getInfo(),
         nextSlide: this[this.loader],
         nextIndex: this.nextIndex,
-        element: this.slider,
       });
     }
     const activeContent = active.querySelector(`.${this.classNames.content}`);
@@ -335,6 +360,71 @@ export default class AwesomeSlider extends React.Component {
     });
   }
 
+  runAnimation({
+    active,
+    media,
+    contentExitMoveClass,
+    contentEnterMoveClass,
+    activeContentElement,
+    loaderContentElement,
+    loader,
+    loaderPosition,
+    exitPosition,
+    callback,
+    transitionDelay,
+  }) {
+    this.loadContent(active, media.url).then(bar => {
+      activeContentElement.classList.add(contentExitMoveClass);
+      activeContentElement.classList.add(this.classNames.contentExit);
+      loaderContentElement.classList.add(contentEnterMoveClass);
+      loaderContentElement.classList.add(this.classNames.contentStatic);
+      setTimeout(() => {
+        onceNextCssLayout().then(() => {
+          loaderContentElement.classList.remove(this.classNames.contentStatic);
+          active.classList.add(this.classNames.exit);
+          loader.classList.add(loaderPosition);
+          active.classList.add(exitPosition);
+          onceAnimationEnd(active).then(() => {
+            loader.classList.add(this.classNames.active);
+            loader.classList.remove(loaderPosition);
+            active.classList.remove(this.classNames.active);
+            active.classList.remove(exitPosition);
+            active.classList.remove(this.classNames.exit);
+            activeContentElement.classList.remove(contentExitMoveClass);
+            activeContentElement.classList.remove(this.classNames.contentExit);
+            loaderContentElement.classList.remove(contentEnterMoveClass);
+            // removeElement BAR;
+            if (bar) {
+              active.removeChild(bar);
+            }
+
+            setTimeout(() => {
+              onceNextCssLayout().then(() => {
+                this.buttons.element.classList.remove(
+                  this.classNames.controlsActive
+                );
+              });
+            }, this.props.controlsReturnDelay);
+
+            if (this.activeArrow) {
+              onceNextCssLayout().then(() => {
+                this.activeArrow.classList.remove(this.activeArrowClass);
+                this.activeArrow = null;
+                this.activeArrowClass = null;
+              });
+            }
+            // * INVERT BOXES *
+            this.active = this.active === 'boxA' ? 'boxB' : 'boxA';
+            this.loader = this.active === 'boxA' ? 'boxB' : 'boxA';
+            if (callback) {
+              callback();
+            }
+          });
+        });
+      }, transitionDelay);
+    });
+  }
+
   startAnimation(direction, media, callback) {
     const { transitionDelay } = this.props;
     const active = this[this.active];
@@ -363,73 +453,27 @@ export default class AwesomeSlider extends React.Component {
 
     if (this.props.onTransitionStart) {
       this.props.onTransitionStart({
-        currentIndex: this.index,
-        currentSlide: this[this.active],
+        ...this.getInfo(),
         nextSlide: this[this.loader],
         nextIndex: this.nextIndex,
-        element: this.slider,
       });
     }
-    this.loadContent(active, media.url).then(bar => {
-      activeContentElement.classList.add(contentExitMoveClass);
-      activeContentElement.classList.add(this.classNames.contentExit);
-      loaderContentElement.classList.add(contentEnterMoveClass);
-      loaderContentElement.classList.add(this.classNames.contentStatic);
-      setTimeout(() => {
-        onceNextCssLayout().then(() => {
-          loader.classList.add(loaderPosition);
-          onceNextCssLayout().then(() => {
-            loader.classList.add(this.classNames.animated);
-            active.classList.add(this.classNames.animated);
-            loaderContentElement.classList.remove(
-              this.classNames.contentStatic
-            );
-            onceNextCssLayout().then(() => {
-              loader.classList.remove(loaderPosition);
-              active.classList.add(this.classNames.exit);
-              active.classList.add(exitPosition);
-              onceTransitionEnd(active).then(() => {
-                loader.classList.add(this.classNames.active);
-                active.classList.remove(this.classNames.active);
-                active.classList.remove(exitPosition);
-                active.classList.remove(this.classNames.exit);
-                loader.classList.remove(this.classNames.animated);
-                active.classList.remove(this.classNames.animated);
-                activeContentElement.classList.remove(contentExitMoveClass);
-                activeContentElement.classList.remove(
-                  this.classNames.contentExit
-                );
-                loaderContentElement.classList.remove(contentEnterMoveClass);
-                // removeElement BAR;
-                if (bar) {
-                  active.removeChild(bar);
-                }
-                setTimeout(() => {
-                  onceNextCssLayout().then(() => {
-                    this.buttons.element.classList.remove(
-                      this.classNames.controlsActive
-                    );
-                  });
-                }, this.props.controlsReturnDelay);
-                if (this.activeArrow) {
-                  onceNextCssLayout().then(() => {
-                    this.activeArrow.classList.remove(this.activeArrowClass);
-                    this.activeArrow = null;
-                    this.activeArrowClass = null;
-                  });
-                }
-                // * INVERT BOXES *
-                this.active = this.active === 'boxA' ? 'boxB' : 'boxA';
-                this.loader = this.active === 'boxA' ? 'boxB' : 'boxA';
-                if (callback) {
-                  callback();
-                }
-              });
-            });
-          });
-        });
-      }, transitionDelay);
-    });
+
+    const animationObject = {
+      active,
+      media,
+      contentExitMoveClass,
+      contentEnterMoveClass,
+      activeContentElement,
+      loaderContentElement,
+      loader,
+      loaderPosition,
+      exitPosition,
+      callback,
+      transitionDelay,
+    };
+
+    this.runAnimation(animationObject);
   }
 
   goTo({ index, direction, touch = false }) {
@@ -447,9 +491,7 @@ export default class AwesomeSlider extends React.Component {
             this.setState({ index: this.index });
             if (this.props.onTransitionEnd) {
               this.props.onTransitionEnd({
-                currentIndex: this.index,
-                currentSlide: this[this.active],
-                element: this.slider,
+                ...this.getInfo(),
               });
             }
             onceNextCssLayout().then(() => {
@@ -516,14 +558,26 @@ export default class AwesomeSlider extends React.Component {
     this.activeArrow.classList.add(this.activeArrowClass);
   }
 
+  transitionRequest(event) {
+    if (this.props.onTransitionRequest) {
+      this.props.onTransitionRequest({
+        eventName: event,
+        ...this.getInfo(),
+      });
+    }
+  }
+
   clickNext = () => {
+    this.transitionRequest('next');
+    const next = this.index === null ? 0 : this.index + 1;
     this.goTo({
-      index: this.index + 1,
+      index: next,
       direction: true,
     });
   };
 
   clickPrev = () => {
+    this.transitionRequest('prev');
     this.goTo({
       index: this.index - 1,
       direction: false,
@@ -599,9 +653,7 @@ export default class AwesomeSlider extends React.Component {
       this.setState({ index: this.index });
       if (this.props.onTransitionEnd) {
         this.props.onTransitionEnd({
-          currentIndex: this.index,
-          currentSlide: this[this.active],
-          element: this.slider,
+          ...this.getInfo(),
         });
       }
       this.animating = false;
@@ -692,6 +744,7 @@ export default class AwesomeSlider extends React.Component {
             media={this.media}
             selected={this.state.index}
             onClick={info => {
+              this.transitionRequest('bullet');
               this.goTo(info);
             }}
           />

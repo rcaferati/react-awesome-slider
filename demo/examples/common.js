@@ -1,3 +1,29 @@
+export const globalProps = [
+  {
+    name: 'React component props',
+    props: [
+      {
+        global: true,
+        name: 'organicArrows',
+        type: 'checkbox',
+        defaultValue: true,
+      },
+      {
+        global: true,
+        name: 'bullets',
+        type: 'checkbox',
+        defaultValue: true,
+      },
+      {
+        global: true,
+        name: 'fillParent',
+        type: 'checkbox',
+        defaultValue: false,
+      },
+    ],
+  },
+];
+
 export const properties = [
   {
     name: 'General',
@@ -100,7 +126,7 @@ export const properties = [
 export const features = [
   'Look and feel customisable and extendable via SASS variables and lists',
   'Use it with CSSModules or Plain CSS (NO inline-styles)',
-  'Render any tag as the component\'s child (text, icon, img, svg)',
+  "Render any tag as the component's child (text, icon, img, svg)",
   'Animated progress button',
   'OnClick bubble animation',
 ];
@@ -165,12 +191,14 @@ import AwesomeSlider from 'react-awesome-slider';
     },
     {
       title: 'Styling with - CSS',
-      description: 'For styling with CSS you can access all themes on the /dist folder and append it via <link> or import into your .js or .css files.',
-      jsx: 'import \'react-awesome-button/dist/themes/theme-blue.css\';',
+      description:
+        'For styling with CSS you can access all themes on the /dist folder and append it via <link> or import into your .js or .css files.',
+      jsx: "import 'react-awesome-button/dist/themes/theme-blue.css';",
     },
     {
       title: 'Styling with - CSS Modules',
-      description: 'For styling it through CSS Modules, import the file from the themes folder inside the src. You\'ll need a .scss loader in place in order to build it.',
+      description:
+        "For styling it through CSS Modules, import the file from the themes folder inside the src. You'll need a .scss loader in place in order to build it.",
       jsx: `
 import AwesomeButton from 'react-awesome-button/src/components/AwesomeButton';
 import styles from 'react-awesome-button/src/styles/themes/theme-blue';
