@@ -1,8 +1,7 @@
 import React from 'react';
 import AwesomeFrame from 'src/components/react-awesome-frame';
-import AwsSliderStyles from 'src/components/styled/scale-out-animation/styles.scss';
-import AutoplaySlider from 'src/components/hoc/autoplay';
-import LetteringStyles from 'src/components/hoc/animated-lettering/styles.scss';
+import AwsSliderStyles from 'src/styled/scale-out-animation.scss';
+import AutoplaySlider from 'src/hoc/autoplay';
 import AwsFrameStyles from 'src/components/react-awesome-frame/styles.scss';
 import { transitionEnd, transitionStart, resetSlider } from 'helpers/examples';
 import { features, properties, globalProps } from 'examples/common';
@@ -61,8 +60,32 @@ function Component({ startup }) {
 
 const example = {
   title: 'Autoplay HOC',
+  items: [
+    {
+      title: 'Autoplay HOC',
+      description: `For this example we're importing the Autplay HOC that can be imported from de HOC folder. You can checkout it's full source <a target="_blank" href="https://github.com/rcaferati/react-awesome-slider/tree/master/src/hoc/autoplay/hoc.js">here</a>.`,
+      jsx: `
+import AutoplaySlider from 'react-awesome-slider/hoc/autoplay';
+import AwesomeSliderStyles from 'react-awesome-slider/src/styled/fold-out-animation.scss';
+
+const Slider = (
+  <AutoplaySlider
+    play={true}
+    cancelOnInteraction={false}
+    interval={6000}
+    cssModule={AwesomeSliderStyles}
+  >
+    <div data-src="/path/to/image-0.jpg" />
+    <div data-src="/path/to/image-1.jpg" />
+    <div data-src="/path/to/image-2.jpg" />
+    <div data-src="/path/to/image-3.jpg" />
+  </AutoplaySlider>
+);
+      `,
+    },
+  ],
   Component,
-  componentClass: LetteringStyles['aws-sld'],
+  componentClass: AwsSliderStyles['aws-sld'],
 };
 
 export default {

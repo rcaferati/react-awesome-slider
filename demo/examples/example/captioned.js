@@ -1,6 +1,6 @@
 import React from 'react';
-import Captioned from 'src/components/hoc/captioned-images';
-import CaptionedStyles from 'src/components/hoc/captioned-images/styles.scss';
+import Captioned from 'src/hoc/captioned-images';
+import CaptionedStyles from 'src/hoc/captioned-images/styles.scss';
 import AwesomeFrame from 'src/components/react-awesome-frame';
 import AwsFrameStyles from 'src/components/react-awesome-frame/styles.scss';
 import { shadeRGBColor } from 'helpers/examples';

@@ -1,10 +1,11 @@
-@import '../../../core/styles.scss';
+@import '../core/styles.scss';
 
 .#{$root-element} {
+  --scale-out-scale: 0.85;
+
   &--exit {
     &.#{$root-element}--moveRight,
     &.#{$root-element}--moveLeft {
-      transform: translate3d(0, 0, 0);
       animation: scaleOut var(--slider-transition-duration) both
         var(--transition-bezier);
     }
@@ -13,6 +14,6 @@
 
 @keyframes scaleOut {
   to {
-    transform: scale(0.85);
+    transform: scale(var(--scale-out-scale));
   }
 }

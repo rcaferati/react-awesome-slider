@@ -1,6 +1,6 @@
 import React from 'react';
 import AwesomeSlider from 'src';
-import AwsSliderStyles from 'src/components/styled/scale-out-animation/styles.scss';
+import AwsSliderStyles from 'src/styled/scale-out-animation.scss';
 import AwesomeFrame from 'src/components/react-awesome-frame';
 import AwsFrameStyles from 'src/components/react-awesome-frame/styles.scss';
 import { resetSlider, transitionStart, transitionEnd } from 'helpers/examples';
@@ -52,15 +52,11 @@ function Component({ startup }) {
               />
               <div
                 style={{ backgroundColor: '#f46b34' }}
-                data-src="/images/series/south-park-2.jpg"
-              />
-              <div
-                style={{ backgroundColor: '#d63b6b' }}
                 data-src="/images/series/south-park-3.jpg"
               />
               <div
                 style={{ backgroundColor: '#d63b6b' }}
-                data-src="/images/series/south-park-0.jpg"
+                data-src="/images/series/south-park-4.jpg"
               />
             </AwesomeSlider>
           </AwesomeFrame>
@@ -76,10 +72,10 @@ const example = {
     {
       title: 'Scale Animation Styles',
       description:
-        "For this example I'm using the ScaleOutAnimation component ",
+        "For this example we're importing the scale-out-animation overwritten style modules.",
       jsx: `
 import AwesomeSlider from 'react-awesome-slider';
-import AwesomeSliderStyles from 'react-awesome-slider/src/components/scale-out-animation/styles.scss';
+import AwesomeSliderStyles from 'react-awesome-slider/src/styled/scale-out-animation.scss';
 
 const Slider = (
   <AwesomeSlider cssModule={AwesomeSliderStyles}>
@@ -92,18 +88,22 @@ const Slider = (
       `,
     },
     {
-      title: 'ScaleOutAnimation Styles',
+      title: 'How to extend it',
       description:
-        'The animation out styling on the <b>scale-out-animation</b> .scss file is pretty simple. We just apply the scaling down on exit moveLeft and exit moveRight classes of the current box container.',
+        'The animation exit styling on the <b>scale-out-animation</b> .scss file is pretty straight forward. We just apply the scaling down on exit moveLeft and exit moveRight classes of the active box container.',
       scss: `
-.aws-slr {
+.aws-sld {
   &--exit {
-    &.aws-slr--moveLeft {
-      transform: scale(0.85);
+    &.aws-sld--moveRight, &.aws-sld--moveLeft {
+      animation: scaleOut var(--slider-transition-duration) both
+        var(--transition-bezier);
     }
-    &.aws-slr--moveRight {
-      transform: scale(0.85);
-    }
+  }
+}
+
+@keyframes scaleOut {
+  to {
+    transform: scale(0.85);
   }
 }
       `,

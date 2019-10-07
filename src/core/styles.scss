@@ -215,6 +215,10 @@ $content-background-color: #2f2f2f;
     z-index: 2;
     transform: translate3d(0, 0, 0);
   }
+  &--moveRight,
+  &--moveLeft {
+    backface-visibility: hidden;
+  }
   &--moveRight {
     // transform: translate3d(100%, 0, 0);
     animation: slideFromRight var(--slider-transition-duration) both

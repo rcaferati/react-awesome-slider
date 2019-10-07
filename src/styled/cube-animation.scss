@@ -1,4 +1,4 @@
-@import '../../../core/styles.scss';
+@import '../core/styles.scss';
 
 .#{$root-element} {
   --cube-animation-duration: 675ms;
@@ -12,37 +12,32 @@
   }
 
   &--moveRight {
-    backface-visibility: hidden;
     transform-origin: 0% 50%;
-    transform: translate3d(0, 0, 0);
-    animation: rotateCubeLeftIn var(--cube-animation-duration) both
+    animation: cubeLeftIn var(--cube-animation-duration) both
       var(--cube-animation-ease-in);
   }
 
   &--moveLeft {
-    backface-visibility: hidden;
     transform-origin: 100% 50%;
-    transform: translate3d(0, 0, 0);
-    animation: rotateCubeRightIn var(--cube-animation-duration) both
+    animation: cubeRightIn var(--cube-animation-duration) both
       var(--cube-animation-ease-in);
   }
 
   &--exit {
     &.#{$root-element}--moveLeft {
       transform-origin: 100% 50%;
-      animation: rotateCubeLeftOut var(--cube-animation-duration) both
+      animation: cubeLeftOut var(--cube-animation-duration) both
         var(--cube-animation-ease-in);
-      transform: translate3d(0, 0, 0);
     }
     &.#{$root-element}--moveRight {
       transform-origin: 0% 50%;
-      animation: rotateCubeRightOut var(--cube-animation-duration) both
+      animation: cubeRightOut var(--cube-animation-duration) both
         var(--cube-animation-ease-in);
     }
   }
 }
 
-@keyframes rotateCubeLeftOut {
+@keyframes cubeLeftOut {
   50% {
     animation-timing-function: var(--cube-animation-ease-out);
     transform: translateX(-50%) translateZ(var(--cube-translateZ-distance))
@@ -53,7 +48,7 @@
   }
 }
 
-@keyframes rotateCubeRightOut {
+@keyframes cubeRightOut {
   50% {
     animation-timing-function: var(--cube-animation-ease-out);
     transform: translateX(50%) translateZ(var(--cube-translateZ-distance))
@@ -64,7 +59,7 @@
   }
 }
 
-@keyframes rotateCubeLeftIn {
+@keyframes cubeLeftIn {
   0% {
     transform: translateX(100%) rotateY(90deg);
   }
@@ -75,7 +70,7 @@
   }
 }
 
-@keyframes rotateCubeRightIn {
+@keyframes cubeRightIn {
   0% {
     transform: translateX(-100%) rotateY(-90deg);
   }

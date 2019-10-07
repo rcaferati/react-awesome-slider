@@ -1,15 +1,17 @@
-@import '../../../core/styles.scss';
+@import '../core/styles.scss';
 
 .#{$root-element} {
+  --fold-out-perspective: 2000px;
+  --fold-out-angle: 90deg;
+
   &__container {
-    perspective: 2000px;
+    perspective: var(--fold-out-perspective);
   }
 
   &--exit {
     &.#{$root-element}--moveLeft,
     &.#{$root-element}--moveRight {
       transform-style: preserve-3d;
-      backface-visibility: hidden;
     }
     &.#{$root-element}--moveLeft {
       transform-origin: 100% 50%;
@@ -29,7 +31,8 @@
     transform: translate3d(0, 0, 0) rotateY(0deg);
   }
   to {
-    transform: translate3d(-100%, 0, 0) rotateY(-90deg);
+    transform: translate3d(-100%, 0, 0)
+      rotateY(calc(var(--fold-out-angle) * -1));
   }
 }
 
@@ -38,6 +41,6 @@
     transform: translate3d(0, 0, 0) rotateY(0deg);
   }
   to {
-    transform: translate3d(100%, 0, 0) rotateY(90deg);
+    transform: translate3d(100%, 0, 0) rotateY(var(--fold-out-angle));
   }
 }

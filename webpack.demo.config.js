@@ -3,7 +3,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const config = {
   entry: {
-    'react-awesome-button': ['./demo/index.js'],
+    'react-awesome-slider': ['./demo/index.js'],
   },
   resolve: {
     alias: {

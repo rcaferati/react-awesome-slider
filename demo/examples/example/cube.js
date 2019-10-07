@@ -1,7 +1,7 @@
 import React from 'react';
 import AwesomeSlider from 'src';
 import AwesomeFrame from 'src/components/react-awesome-frame';
-import AwsSliderStyles from 'src/components/styled/cube-animation/styles.scss';
+import AwsSliderStyles from 'src/styled/cube-animation.scss';
 import AwsFrameStyles from 'src/components/react-awesome-frame/styles.scss';
 import { transitionStart, transitionEnd, resetSlider } from 'helpers/examples';
 import { GeneralContext } from 'context/GeneralContext';
@@ -18,8 +18,12 @@ function reset(slider) {
 }
 
 const startupScreen = (
-  <div style={{ backgroundColor: '#000' }}>
-    <img alt="bojack" src="/images/series/stranger-things-loader.jpg" />
+  <div style={{ backgroundColor: '#FFF' }}>
+    <img
+      style={{ width: '18%' }}
+      alt="bojack"
+      src="/images/series/ricknmorty-loader.png"
+    />
   </div>
 );
 
@@ -30,7 +34,7 @@ function Component({ startup }) {
         return (
           <AwesomeFrame
             cssModule={AwsFrameStyles}
-            title="Netflix &mdash; Stranger Things"
+            title="Adult Swim &mdash; Rick and Morty"
           >
             <AwesomeSlider
               name="images"
@@ -48,16 +52,16 @@ function Component({ startup }) {
               fillParent={context.general['--fillParent']}
             >
               <div
-                style={{ backgroundColor: '#fad0ce' }}
-                data-src="/images/series/stranger-things-4.jpg"
+                style={{ backgroundColor: '#65c1ab' }}
+                data-src="/images/series/ricknmorty-3.png"
               />
               <div
-                style={{ backgroundColor: '#5ed6ff' }}
-                data-src="/images/series/stranger-things-3.jpg"
+                style={{ backgroundColor: '#ddff2d' }}
+                data-src="/images/series/ricknmorty-5.png"
               />
               <div
-                style={{ backgroundColor: '#f09297' }}
-                data-src="/images/series/stranger-things-2.jpg"
+                style={{ backgroundColor: '#0095a9' }}
+                data-src="/images/series/ricknmorty-6.jpg"
               />
             </AwesomeSlider>
           </AwesomeFrame>
@@ -68,31 +72,39 @@ function Component({ startup }) {
 }
 
 const example = {
-  title: 'Fold Animation',
+  title: 'Cube Animation',
   items: [
     {
-      title: 'Styling the fold animation',
+      title: 'Cube Animation Styles',
       description:
-        'The animation out styling is pretty simple. We just apply the folding with translate + rotation on exit moveLeft and exit moveRight classes. Checkout this component\'s source <a target="_blank" href="https://github.com/rcaferati/react-awesome-slider/tree/master/src/components/fold-out-animation">here</a>.',
+        "For this example we're importing the cube-animation style modules.",
+      jsx: `
+import AwesomeSlider from 'react-awesome-slider';
+import AwesomeSliderStyles from 'react-awesome-slider/src/styled/cube-animation.scss';
+
+const Slider = (
+  <AwesomeSlider cssModule={AwesomeSliderStyles}>
+    <div data-src="/path/to/image-0.jpg" />
+    <div data-src="/path/to/image-1.jpg" />
+    <div data-src="/path/to/image-2.jpg" />
+    <div data-src="/path/to/image-3.jpg" />
+  </AwesomeSlider>
+);
+      `,
+    },
+    {
+      title: 'Styling the cube animation',
+      description:
+        'The animation exit styling on the <b>cube-animation</b> .scss file is not that straight forward but you can easily customize it using the <b>--cube</b> CSS properties. Checkout the full style source <a target="_blank" href="https://github.com/rcaferati/react-awesome-slider/tree/master/src/styled/cube-animation.scss">here</a>.',
       scss: `
 .aws-sld {
-  &__container {
-    perspective: 2000px;
-  }
-  &--exit {
-    &.aws-sld--moveLeft, &.aws-sld--moveRight {
-      transform-style: preserve-3d;
-      backface-visibility: hidden;
-    }
-    &.aws-sld--moveLeft {
-      transform-origin: 100% 50%;
-      transform: translate3d(-100%, 0, 0) rotateY(-90deg);
-    }
-    &.aws-sld--moveRight {
-      transform-origin: 0% 50%;
-      transform: translate3d(100%, 0, 0) rotateY(90deg);
-    }
-  }
+  --cube-animation-duration: 675ms;
+  --cube-animation-perspective: 1800px;
+  --cube-animation-ease-in: cubic-bezier(0.8, 0, 1, 0.8);
+  --cube-animation-ease-out: cubic-bezier(0, 0.2, 0.2, 1);
+  --cube-translateZ-distance: -225px;
+
+  ...
 }
       `,
     },

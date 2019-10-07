@@ -1,7 +1,7 @@
 import React from 'react';
 import AwesomeFrame from 'src/components/react-awesome-frame';
-import Lettering from 'src/components/hoc/animated-lettering';
-import LetteringStyles from 'src/components/hoc/animated-lettering/styles.scss';
+import Lettering from 'src/hoc/animated-lettering';
+import LetteringStyles from 'src/hoc/animated-lettering/styles.scss';
 import AwsFrameStyles from 'src/components/react-awesome-frame/styles.scss';
 import { resetSlider, transitionStart, transitionEnd } from 'helpers/examples';
 import { GeneralContext } from 'context/GeneralContext';

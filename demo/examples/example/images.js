@@ -18,8 +18,8 @@ function reset(slider) {
 }
 
 const startupScreen = (
-  <div style={{ backgroundColor: '#EFEFEF' }}>
-    <img alt="bojack" src="/images/series/bojack-loader.png" />
+  <div style={{ backgroundColor: '#6978b5' }}>
+    <img alt="bojack" src="/images/series/bojack-loader.svg" />
   </div>
 );
 
@@ -50,12 +50,16 @@ function Component({ startup }) {
                 data-src="/images/series/bojack-0.png"
               />
               <div
-                style={{ backgroundColor: '#5fb7b2' }}
-                data-src="/images/series/bojack-2.png"
+                style={{ backgroundColor: '#62a4fa' }}
+                data-src="/images/series/bojack-5.jpg"
               />
               <div
-                style={{ backgroundColor: '#fcd0a8' }}
-                data-src="/images/series/bojack-5.jpg"
+                style={{ backgroundColor: '#f33d42' }}
+                data-src="/images/series/bojack-3.jpg"
+              />
+              <div
+                style={{ backgroundColor: '#fafafa' }}
+                data-src="/images/series/bojack-4.jpg"
               />
             </AwesomeSlider>
           </AwesomeFrame>

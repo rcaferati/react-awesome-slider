@@ -292,10 +292,11 @@ class Customiser extends React.Component {
   }
 
   renderSection(section) {
+    const listClass = section.name ? null : Styles.untitledSection;
     return (
       <section key={section.name}>
         <h4>{section.name}</h4>
-        <ul>{this.renderInputs(section.props)}</ul>
+        <ul className={listClass}>{this.renderInputs(section.props)}</ul>
       </section>
     );
   }
@@ -315,7 +316,8 @@ class Customiser extends React.Component {
               <header>
                 <h2>Customisation</h2>
                 <p>
-                  Basic customization through PROPS and CSS custom-properties.
+                  Basic customization through the component's props and CSS
+                  custom-properties.
                 </p>
                 <div
                   ref={control => {
@@ -347,7 +349,7 @@ class Customiser extends React.Component {
                 </div>
               </header>
               <header>
-                <h3>Global Props</h3>
+                <h3>Component's global props</h3>
               </header>
               <ul>{this.renderSections(this.props.globalProps)}</ul>
               <header>

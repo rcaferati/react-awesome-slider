@@ -1,0 +1,66 @@
+@import '../core/styles.scss';
+
+.#{$root-element} {
+  --fall-animation-duration: 700ms;
+  --fall-animation-angle: 16deg;
+  --fall-scaling-in-from: 0.9;
+
+  &--moveRight,
+  &--moveLeft {
+    animation: scaleUp calc(var(--fall-animation-duration) / 2)
+      var(--transition-bezier) both;
+  }
+
+  &--exit {
+    z-index: 100;
+
+    &.#{$root-element}--moveLeft {
+      transform-origin: 0% 0%;
+      animation: rotateFallRight var(--fall-animation-duration) both ease-in-out;
+    }
+
+    &.#{$root-element}--moveRight {
+      transform-origin: 100% 0%;
+      animation: rotateFallLeft var(--fall-animation-duration) both ease-in-out;
+    }
+  }
+}
+
+@keyframes scaleUp {
+  0% {
+    transform: scale(var(--fall-scaling-in-from));
+  }
+  75% {
+    transform: scale(1);
+  }
+}
+
+@keyframes rotateFallRight {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  40% {
+    transform: rotateZ(var(--fall-animation-angle));
+  }
+  60% {
+    transform: rotateZ(calc(var(--fall-animation-angle) - 2deg));
+  }
+  100% {
+    transform: translateY(100%) rotateZ(calc(var(--fall-animation-angle) * 2));
+  }
+}
+
+@keyframes rotateFallLeft {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  40% {
+    transform: rotateZ(calc(var(--fall-animation-angle) * -1));
+  }
+  60% {
+    transform: rotateZ(calc((var(--fall-animation-angle) - 2deg) * -1));
+  }
+  100% {
+    transform: translateY(100%) rotateZ(calc(var(--fall-animation-angle) * -2));
+  }
+}

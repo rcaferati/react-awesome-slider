@@ -1,6 +1,6 @@
 import React from 'react';
 import AwesomeSlider from 'src';
-import AwsSliderStyles from 'src/components/styled/fall-animation/styles.scss';
+import AwsSliderStyles from 'src/styled/fall-animation.scss';
 import AwesomeFrame from 'src/components/react-awesome-frame';
 import AwsFrameStyles from 'src/components/react-awesome-frame/styles.scss';
 import { transitionStart, transitionEnd, resetSlider } from 'helpers/examples';
@@ -18,8 +18,8 @@ function reset(slider) {
 }
 
 const startupScreen = (
-  <div style={{ backgroundColor: '#000' }}>
-    <img alt="bojack" src="/images/series/stranger-things-loader.jpg" />
+  <div style={{ backgroundColor: '#353464' }}>
+    <img alt="bojack" src="/images/series/south-park-loader.png" />
   </div>
 );
 
@@ -30,7 +30,7 @@ function Component({ startup }) {
         return (
           <AwesomeFrame
             cssModule={AwsFrameStyles}
-            title="Netflix &mdash; Stranger Things"
+            title="Comedy Central &mdash; South Park"
           >
             <AwesomeSlider
               name="images"
@@ -48,16 +48,16 @@ function Component({ startup }) {
               fillParent={context.general['--fillParent']}
             >
               <div
-                style={{ backgroundColor: '#fad0ce' }}
-                data-src="/images/series/stranger-things-4.jpg"
+                style={{ backgroundColor: '#a3b9d0' }}
+                data-src="/images/series/south-park-1.jpg"
               />
               <div
-                style={{ backgroundColor: '#5ed6ff' }}
-                data-src="/images/series/stranger-things-3.jpg"
+                style={{ backgroundColor: '#f46b34' }}
+                data-src="/images/series/south-park-3.jpg"
               />
               <div
-                style={{ backgroundColor: '#f09297' }}
-                data-src="/images/series/stranger-things-2.jpg"
+                style={{ backgroundColor: '#d63b6b' }}
+                data-src="/images/series/south-park-4.jpg"
               />
             </AwesomeSlider>
           </AwesomeFrame>
@@ -71,28 +71,34 @@ const example = {
   title: 'Fold Animation',
   items: [
     {
+      title: 'Fall Animation Styles',
+      description:
+        "For this example we're importing the fall-animation style modules.",
+      jsx: `
+import AwesomeSlider from 'react-awesome-slider';
+import AwesomeSliderStyles from 'react-awesome-slider/src/styled/fall-animation.scss';
+
+const Slider = (
+  <AwesomeSlider cssModule={AwesomeSliderStyles}>
+    <div data-src="/path/to/image-0.jpg" />
+    <div data-src="/path/to/image-1.jpg" />
+    <div data-src="/path/to/image-2.jpg" />
+    <div data-src="/path/to/image-3.jpg" />
+  </AwesomeSlider>
+);
+      `,
+    },
+    {
       title: 'Styling the fold animation',
       description:
-        'The animation out styling is pretty simple. We just apply the folding with translate + rotation on exit moveLeft and exit moveRight classes. Checkout this component\'s source <a target="_blank" href="https://github.com/rcaferati/react-awesome-slider/tree/master/src/components/fold-out-animation">here</a>.',
+        'The animation exit styling on the <b>fall-animation</b> .scss file is not that straight forward but you can easily customize it using the <b>--fall</b> CSS custom properties. Checkout the full style source <a target="_blank" href="https://github.com/rcaferati/react-awesome-slider/tree/master/src/styled/fall-animation.scss">here</a>.',
       scss: `
 .aws-sld {
-  &__container {
-    perspective: 2000px;
-  }
-  &--exit {
-    &.aws-sld--moveLeft, &.aws-sld--moveRight {
-      transform-style: preserve-3d;
-      backface-visibility: hidden;
-    }
-    &.aws-sld--moveLeft {
-      transform-origin: 100% 50%;
-      transform: translate3d(-100%, 0, 0) rotateY(-90deg);
-    }
-    &.aws-sld--moveRight {
-      transform-origin: 0% 50%;
-      transform: translate3d(100%, 0, 0) rotateY(90deg);
-    }
-  }
+  --fall-animation-duration: 700ms;
+  --fall-animation-angle: 16deg;
+  --fall-scaling-in-from: 0.9;
+
+  ...
 }
       `,
     },

@@ -1,0 +1,45 @@
+@import '../core/styles.scss';
+
+.#{$root-element} {
+  --open-animation-perspective: 600px;
+  --open-animation-angle: 8deg;
+  --open-animation-enter-delay: 85ms;
+
+  &__container {
+    perspective: var(--open-animation-perspective);
+  }
+
+  // Delaying the next slide entering animation
+  &--moveLeft,
+  &--moveRight {
+    animation-delay: var(--open-animation-enter-delay);
+  }
+
+  &--exit {
+    &.#{$root-element}--moveLeft {
+      transform-origin: 0% 50%;
+      animation: openRight var(--slider-transition-duration) both
+        var(--transition-bezier);
+    }
+
+    &.#{$root-element}--moveRight {
+      transform-origin: 100% 50%;
+      animation: openLeft var(--slider-transition-duration) both
+        var(--transition-bezier);
+    }
+  }
+}
+
+// We're using the 45% trick to reduce the time of the exit animation without messing with the animation's callback
+// as we're using the active container for handling that
+@keyframes openLeft {
+  45% {
+    transform: rotateY(calc(var(--open-animation-angle) * -1));
+  }
+}
+
+@keyframes openRight {
+  45% {
+    transform: rotateY(var(--open-animation-angle));
+  }
+}

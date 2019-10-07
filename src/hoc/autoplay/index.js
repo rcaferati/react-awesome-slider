@@ -1,6 +1,6 @@
 import React from 'react';
+import AwesomeSlider from 'src';
 import Hoc from './hoc';
-import AwesomeSlider from '../../../index';
 
 const AutoplayComponent = Hoc(AwesomeSlider);
 

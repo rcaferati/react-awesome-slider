@@ -1,6 +1,6 @@
 export const globalProps = [
   {
-    name: 'React component props',
+    name: null,
     props: [
       {
         global: true,
