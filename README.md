@@ -80,7 +80,7 @@ const slider = (
 
 ### Fold-out animation recipe with CSS Modules
 
-Checkout more recipes on the styled folder.
+Checkout more recipes on the styled folder. For more animation recipes check out the [styled folder](https://github.com/rcaferati/react-awesome-slider/tree/master/src/styled).
 
 ```jsx
 import AwesomeSlider from 'react-awesome-slider';
@@ -97,7 +97,7 @@ const slider = (
 
 ### Cube animation recipe with CSS Modules
 
-Checkout more recipes on the styled folder.
+Checkout more recipes on the styled folder. For more animation recipes check out the [styled folder](https://github.com/rcaferati/react-awesome-slider/tree/master/src/styled).
 
 ```jsx
 import AwesomeSlider from 'react-awesome-slider';
