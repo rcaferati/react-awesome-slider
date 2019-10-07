@@ -18,7 +18,7 @@ function reset(slider) {
 }
 
 const startupScreen = (
-  <div style={{ backgroundColor: '#FFF' }}>
+  <div style={{ backgroundColor: '#5fc0ae' }}>
     <img
       style={{ width: '18%' }}
       alt="bojack"
@@ -56,12 +56,12 @@ function Component({ startup }) {
                 data-src="/images/series/ricknmorty-3.png"
               />
               <div
-                style={{ backgroundColor: '#ddff2d' }}
-                data-src="/images/series/ricknmorty-5.png"
-              />
-              <div
                 style={{ backgroundColor: '#0095a9' }}
                 data-src="/images/series/ricknmorty-6.jpg"
+              />
+              <div
+                style={{ backgroundColor: '#ddff2d' }}
+                data-src="/images/series/ricknmorty-5.png"
               />
             </AwesomeSlider>
           </AwesomeFrame>

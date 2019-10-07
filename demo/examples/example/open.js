@@ -30,7 +30,7 @@ function Component({ startup }) {
         return (
           <AwesomeFrame
             cssModule={AwsFrameStyles}
-            title="Netflix &mdash; Stranger Things"
+            title="Netflix &mdash; Bojack Horseman"
           >
             <AwesomeSlider
               name="images"
