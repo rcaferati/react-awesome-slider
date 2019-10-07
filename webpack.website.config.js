@@ -12,6 +12,15 @@ const config = {
     libraryTarget: 'umd',
     library: 'react-awesome-slider',
   },
+  resolve: {
+    alias: {
+      components: path.resolve(__dirname, 'demo/components/'),
+      examples: path.resolve(__dirname, 'demo/examples'),
+      helpers: path.resolve(__dirname, 'demo/helpers'),
+      context: path.resolve(__dirname, 'demo/context'),
+      src: path.resolve(__dirname, 'src'),
+    },
+  },
   module: {
     rules: [
       {
