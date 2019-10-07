@@ -20,21 +20,10 @@ class Example extends React.Component {
 
   renderExamples(examples) {
     return examples.map((example, index) => {
-      const {
-        js,
-        jsx,
-        scss,
-        component,
-        description,
-        command,
-        title,
-      } = example;
+      const { js, jsx, scss, component, description, command, title } = example;
       return (
-        <div
-          key={`example-${index}`}
-          className={Styles.example}
-        >
-          {title && (<h3>{title}</h3>)}
+        <div key={`example-${index}`} className={Styles.example}>
+          {title && <h3>{title}</h3>}
           {description && (
             <p
               dangerouslySetInnerHTML={{
@@ -47,7 +36,10 @@ class Example extends React.Component {
               <h4>.sh</h4>
               <code
                 dangerouslySetInnerHTML={{
-                  __html: Prism.highlight(command.trim(), Prism.languages.markup),
+                  __html: Prism.highlight(
+                    command.trim(),
+                    Prism.languages.markup
+                  ),
                 }}
               />
             </pre>
@@ -82,32 +74,20 @@ class Example extends React.Component {
               />
             </pre>
           )}
-          {component && (
-            <div>
-              {component}
-            </div>
-          )}
+          {component && <div>{component}</div>}
         </div>
       );
     });
   }
 
   render() {
-    const {
-      title,
-      Component,
-      examples,
-    } = this.props;
+    const { title, Component, examples } = this.props;
 
     return (
       <div className={Styles.container}>
-        <div className={Styles.header}>
-          {title && <h3>{title}</h3>}
-        </div>
+        <div className={Styles.header}>{title && <h3>{title}</h3>}</div>
         <div data-role="customizable" className={Styles.component}>
-          <Component
-            startup={this.props.startup}
-          />
+          <Component startup={this.props.startup} />
         </div>
         {this.renderExamples(examples)}
       </div>

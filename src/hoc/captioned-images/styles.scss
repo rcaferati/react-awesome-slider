@@ -1,4 +1,4 @@
-@import '../../../core/styles.scss';
+@import '../../core/styles.scss';
 
 .#{$root-element} {
   --caption-background-color: rgba(0, 0, 0, 0.15);
@@ -18,9 +18,10 @@
       p {
         background-color: var(--caption-background-color);
         padding: 10px 20px;
-        color: #FFF;
+        color: #fff;
         font-weight: bold;
-        transition: transform 0.425s cubic-bezier(0.05, 0.65, 0.1, 0.95), opacity 300ms ease-out;
+        transition: transform 0.425s cubic-bezier(0.05, 0.65, 0.1, 0.95),
+          opacity 300ms ease-out;
         transform: translate3d(0, 0, 0);
         opacity: 1;
 
@@ -38,7 +39,8 @@
     &--exit {
       .caption {
         p {
-          transition: transform 225ms cubic-bezier(0.85, 0, 0.85, 0.7) 75ms, opacity 275ms ease-out 175ms;
+          transition: transform 225ms cubic-bezier(0.85, 0, 0.85, 0.7) 75ms,
+            opacity 275ms ease-out 175ms;
         }
       }
     }
@@ -60,6 +62,5 @@
         }
       }
     }
-
   }
 }

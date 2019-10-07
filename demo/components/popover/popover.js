@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { AwesomeButton } from 'react-awesome-button';
 import AwesomeButtonStyles from 'react-awesome-button/src/styles/themes/theme-blue';
+import { setCssEndEvent } from 'helpers/examples';
 import Styles from './popover.scss';
-import { setCssEndEvent } from '../../helpers/examples';
 
 class Popover extends React.Component {
   static propTypes = {
@@ -60,12 +60,12 @@ class Popover extends React.Component {
   }
 
   render() {
-    const {
-      text,
-    } = this.props;
+    const { text } = this.props;
     return (
       <div
-        ref={(container) => { this.container = container; }}
+        ref={container => {
+          this.container = container;
+        }}
         className={Styles.container}
       >
         <div className={Styles.window}>

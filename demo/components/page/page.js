@@ -1,11 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Footer,
-  Example,
-  Section,
-  Popover,
-} from '../index';
+import { Footer, Example, Section, Popover } from 'components';
 
 const Page = ({
   theme,
@@ -24,10 +19,7 @@ const Page = ({
         Component={theme.example.Component}
         examples={theme.example.items}
       />
-      <Footer
-        repository={data.repository}
-        article={data.article}
-      />
+      <Footer repository={data.repository} article={data.article} />
       <Popover
         opened={popoverOpened}
         text={popoverText}
@@ -35,7 +27,7 @@ const Page = ({
       />
     </Section>
   );
-}
+};
 
 Page.propTypes = {
   theme: PropTypes.object.isRequired,

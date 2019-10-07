@@ -36,11 +36,14 @@
 
   ul {
     list-style: none;
-    margin-bottom: 18px;
+    margin-bottom: 24px;
   }
+
   h3 {
     font-size: 18px;
     margin-bottom: 4px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
   }
   li {
     display: flex;
@@ -59,10 +62,10 @@
     input {
       display: block;
     }
-    input[type="range"] {
+    input[type='range'] {
       width: 120px;
     }
-    input[type="color"] {
+    input[type='color'] {
       width: 80px;
       margin-right: 40px;
     }
@@ -85,7 +88,7 @@
   position: relative;
 
   &:before {
-    content: "";
+    content: '';
     width: 60%;
     height: 1px;
     background-color: #6f6f6f;
@@ -95,13 +98,18 @@
   }
 }
 
+.untitledSection {
+  margin-top: -8px;
+}
+
 .control {
   padding-top: 16px;
 
   svg {
     margin-top: -4px;
   }
-  > a, > button {
+  > a,
+  > button {
     margin-right: 10px;
   }
 }

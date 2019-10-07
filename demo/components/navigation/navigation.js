@@ -25,9 +25,7 @@ export default class Navigation extends React.Component {
   render() {
     return (
       <div className={Styles.container}>
-        <nav className={Styles.nav}>
-          {this.renderButtons()}
-        </nav>
+        <nav className={Styles.nav}>{this.renderButtons()}</nav>
       </div>
     );
   }

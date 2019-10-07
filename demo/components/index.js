@@ -11,3 +11,4 @@ export { default as PageRibbon } from './pageRibbon/pageRibbon';
 export { default as ColorPicker } from './colorPicker/colorPicker';
 export { default as BorderPicker } from './borderPicker/borderPicker';
 export { default as Popover } from './popover/popover';
+export { default as Checkbox } from './checkbox/checkbox';

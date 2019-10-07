@@ -1,11 +1,13 @@
 @import './helpers/base.scss';
 
 ::selection {
-  color: #FFF;
+  color: #fff;
   background-color: rgba(0, 0, 0, 0.2);
 }
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: inherit;
   margin: 0;
   padding: 0;
@@ -17,11 +19,47 @@ html {
   color: #6f6f6f;
 }
 
+// WHITE RENDER
+// html {
+//   background-color: #fff;
+// }
+
+// h1,
+// h2,
+// h3 {
+//   color: #fff !important;
+// }
+
+// header {
+//   h1,
+//   h2,
+//   p {
+//     display: none !important;
+//   }
+// }
+
+// main > div > section {
+//   display: none !important;
+// }
+
+// main > div > div:nth-child(1) {
+//   display: none !important;
+// }
+
+// main > div > div:nth-child(2) {
+//   max-width: 100% !important;
+// }
+// END WHITE RENDER
+
 body {
   font-family: lato, tahoma, sans-serif;
 }
 
-h1, h2, h3, h4, h5 {
+h1,
+h2,
+h3,
+h4,
+h5 {
   font-family: montserrat, tahoma, sans-serif;
   font-weight: 700;
 }

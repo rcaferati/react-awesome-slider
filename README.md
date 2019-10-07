@@ -98,6 +98,7 @@ const slider = (
 ```
 
 ### Cube animation recipe with CSS Modules
+
 Checkout more recipes on the styled folder.
 
 ```jsx
@@ -125,26 +126,24 @@ const slider = (
 
 ## Main Props
 
-| Attributes        |    Type    |     Default      | Description                                                                                                                        |
-| :---------------- | :--------: | :--------------: | :--------------------------------------------------------------------------------------------------------------------------------- |
-| className         |  `string`  |      `null`      | Add a className to the component container                                                                                         |
-| cssModule         |  `object`  |      `null`      | CSS Module object if you choose to use this styling approach                                                                       |
-| name              |  `string`  | `awesome-slider` | Unique name of the rendered slider. Useful if you're navigating between multiple pages that contains a slider component.           |
-| className         |  `string`  |      `null`      | Adds a classname to the awesome slider container                                                                                   |
-| selected          |  `number`  |       `0`        | Sets the current active/selected screen                                                                                            |
-| bullets           | `boolean`  |      `true`      | When set to true show the bullet controls underneath the slider                                                                    |
-| organicArrows     | `boolean`  |      `true`      | When set to true show the organic arrow `next` and `prev` controls                                                                 |
-| fillParent        | `boolean`  |     `false`      | When set to true the slider will fill the dimensions of the parent element. Usefull for using it in full-screen mode.              |
-| infinite          | `boolean`  |      `true`      | When set to true the slider will behave on an infinite fashion returing to the first slide after the last one.                     |
-| startupScreen     |   `node`   |      `null`      | Set's the startup screen component to be shown before the first screen is loaded. It works like a pre-loading screen.              |
-| startup           | `boolean`  |      `true`      | Used together with `startupScreen` controls weather or not the startupScreen should auto-start.                                    |
-| transitionDelay   |  `number`  |       `0`        | Sets a delay in `ms` between the slide transitions. Useful if you're waiting for an exit animation to finish in the current slide. |
-| onFirstMount      | `function` |      `null`      | Called on componentDidMount passing the slider reference as an argument                                                              |
-| onTransitionEnd   | `function` |      `null`      | Called on at the slider transition end event passing the slider reference as an argument                                             |
-| onTransitionStart | `function` |      `null`      | Called on slider transition start passing the slider reference as an argument                                                        |
+| Attributes          |    Type    |     Default      | Description                                                                                                                        |
+| :------------------ | :--------: | :--------------: | :--------------------------------------------------------------------------------------------------------------------------------- |
+| className           |  `string`  |      `null`      | Add a className to the component container                                                                                         |
+| cssModule           |  `object`  |      `null`      | CSS Module object if you choose to use this styling approach                                                                       |
+| name                |  `string`  | `awesome-slider` | Unique name of the rendered slider. Useful if you're navigating between multiple pages that contains a slider component.           |
+| className           |  `string`  |      `null`      | Adds a classname to the awesome slider container                                                                                   |
+| selected            |  `number`  |       `0`        | Sets the current active/selected screen                                                                                            |
+| bullets             | `boolean`  |      `true`      | When set to true show the bullet controls underneath the slider                                                                    |
+| organicArrows       | `boolean`  |      `true`      | When set to true show the organic arrow `next` and `prev` controls                                                                 |
+| fillParent          | `boolean`  |     `false`      | When set to true the slider will fill the dimensions of the parent element. Usefull for using it in full-screen mode.              |
+| infinite            | `boolean`  |      `true`      | When set to true the slider will behave on an infinite fashion returing to the first slide after the last one.                     |
+| startupScreen       |   `node`   |      `null`      | Set's the startup screen component to be shown before the first screen is loaded. It works like a pre-loading screen.              |
+| startup             | `boolean`  |      `true`      | Used together with `startupScreen` controls weather or not the startupScreen should auto-start.                                    |
+| transitionDelay     |  `number`  |       `0`        | Sets a delay in `ms` between the slide transitions. Useful if you're waiting for an exit animation to finish in the current slide. |
+| onFirstMount        | `function` |      `null`      | Called on componentDidMount passing the slider reference as an argument                                                            |
+| onTransitionEnd     | `function` |      `null`      | Called on at the slider transition end event passing the slider reference as an argument                                           |
+| onTransitionStart   | `function` |      `null`      | Called on slider transition start passing the slider reference as an argument                                                      |
 | onTransitionRequest | `function` |      `null`      | Called when a user interacts with the slider navigation (arrows or bullets)                                                        |
-
-
 
 ## Contribute
 

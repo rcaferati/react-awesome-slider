@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Navigation } from 'components';
 import Styles from './header.scss';
-import { Navigation } from '../index';
 
 const Header = ({
   title,
@@ -24,11 +24,7 @@ const Header = ({
         <span>{size}</span>
       </h2>
       <p>{description}</p>
-      <Navigation
-        domain={domain}
-        theme={theme}
-        themes={themes}
-      />
+      <Navigation domain={domain} theme={theme} themes={themes} />
     </div>
   </header>
 );

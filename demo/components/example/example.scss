@@ -7,9 +7,14 @@
 }
 
 .component {
+  > div > div {
+    z-index: 100;
+  }
+
   margin-bottom: 60px;
 
-  a, button {
+  a,
+  button {
     margin: 8px 0;
   }
 }
@@ -28,7 +33,8 @@
     margin-bottom: 8px;
   }
 
-  a, button {
+  a,
+  button {
     margin-right: 10px;
     margin-bottom: 10px;
   }
@@ -44,7 +50,7 @@
   }
   code {
     padding: 12px 20px;
-    background-color: rgba(0,0,0,0.05);
+    background-color: rgba(0, 0, 0, 0.05);
     border-radius: 4px;
     overflow-x: auto;
   }
@@ -66,7 +72,7 @@
 
 .features {
   margin-bottom: $deca;
-  background-color: rgba(0,0,0,0.1);
+  background-color: rgba(0, 0, 0, 0.1);
   padding: $double * 2;
   border-radius: $unit;
   h3 {
@@ -83,7 +89,7 @@
     padding-left: $double * 3;
     position: relative;
     &:before {
-      content: "\F00C";
+      content: '\F00C';
       font-family: FontAwesome;
       font-size: $double * 2;
       display: block;
