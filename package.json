@@ -15,10 +15,11 @@
   },
   "scripts": {
     "start": "webpack-dev-server -d --config webpack.demo.config.js",
-    "build": "NODE_ENV=production webpack",
-    "build:scss": "NODE_ENV=production webpack --config webpack.scss.config.js && rm ./dist/styles.js",
+    "build": "NODE_ENV=production webpack --mode production",
+    "build:scss": "NODE_ENV=production webpack --mode production --config webpack.scss.config.js && rm ./dist/styles.js",
     "build:website": "webpack -p --config webpack.website.config.js",
     "build:server": "webpack -p --config webpack.server.config.js",
+    "build:animations": "babel-node ./scss-builder.js",
     "test": "echo \"No test specified ATM\"",
     "lint": "eslint src/**",
     "prepublish": "npm run build && npm run build:scss"
@@ -47,6 +48,7 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
     "jest": "^22.0.4",
+    "mini-css-extract-plugin": "^0.8.0",
     "node-sass": "^4.7.2",
     "postcss-loader": "^2.0.10",
     "prismjs": "^1.9.0",
@@ -63,7 +65,7 @@
     "webpack": "^4.40.2",
     "webpack-cli": "^3.3.9",
     "webpack-dev-server": "^3.8.1",
-    "mini-css-extract-plugin": "^0.8.0"
+    "optimize-css-assets-webpack-plugin": "^5.0.3"
   },
   "keywords": [
     "react-component",
@@ -81,6 +83,6 @@
     "javascript"
   ],
   "dependencies": {
-    "web-animation-club": "^0.2.2"
+    "web-animation-club": "^0.4.0"
   }
 }

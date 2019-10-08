@@ -1,5 +1,4 @@
 import React, { useRef, useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import Styles from './checkbox.scss';
 
 const CheckBox = ({ checked, onChange }) => {
@@ -29,13 +28,9 @@ const CheckBox = ({ checked, onChange }) => {
 
   return (
     <button onClick={onPress} className={classnames.join(' ')}>
-      <input ref={input} type="checkbox" checked={state} />
+      <input ref={input} type="checkbox" checked={state} onChange={() => {}} />
     </button>
   );
-};
-
-CheckBox.propTypes = {
-  children: PropTypes.node.isRequired,
 };
 
 export default CheckBox;

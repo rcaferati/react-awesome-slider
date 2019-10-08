@@ -4,7 +4,7 @@
   "title": "Awesome Slider",
   "description": "React Awesome Slider is a 60fps, extendable, highly customisable, production ready javascript react component that renders an animated set of UI gallery sliders.",
   "icon": "react-js",
-  "size": "~6KB compressed",
+  "size": "~7KB compressed",
   "repository": "https://github.com/rcaferati/react-awesome-slider",
   "article": "//caferati.me/labs/awesome-slider",
   "domain": "",

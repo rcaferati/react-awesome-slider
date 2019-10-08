@@ -1,7 +1,7 @@
 import React from 'react';
 import AwesomeSlider from 'src';
 import AwesomeFrame from 'src/components/react-awesome-frame';
-import AwsSliderStyles from 'src/styled/open-animation.scss';
+import AwsSliderStyles from 'src/styled/open-animation';
 import AwsFrameStyles from 'src/components/react-awesome-frame/styles.scss';
 import { transitionStart, transitionEnd, resetSlider } from 'helpers/examples';
 import { GeneralContext } from 'context/GeneralContext';

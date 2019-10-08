@@ -1,6 +1,6 @@
 import React from 'react';
 import AwesomeFrame from 'src/components/react-awesome-frame';
-import AwsSliderStyles from 'src/styled/scale-out-animation.scss';
+import AwsSliderStyles from 'src/styled/scale-out-animation';
 import AutoplaySlider from 'src/hoc/autoplay';
 import AwsFrameStyles from 'src/components/react-awesome-frame/styles.scss';
 import { transitionEnd, transitionStart, resetSlider } from 'helpers/examples';
