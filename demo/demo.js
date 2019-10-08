@@ -38,7 +38,6 @@ const DemoComponent = ({
 
 const ComposerComponent = ({ match, handlePopover }) => {
   const theme = match.params.theme || DEFAULT_THEME;
-  // console.log(data[theme]);
   return (
     <Customiser
       theme={theme}

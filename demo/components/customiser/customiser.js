@@ -268,7 +268,6 @@ class Customiser extends React.Component {
               onChange={onChange}
               {...extraProps}
             />
-            // <input checked={inputValue} onChange={onChange} {...extraProps} />
           );
           break;
         default:
@@ -310,7 +309,6 @@ class Customiser extends React.Component {
       <GeneralContext.Consumer>
         {context => {
           this.context = context;
-          console.log(context.general);
           return (
             <section className={Styles.container}>
               <header>

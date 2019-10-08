@@ -63,36 +63,41 @@ export function rgba2hex(rgba) {
 }
 
 export function resetSlider(slider, customFnc = null) {
-  clearTimeout(window.transitionUpdateTimer);
-  if (customFnc) {
-    customFnc();
-  } else {
-    slider.element.style.setProperty('--slider-transition-duration', '525ms');
+  if (typeof window !== 'undefined') {
+    clearTimeout(window.transitionUpdateTimer);
+    if (customFnc) {
+      customFnc();
+    } else {
+      slider.element.style.setProperty('--slider-transition-duration', '525ms');
+    }
+    window.setElement(slider.element);
   }
-
-  window.setElement(slider.element);
 }
 
 export function transitionStart(slider) {
-  const divs = slider.nextSlide.querySelectorAll('div');
-  const color = getComputedStyle(divs[0]).backgroundColor;
-  window.transitionUpdateTimer = setTimeout(() => {
-    slider.element.style.setProperty(
-      '--control-bullet-active-color',
-      shadeRGBColor(color, -0.15)
-    );
-    slider.element.style.setProperty('--control-bullet-color', color);
-  }, 400);
+  if (typeof window !== 'undefined') {
+    const divs = slider.nextSlide.querySelectorAll('div');
+    const color = getComputedStyle(divs[0]).backgroundColor;
+    window.transitionUpdateTimer = setTimeout(() => {
+      slider.element.style.setProperty(
+        '--control-bullet-active-color',
+        shadeRGBColor(color, -0.15)
+      );
+      slider.element.style.setProperty('--control-bullet-color', color);
+    }, 400);
+  }
 }
 
 export function transitionEnd(slider) {
-  const divs = slider.currentSlide.querySelectorAll('div');
-  const color = getComputedStyle(divs[0]).backgroundColor;
-  slider.element.style.setProperty(
-    '--organic-arrow-color',
-    shadeRGBColor(color, -0.15)
-  );
-  window.setElement(slider.element);
+  if (typeof window !== 'undefined') {
+    const divs = slider.currentSlide.querySelectorAll('div');
+    const color = getComputedStyle(divs[0]).backgroundColor;
+    slider.element.style.setProperty(
+      '--organic-arrow-color',
+      shadeRGBColor(color, -0.15)
+    );
+    window.setElement(slider.element);
+  }
 }
 
 export default {};

@@ -1,4 +1,5 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
 
@@ -11,6 +12,7 @@ const config = {
     filename: '[name].js',
     libraryTarget: 'umd',
     library: 'react-awesome-slider',
+    globalObject: 'this',
   },
   resolve: {
     alias: {
@@ -61,6 +63,16 @@ const config = {
   },
   optimization: {
     minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          output: {
+            comments: false,
+          },
+        },
+        extractComments: false,
+      }),
+    ],
   },
   plugins: [
     new MiniCssExtractPlugin({

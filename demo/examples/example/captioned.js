@@ -16,6 +16,9 @@ import {
  * START CUSTOM RESETS
  */
 function resetSlider(slider) {
+  if (typeof window === 'undefined') {
+    return;
+  }
   clearTimeout(window.transitionUpdateTimer);
   const divs = slider.currentSlide.querySelectorAll('div');
   const color = getComputedStyle(divs[0]).backgroundColor;
@@ -33,6 +36,9 @@ function resetSlider(slider) {
 }
 
 function transitionStart(slider) {
+  if (typeof window === 'undefined') {
+    return;
+  }
   const divs = slider.nextSlide.querySelectorAll('div');
   const color = getComputedStyle(divs[0]).backgroundColor;
   window.transitionUpdateTimer = setTimeout(() => {
@@ -45,6 +51,9 @@ function transitionStart(slider) {
 }
 
 function transitionEnd(slider) {
+  if (typeof window === 'undefined') {
+    return;
+  }
   const divs = slider.currentSlide.querySelectorAll('div');
   const color = getComputedStyle(divs[0]).backgroundColor;
   const captionColor = shadeRGBColor(color, -0.2)
