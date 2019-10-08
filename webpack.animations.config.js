@@ -1,14 +1,17 @@
+const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const path = require('path');
 
-const config = {
+const THEME = process.env.AWESOME_THEME;
+
+module.exports = {
   entry: {
-    styles: ['./src/core/styles.scss'],
+    styles: [path.resolve(__dirname, `src/styled/${THEME}/index.js`)],
   },
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: '[name].js',
+    path: path.resolve(__dirname, 'dist/custom-animations'),
+    filename: `${THEME}.js`,
     libraryTarget: 'umd',
   },
   module: {
@@ -48,9 +51,7 @@ const config = {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: `styles.css`,
+      filename: `${THEME}.css`,
     }),
   ],
 };
-
-module.exports = config;
