@@ -1,4 +1,4 @@
-# React Awesome Slider v2
+# React Awesome Slider v2 [New Transitions]
 
 [![Travis](https://img.shields.io/travis/rcaferati/react-awesome-slider/master.svg)](https://travis-ci.org/rcaferati/react-awesome-slider) ![NPM](https://img.shields.io/npm/v/react-awesome-slider.svg)
 
