@@ -1,5 +1,5 @@
 import React from 'react';
-import AwesomeSlider from 'src';
+import AwesomeSlider from '../../index';
 import Hoc from './hoc';
 
 const CaptionedComponent = Hoc(AwesomeSlider);
