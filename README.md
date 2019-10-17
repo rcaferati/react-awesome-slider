@@ -84,7 +84,7 @@ Checkout more recipes on the styled folder. For more animation recipes check out
 
 ```jsx
 import AwesomeSlider from 'react-awesome-slider';
-import AwesomeSliderStyles from 'react-awesome-slider/src/styled/fold-out-animation.scss';
+import AwesomeSliderStyles from 'react-awesome-slider/src/styled/fold-out-animation';
 
 const slider = (
   <AwesomeSlider cssModule={AwesomeSliderStyles}>
@@ -101,7 +101,7 @@ Checkout more recipes on the styled folder. For more animation recipes check out
 
 ```jsx
 import AwesomeSlider from 'react-awesome-slider';
-import AwesomeSliderStyles from 'react-awesome-slider/src/styled/cube-animation.scss';
+import AwesomeSliderStyles from 'react-awesome-slider/src/styled/cube-animation';
 
 const slider = (
   <AwesomeSlider cssModule={AwesomeSliderStyles}>
