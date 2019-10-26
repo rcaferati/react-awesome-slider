@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Navigation } from 'components';
+import { Navigation, ReactLogo } from 'components';
 import Styles from './header.scss';
 
 const Header = ({
@@ -15,10 +15,14 @@ const Header = ({
 }) => (
   <header className={Styles.container}>
     <div className={Styles.wrapper}>
-      <h1>
-        <span>{framework}</span>
-        <span>{title}</span>
-      </h1>
+      <div className={Styles.title}>
+        <ReactLogo />
+        <h1>
+          <span>{framework}</span>
+          <span>{title}</span>
+        </h1>
+      </div>
+
       <h2>
         <strong>&lt;{name}/&gt;</strong>
         <span>{size}</span>

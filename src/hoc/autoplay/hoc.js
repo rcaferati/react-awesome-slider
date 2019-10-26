@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { onceNextCssLayout, onceTransitionEnd } from 'web-animation-club';
 import PropTypes from 'prop-types';
-import Styles from './styles.scss';
+import { getClassName } from '../../helpers/components';
+
+const ROOTELM = 'awssld';
 
 export default function AutoplayHoc(WrappedComponent) {
   return class extends Component {
     static propTypes = {
       interval: PropTypes.number,
+      cssModule: PropTypes.object,
       play: PropTypes.bool,
       cancelOnInteraction: PropTypes.bool,
       timerHeight: PropTypes.string,
@@ -15,6 +18,7 @@ export default function AutoplayHoc(WrappedComponent) {
       onTransitionStart: PropTypes.func,
       onTransitionEnd: PropTypes.func,
       onTransitionRequest: PropTypes.func,
+      rootElement: PropTypes.string,
     };
 
     static defaultProps = {
@@ -22,16 +26,19 @@ export default function AutoplayHoc(WrappedComponent) {
       play: false,
       cancelOnInteraction: false,
       timerHeight: '6px',
+      cssModule: null,
       timerBackgroundColor: 'rgba(0, 0, 0, 0.15)',
       showTimer: true,
       onTransitionStart: null,
       onTransitionEnd: null,
       onTransitionRequest: null,
+      rootElement: ROOTELM,
     };
 
     constructor(props) {
       super(props);
       this.forceStop = false;
+      this.rootElement = props.rootElement || ROOTELM;
       this.state = {
         selected: 0,
       };
@@ -48,19 +55,40 @@ export default function AutoplayHoc(WrappedComponent) {
       if (this.forceStop === true) {
         return;
       }
-      let bar = element.querySelector(`.${Styles.timer}`);
+      let bar = element.querySelector(
+        `.${getClassName(`${this.rootElement}__timer`, this.props.cssModule)}`
+      );
       if (!bar) {
         bar = this.createBarElement();
         element.querySelector('div').appendChild(bar);
       }
-      bar.classList.remove(Styles.animated);
+      bar.classList.remove(
+        getClassName(
+          `${this.rootElement}__timer--animated`,
+          this.props.cssModule
+        )
+      );
       onceNextCssLayout().then(() => {
-        bar.classList.remove(Styles.run);
-        bar.classList.remove(Styles.fast);
+        bar.classList.remove(
+          getClassName(`${this.rootElement}__timer--run`, this.props.cssModule)
+        );
+        bar.classList.remove(
+          getClassName(`${this.rootElement}__timer--fast`, this.props.cssModule)
+        );
         onceNextCssLayout().then(() => {
-          bar.classList.add(Styles.animated);
+          bar.classList.add(
+            getClassName(
+              `${this.rootElement}__timer--animated`,
+              this.props.cssModule
+            )
+          );
           onceNextCssLayout().then(() => {
-            bar.classList.add(Styles.run);
+            bar.classList.add(
+              getClassName(
+                `${this.rootElement}__timer--run`,
+                this.props.cssModule
+              )
+            );
             onceTransitionEnd(bar).then(() => {
               this.clearBarAnimation(bar);
               if (this.forceStop === true || this.props.play === false) {
@@ -74,13 +102,17 @@ export default function AutoplayHoc(WrappedComponent) {
     }
 
     getBarFromSlide(slider) {
-      const bar = slider.querySelector(`.${Styles.timer}`);
+      const bar = slider.querySelector(
+        `.${getClassName(`${this.rootElement}__timer`, this.props.cssModule)}`
+      );
       return bar || null;
     }
 
     createBarElement() {
       const bar = document.createElement('div');
-      bar.classList.add(Styles.timer);
+      bar.classList.add(
+        getClassName(`${this.rootElement}__timer`, this.props.cssModule)
+      );
       bar.style.setProperty('--timer-delay', `${this.props.interval}ms`);
       bar.style.setProperty('--timer-height', this.props.timerHeight);
       bar.style.setProperty(
@@ -93,19 +125,30 @@ export default function AutoplayHoc(WrappedComponent) {
     clearBar(info) {
       const bar = this.getBarFromSlide(info.currentSlide);
       bar.clearCssEndEvent();
-      bar.classList.add(Styles.fast);
+      bar.classList.add(
+        getClassName(`${this.rootElement}__timer--fast`, this.props.cssModule)
+      );
       onceTransitionEnd(bar).then(() => {
         this.clearBarAnimation(bar);
       });
     }
 
     clearBarAnimation(bar) {
-      bar.classList.remove(Styles.animated);
+      bar.classList.remove(
+        getClassName(
+          `${this.rootElement}__timer--animated`,
+          this.props.cssModule
+        )
+      );
     }
 
     restartBarAnimation(bar) {
-      bar.classList.remove(Styles.run);
-      bar.classList.remove(Styles.fast);
+      bar.classList.remove(
+        getClassName(`${this.rootElement}__timer--run`, this.props.cssModule)
+      );
+      bar.classList.remove(
+        getClassName(`${this.rootElement}__timer--fast`, this.props.cssModule)
+      );
     }
 
     goTonext() {

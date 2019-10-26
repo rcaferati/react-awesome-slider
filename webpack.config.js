@@ -5,6 +5,7 @@ const path = require('path');
 const config = {
   entry: {
     index: ['./src/index.js'],
+    autoplay: ['./src/hoc/autoplay/hoc.js'],
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
