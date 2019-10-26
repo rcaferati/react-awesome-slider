@@ -22,7 +22,7 @@
     "build:animations": "babel-node ./scss-builder.js",
     "test": "echo \"No test specified ATM\"",
     "lint": "eslint src/**",
-    "prepublish": "npm run build && npm run build:scss"
+    "prepublish": "npm run build && npm run build:scss && npm run build:animations"
   },
   "peer-dependencies": {
     "prop-types": "^15.6.0",
