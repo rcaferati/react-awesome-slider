@@ -15,7 +15,9 @@ export default function LetteringHoc(WrappedComponent) {
             backgroundColor: screen.backgroundColor,
           }}
         >
-          {screen.children.map((text, tIndex) => <p key={`${this.props.name}${index}-text-${tIndex}`}>{text}</p>)}
+          {screen.children.map((text, tIndex) => (
+            <p key={`${this.props.name}${index}-text-${tIndex}`}>{text}</p>
+          ))}
         </div>
       ));
     }

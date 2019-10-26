@@ -15,7 +15,7 @@ import Bullets from './bullets';
 import Buttons from './buttons';
 import Media from './media';
 
-const ROOTELM = 'aws-sld';
+const ROOTELM = 'awssld';
 const mediaLoader = new MediaLoader();
 
 export default class AwesomeSlider extends React.Component {
@@ -199,10 +199,16 @@ export default class AwesomeSlider extends React.Component {
   }
 
   refreshSlider() {
-    if (this.loading === true || this.props.startup === false) {
+    if (
+      this.loading === true ||
+      this.props.startup === false ||
+      this.index === null
+    ) {
       return;
     }
+
     const { index } = this;
+
     this.setState({
       index,
       boxA: this.media[index],
@@ -220,7 +226,7 @@ export default class AwesomeSlider extends React.Component {
           touch: false,
         });
       });
-    }, 125);
+    }, 100);
   }
 
   resetSlider(index = 0) {

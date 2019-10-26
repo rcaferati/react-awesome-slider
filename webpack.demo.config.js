@@ -12,6 +12,7 @@ const config = {
       helpers: path.resolve(__dirname, 'demo/helpers'),
       context: path.resolve(__dirname, 'demo/context'),
       src: path.resolve(__dirname, 'src'),
+      dist: path.resolve(__dirname, 'dist'),
     },
   },
   module: {

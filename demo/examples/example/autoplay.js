@@ -1,11 +1,14 @@
 import React from 'react';
 import AwesomeFrame from 'src/components/react-awesome-frame';
-import AwsSliderStyles from 'src/styled/scale-out-animation';
-import AutoplaySlider from 'src/hoc/autoplay';
+import 'dist/custom-animations/cube-animation.css';
+import AwesomeSlider from 'src';
+import AutoplayHoc from 'dist/autoplay';
 import AwsFrameStyles from 'src/components/react-awesome-frame/styles.scss';
 import { transitionEnd, transitionStart, resetSlider } from 'helpers/examples';
 import { features, properties, globalProps } from 'examples/common';
 import { GeneralContext } from 'context/GeneralContext';
+
+const AutoplaySlider = AutoplayHoc(AwesomeSlider);
 
 const startupScreen = (
   <div style={{ backgroundColor: '#0095B7' }}>
@@ -24,7 +27,6 @@ function Component({ startup }) {
               play
               cancelOnInteraction={false}
               interval={6000}
-              cssModule={AwsSliderStyles}
               startup={startup}
               startupScreen={startupScreen}
               onFirstMount={resetSlider}
@@ -85,7 +87,7 @@ const Slider = (
     },
   ],
   Component,
-  componentClass: AwsSliderStyles['aws-sld'],
+  // componentClass: AwsSliderStyles['aws-sld'],
 };
 
 export default {
