@@ -48,6 +48,9 @@ function Component({ startup }) {
               <div
                 style={{ backgroundColor: '#2d5182' }}
                 data-src="/images/series/bojack-0.png"
+                onClick={() => {
+                  alert('dope')
+                }}
               />
               <div
                 style={{ backgroundColor: '#62a4fa' }}
