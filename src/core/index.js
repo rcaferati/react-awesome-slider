@@ -493,6 +493,7 @@ export default class AwesomeSlider extends React.Component {
         this.chargeIndex(index, media => {
           this.renderedLoader = true;
           this.startAnimation(direction, media, () => {
+            this.loading = false;
             this.index = this.nextIndex;
             this.setState({ index: this.index });
             if (this.props.onTransitionEnd) {
@@ -500,9 +501,6 @@ export default class AwesomeSlider extends React.Component {
                 ...this.getInfo(),
               });
             }
-            onceNextCssLayout().then(() => {
-              this.loading = false;
-            });
           });
         });
       });
