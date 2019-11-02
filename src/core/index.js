@@ -493,8 +493,8 @@ export default class AwesomeSlider extends React.Component {
         this.chargeIndex(index, media => {
           this.renderedLoader = true;
           this.startAnimation(direction, media, () => {
-            this.loading = false;
             this.index = this.nextIndex;
+            this.loading = false;
             this.setState({ index: this.index });
             if (this.props.onTransitionEnd) {
               this.props.onTransitionEnd({
@@ -541,7 +541,7 @@ export default class AwesomeSlider extends React.Component {
     const dirName = direction ? 'right' : 'left';
     this.activeArrow = activeArrow.querySelector('span');
     if (!this.activeArrow) {
-      callback();
+      if(callback) callback();
       return;
     }
     this.activeArrowClass = getClassName(
