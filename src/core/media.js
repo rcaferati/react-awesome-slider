@@ -6,17 +6,21 @@ export default class Media extends React.Component {
     media: PropTypes.object.isRequired,
     className: PropTypes.string.isRequired,
   };
+
   state = {};
+
   render() {
     const { media, className } = this.props;
+    const { url, children, style, loader, [`data-src`]: dataSrc,className: mediaClass, ...extra } = media;
 
     let background = null;
-    if (media.url) {
-      if (media.url.match(/\.(mp4|webm)/)) {
+
+    if (url) {
+      if (url.match(/\.(mp4|webm)/)) {
         background = (
           <video
             title={media.title}
-            src={media.url}
+            src={url}
             type="video/mp4"
             controls
           />
@@ -24,15 +28,16 @@ export default class Media extends React.Component {
       } else {
         // DEFAULTS TO AN IMAGE TAG
         background = (
-          <img alt={media.alt || media.title || null} src={media.url} />
+          <img alt={media.alt || media.title || null} src={url} />
         );
       }
     }
+
     return (
-      <div className={className} style={media.style || null}>
+      <div className={className} style={style || null} {...extra}>
         {background}
-        {media.children && (
-          <div className={media.className || null}>{media.children}</div>
+        {children && (
+          <div className={mediaClass}>{media.children}</div>
         )}
       </div>
     );

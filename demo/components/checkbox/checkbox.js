@@ -23,7 +23,7 @@ export default class CheckBox extends React.Component {
             this.input = ref;
           }}
           type="checkbox"
-          checked={this.props.checked}
+          defaultChecked={this.props.checked}
         />
       </button>
     );

@@ -19,10 +19,14 @@ class Customiser extends React.Component {
     module: PropTypes.object.isRequired,
     handlePopover: PropTypes.func.isRequired,
     theme: PropTypes.string.isRequired,
-    componentClass: PropTypes.string.isRequired,
+    componentClass: PropTypes.string,
     properties: PropTypes.array.isRequired,
     globalProps: PropTypes.array.isRequired,
   };
+
+  static defaultProps = {
+    componentClass: null,
+  }
 
   constructor(props) {
     super(props);
