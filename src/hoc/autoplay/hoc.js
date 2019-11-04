@@ -124,13 +124,17 @@ export default function AutoplayHoc(WrappedComponent) {
 
     clearBar(info) {
       const bar = this.getBarFromSlide(info.currentSlide);
-      bar.clearCssEndEvent();
-      bar.classList.add(
-        getClassName(`${this.rootElement}__timer--fast`, this.props.cssModule)
-      );
-      onceTransitionEnd(bar).then(() => {
-        this.clearBarAnimation(bar);
-      });
+      if (bar) {
+        if (bar.clearCssEndEvent) {
+          bar.clearCssEndEvent();
+        }
+        bar.classList.add(
+          getClassName(`${this.rootElement}__timer--fast`, this.props.cssModule)
+        );
+        onceTransitionEnd(bar).then(() => {
+          this.clearBarAnimation(bar);
+        });
+      }
     }
 
     clearBarAnimation(bar) {

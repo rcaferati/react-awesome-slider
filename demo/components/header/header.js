@@ -22,7 +22,6 @@ const Header = ({
           <span>{title}</span>
         </h1>
       </div>
-
       <h2>
         <strong>&lt;{name}/&gt;</strong>
         <span>{size}</span>
