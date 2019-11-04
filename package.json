@@ -65,7 +65,8 @@
     "style-loader": "^0.19.1",
     "webpack": "^4.40.2",
     "webpack-cli": "^3.3.9",
-    "webpack-dev-server": "^3.8.1"
+    "webpack-dev-server": "^3.8.1",
+    "terser-webpack-plugin": "^2.1.2"
   },
   "keywords": [
     "react-component",
@@ -83,7 +84,6 @@
     "javascript"
   ],
   "dependencies": {
-    "terser-webpack-plugin": "^2.1.2",
     "web-animation-club": "^0.5.0"
   }
 }
