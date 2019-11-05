@@ -2,7 +2,7 @@ import React from 'react';
 import AwesomeFrame from 'src/components/react-awesome-frame';
 import 'dist/custom-animations/cube-animation.css';
 import AwesomeSlider from 'src';
-import AutoplayHoc from 'dist/autoplay';
+import AutoplayHoc from 'src/hoc/autoplay/hoc';
 import AwsFrameStyles from 'src/components/react-awesome-frame/styles.scss';
 import { transitionEnd, transitionStart, resetSlider } from 'helpers/examples';
 import { features, properties, globalProps } from 'examples/common';

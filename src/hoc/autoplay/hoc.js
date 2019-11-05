@@ -170,6 +170,7 @@ export default function AutoplayHoc(WrappedComponent) {
         showTimer,
         onTransitionStart,
         onTransitionEnd,
+        onFirstMount,
         onTransitionRequest,
         ...extra
       } = this.props;
@@ -178,6 +179,15 @@ export default function AutoplayHoc(WrappedComponent) {
         <WrappedComponent
           {...extra}
           selected={this.state.selected}
+          onFirstMount={info => {
+            if (!extra.startupScreen) {
+              this.setInfo(info);
+              this.setTimer(info.currentSlide);
+            }
+            if (onFirstMount) {
+              onFirstMount(info);
+            }
+          }}
           onTransitionStart={info => {
             const bar = this.getBarFromSlide(info.nextSlide);
             if (bar) {
