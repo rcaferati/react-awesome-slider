@@ -83,6 +83,6 @@
     "javascript"
   ],
   "dependencies": {
-    "web-animation-club": "^0.5.0"
+    "web-animation-club": "^0.6.0"
   }
 }
