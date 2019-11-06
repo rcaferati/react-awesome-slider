@@ -1,6 +1,4 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const webpack = require('webpack');
 const path = require('path');
 
 const config = {
@@ -31,6 +29,7 @@ const config = {
         loader: 'babel-loader',
         options: {
           presets: ['es2015', 'react', 'stage-0'],
+          plugins: ['transform-react-remove-prop-types'],
         },
       },
       {
@@ -61,27 +60,9 @@ const config = {
       },
     ],
   },
-  optimization: {
-    minimize: true,
-    minimizer: [
-      new TerserPlugin({
-        terserOptions: {
-          output: {
-            comments: false,
-          },
-        },
-        extractComments: false,
-      }),
-    ],
-  },
   plugins: [
     new MiniCssExtractPlugin({
       filename: 'react-awesome-slider.css',
-    }),
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('production'),
-      },
     }),
   ],
 };
