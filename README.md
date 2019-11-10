@@ -152,7 +152,6 @@ const slider = (
 | className           |  `string`  |      `null`      | Add a className to the component container                                                                                         |
 | cssModule           |  `object`  |      `null`      | CSS Module object if you choose to use this styling approach                                                                       |
 | name                |  `string`  | `awesome-slider` | Unique name of the rendered slider. Useful if you're navigating between multiple pages that contains a slider component.           |
-| className           |  `string`  |      `null`      | Adds a classname to the awesome slider container                                                                                   |
 | selected            |  `number`  |       `0`        | Sets the current active/selected screen                                                                                            |
 | bullets             | `boolean`  |      `true`      | When set to true show the bullet controls underneath the slider                                                                    |
 | organicArrows       | `boolean`  |      `true`      | When set to true show the organic arrow `next` and `prev` controls                                                                 |
