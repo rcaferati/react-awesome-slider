@@ -386,6 +386,8 @@ export default class AwesomeSlider extends React.Component {
       loaderContentElement.classList.add(this.classNames.contentStatic);
       setTimeout(() => {
         onceNextCssLayout().then(() => {
+          active.classList.add(this.classNames.animated);
+          loader.classList.add(this.classNames.animated);
           loaderContentElement.classList.remove(this.classNames.contentStatic);
           active.classList.add(this.classNames.exit);
           loader.classList.add(loaderPosition);
@@ -393,6 +395,8 @@ export default class AwesomeSlider extends React.Component {
           onceAnimationEnd(active).then(() => {
             loader.classList.add(this.classNames.active);
             loader.classList.remove(loaderPosition);
+            loader.classList.remove(this.classNames.animated);
+            active.classList.remove(this.classNames.animated);
             active.classList.remove(this.classNames.active);
             active.classList.remove(exitPosition);
             active.classList.remove(this.classNames.exit);
@@ -541,7 +545,7 @@ export default class AwesomeSlider extends React.Component {
     const dirName = direction ? 'right' : 'left';
     this.activeArrow = activeArrow.querySelector('span');
     if (!this.activeArrow) {
-      if(callback) callback();
+      if (callback) callback();
       return;
     }
     this.activeArrowClass = getClassName(
