@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AwesomeSlider from 'src/index';
 import AwesomeFrame from 'src/components/react-awesome-frame';
 import AwsSliderStyles from 'src/core/styles.scss';
@@ -24,6 +24,8 @@ const startupScreen = (
 );
 
 function Component({ startup }) {
+  const [selected, setSelected] = useState(0);
+
   return (
     <GeneralContext.Consumer>
       {context => {
@@ -39,6 +41,7 @@ function Component({ startup }) {
               startupScreen={startupScreen}
               onFirstMount={reset}
               onResetSlider={reset}
+              selected={selected}
               onTransitionStart={transitionStart}
               onTransitionEnd={transitionEnd}
               organicArrows={context.general['--organicArrows']}
@@ -46,21 +49,22 @@ function Component({ startup }) {
               fillParent={context.general['--fillParent']}
             >
               <div
+                data-slug="this-is-zero"
                 style={{ backgroundColor: '#2d5182' }}
                 data-src="/images/series/bojack-0.png"
-                onClick={() => {
-                  alert('dope')
-                }}
               />
               <div
+                data-slug="this-is-one"
                 style={{ backgroundColor: '#62a4fa' }}
                 data-src="/images/series/bojack-5.jpg"
               />
               <div
+                data-slug="this-is-two"
                 style={{ backgroundColor: '#f33d42' }}
                 data-src="/images/series/bojack-3.jpg"
               />
               <div
+                data-slug="this-is-three"
                 style={{ backgroundColor: '#fafafa' }}
                 data-src="/images/series/bojack-4.jpg"
               />
