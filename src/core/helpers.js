@@ -51,6 +51,9 @@ export function transformChildren(children) {
     if (child.props['data-src']) {
       item.url = child.props['data-src'];
     }
+    if (child.props['data-slug']) {
+      item.slug = child.props['data-slug'];
+    }
     media.push(item);
   });
   return media;

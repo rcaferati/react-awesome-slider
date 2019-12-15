@@ -37,7 +37,7 @@ export default class AwesomeSlider extends React.Component {
     onTransitionRequest: PropTypes.func,
     organicArrows: PropTypes.bool,
     rootElement: PropTypes.string,
-    selected: PropTypes.number,
+    selected: PropTypes.any,
     infinite: PropTypes.bool,
     startupScreen: PropTypes.object,
     style: PropTypes.object,
@@ -486,7 +486,23 @@ export default class AwesomeSlider extends React.Component {
     this.runAnimation(animationObject);
   }
 
+  getIndex(index) {
+    let nextIndex = 0;
+    if (typeof index === 'number') {
+      return index;
+    }
+    if (typeof index === 'string') {
+      this.media.forEach(({ slug }, idx) => {
+        if (slug === index) {
+          nextIndex = idx;
+        }
+      });
+    }
+    return nextIndex;
+  }
+
   goTo({ index, direction, touch = false }) {
+    const nextIndex = this.getIndex(index);
     if (this.loading === true || index === this.index) {
       return;
     }
@@ -494,7 +510,7 @@ export default class AwesomeSlider extends React.Component {
     this.direction = direction;
     if (touch === false) {
       this.activateArrows(direction, () => {
-        this.chargeIndex(index, media => {
+        this.chargeIndex(nextIndex, media => {
           this.renderedLoader = true;
           this.startAnimation(direction, media, () => {
             this.index = this.nextIndex;
