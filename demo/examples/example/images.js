@@ -24,8 +24,6 @@ const startupScreen = (
 );
 
 function Component({ startup }) {
-  const [selected, setSelected] = useState(0);
-
   return (
     <GeneralContext.Consumer>
       {context => {
@@ -41,7 +39,6 @@ function Component({ startup }) {
               startupScreen={startupScreen}
               onFirstMount={reset}
               onResetSlider={reset}
-              selected={selected}
               onTransitionStart={transitionStart}
               onTransitionEnd={transitionEnd}
               organicArrows={context.general['--organicArrows']}

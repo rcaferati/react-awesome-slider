@@ -20,50 +20,58 @@ const mediaLoader = new MediaLoader();
 
 export default class AwesomeSlider extends React.Component {
   static propTypes = {
-    startup: PropTypes.bool,
+    bullets: PropTypes.bool,
+    buttons: PropTypes.bool,
+    buttonContentRight: PropTypes.node,
+    buttonContentLeft: PropTypes.node,
     children: PropTypes.node,
     className: PropTypes.string,
     controlsReturnDelay: PropTypes.number,
     cssModule: PropTypes.object,
+    customContent: PropTypes.node,
     disabled: PropTypes.bool,
-    bullets: PropTypes.bool,
     fillParent: PropTypes.bool,
+    infinite: PropTypes.bool,
     media: PropTypes.array,
     name: PropTypes.string,
     onFirstMount: PropTypes.func,
     onResetSlider: PropTypes.func,
     onTransitionEnd: PropTypes.func,
-    onTransitionStart: PropTypes.func,
     onTransitionRequest: PropTypes.func,
+    onTransitionStart: PropTypes.func,
     organicArrows: PropTypes.bool,
     rootElement: PropTypes.string,
     selected: PropTypes.any,
-    infinite: PropTypes.bool,
+    startup: PropTypes.bool,
     startupScreen: PropTypes.object,
     style: PropTypes.object,
     transitionDelay: PropTypes.number,
   };
 
   static defaultProps = {
-    startup: true,
+    bullets: true,
+    buttons: true,
+    buttonContentRight: null,
+    buttonContentLeft: null,
     children: null,
     className: null,
     controlsReturnDelay: 0,
     cssModule: null,
+    customContent: null,
     disabled: false,
+    fillParent: false,
     infinite: true,
     media: [],
-    bullets: true,
-    fillParent: false,
     name: 'awesome-slider',
     onFirstMount: null,
     onResetSlider: null,
     onTransitionEnd: null,
-    onTransitionStart: null,
     onTransitionRequest: null,
+    onTransitionStart: null,
     organicArrows: true,
     rootElement: ROOTELM,
     selected: 0,
+    startup: true,
     startupScreen: null,
     style: {},
     transitionDelay: 0,
@@ -196,6 +204,21 @@ export default class AwesomeSlider extends React.Component {
 
   setupClassNames(cssModule) {
     this.classNames = setupClassNames(this.rootElement, cssModule);
+  }
+
+  getIndex(index) {
+    let nextIndex = 0;
+    if (typeof index === 'number') {
+      return index;
+    }
+    if (typeof index === 'string') {
+      this.media.forEach(({ slug }, idx) => {
+        if (slug === index) {
+          nextIndex = idx;
+        }
+      });
+    }
+    return nextIndex;
   }
 
   refreshSlider() {
@@ -486,21 +509,6 @@ export default class AwesomeSlider extends React.Component {
     this.runAnimation(animationObject);
   }
 
-  getIndex(index) {
-    let nextIndex = 0;
-    if (typeof index === 'number') {
-      return index;
-    }
-    if (typeof index === 'string') {
-      this.media.forEach(({ slug }, idx) => {
-        if (slug === index) {
-          nextIndex = idx;
-        }
-      });
-    }
-    return nextIndex;
-  }
-
   goTo({ index, direction, touch = false }) {
     const nextIndex = this.getIndex(index);
     if (this.loading === true || index === this.index) {
@@ -724,7 +732,16 @@ export default class AwesomeSlider extends React.Component {
   }
 
   render() {
-    const { cssModule, organicArrows, bullets, style } = this.props;
+    const {
+      cssModule,
+      organicArrows,
+      bullets,
+      style,
+      customContent,
+      buttons,
+      buttonContentLeft,
+      buttonContentRight,
+    } = this.props;
     const { rootElement } = this;
 
     return (
@@ -750,16 +767,21 @@ export default class AwesomeSlider extends React.Component {
             {this.renderBox('A')}
             {this.renderBox('B')}
           </div>
-          <Buttons
-            rootElement={rootElement}
-            cssModule={cssModule}
-            onMount={buttons => {
-              this.buttons = buttons;
-            }}
-            onNext={this.clickNext}
-            onPrev={this.clickPrev}
-            organicArrows={organicArrows}
-          />
+          {buttons && (
+            <Buttons
+              rootElement={rootElement}
+              cssModule={cssModule}
+              onMount={btns => {
+                this.buttons = btns;
+              }}
+              onNext={this.clickNext}
+              onPrev={this.clickPrev}
+              organicArrows={organicArrows}
+              buttonContentLeft={buttonContentLeft}
+              buttonContentRight={buttonContentRight}
+            />
+          )}
+          {customContent}
         </div>
         {bullets && (
           <Bullets
