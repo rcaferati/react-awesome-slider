@@ -9,12 +9,16 @@ export default class Buttons extends React.Component {
     onMount: PropTypes.func.isRequired,
     onNext: PropTypes.func.isRequired,
     onPrev: PropTypes.func.isRequired,
+    buttonContentLeft: PropTypes.node,
+    buttonContentRight: PropTypes.node,
     organicArrows: PropTypes.bool,
   };
 
   static defaultProps = {
     cssModule: null,
     organicArrows: true,
+    buttonContentLeft: null,
+    buttonContentRight: null,
   };
 
   componentDidMount() {
@@ -30,28 +34,54 @@ export default class Buttons extends React.Component {
       rootElement,
       cssModule,
       organicArrows,
+      buttonContentLeft,
+      buttonContentRight,
       onNext,
       onPrev,
     } = this.props;
 
     return (
       <div
-        ref={(controls) => { this.controls = controls; }}
+        ref={controls => {
+          this.controls = controls;
+        }}
         className={getClassName(`${rootElement}__controls`, cssModule)}
       >
         <button
-          ref={(next) => { this.next = next; }}
+          ref={next => {
+            this.next = next;
+          }}
           className={getClassName(`${rootElement}__next`, cssModule)}
           onClick={onNext}
         >
-          {organicArrows && <span className={getClassName(`${rootElement}__controls__arrow-right`, cssModule)} />}
+          {organicArrows ? (
+            <span
+              className={getClassName(
+                `${rootElement}__controls__arrow-right`,
+                cssModule
+              )}
+            />
+          ) : (
+            buttonContentRight
+          )}
         </button>
         <button
-          ref={(prev) => { this.prev = prev; }}
+          ref={prev => {
+            this.prev = prev;
+          }}
           className={getClassName(`${rootElement}__prev`, cssModule)}
           onClick={onPrev}
         >
-          {organicArrows && <span className={getClassName(`${rootElement}__controls__arrow-left`, cssModule)} />}
+          {organicArrows ? (
+            <span
+              className={getClassName(
+                `${rootElement}__controls__arrow-left`,
+                cssModule
+              )}
+            />
+          ) : (
+            buttonContentLeft
+          )}
         </button>
       </div>
     );
