@@ -1,4 +1,5 @@
 const path = require('path');
+const TerserPlugin = require('terser-webpack-plugin');
 
 const config = {
   entry: {
@@ -37,6 +38,16 @@ const config = {
           plugins: ['transform-react-remove-prop-types'],
         },
       },
+    ],
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          keep_fnames: true,
+        },
+      }),
     ],
   },
 };
