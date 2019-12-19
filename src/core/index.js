@@ -96,7 +96,9 @@ export default class AwesomeSlider extends React.Component {
   componentDidMount() {
     this.boxA.classList.add(this.classNames.active);
     if (this.props.startupScreen) {
-      this.buttons.element.classList.add(this.classNames.controlsActive);
+      if (this.buttons) {
+        this.buttons.element.classList.add(this.classNames.controlsActive);
+      }
       if (this.props.startup === true) {
         this.startup();
       }
@@ -123,12 +125,15 @@ export default class AwesomeSlider extends React.Component {
       newProps.selected !== this.props.selected
       // || newProps.selected !== this.index
     ) {
-      const index = newProps.selected;
+      const index = this.getIndex(newProps.selected);
       // FORCED RIGHT WING WHEN INFINITE === 0
       const direction =
-        newProps.infinite === true && index === 0
+        newProps.infinite === true &&
+        index === 0 &&
+        this.index === this.media.length - 1
           ? true
           : !(this.index > index);
+
       this.goTo({
         index,
         direction,
@@ -175,7 +180,7 @@ export default class AwesomeSlider extends React.Component {
       };
     } else {
       this.started = true;
-      this.index = this.props.selected;
+      this.index = this.getIndex(this.props.selected);
       this.state = {
         index: this.index,
         boxA: this.media[this.index] || null,
@@ -189,6 +194,7 @@ export default class AwesomeSlider extends React.Component {
       slides: this.media.length,
       currentIndex: this.index,
       currentSlide: this[this.active],
+      currentMedia: this.media[this.index],
       element: this.slider,
     };
   }
@@ -234,8 +240,9 @@ export default class AwesomeSlider extends React.Component {
 
     this.setState({
       index,
-      boxA: this.media[index],
-      boxB: this.media[index],
+      boxA: this.media[this.getIndex(index)],
+      // boxB: this.media[index],
+      boxB: null,
     });
   }
 
@@ -254,11 +261,13 @@ export default class AwesomeSlider extends React.Component {
 
   resetSlider(index = 0) {
     this.index = index;
+
     this.setState(
       {
         index,
-        boxA: this.media[index],
-        boxB: this.media[index],
+        boxA: this.media[this.getIndex(index)],
+        // boxB: this.media[index],
+        boxB: null,
       },
       () => {
         if (this.props.onResetSlider) {
@@ -275,7 +284,8 @@ export default class AwesomeSlider extends React.Component {
       if (props.children !== this.props.children || !this.media) {
         this.media = transformChildren(props.children);
       }
-    } else if (props.media !== this.props.media) {
+    } else if (props.media && props.media.length) {
+      // props.media !== this.props.media
       this.media = props.media;
     }
   }
@@ -368,9 +378,11 @@ export default class AwesomeSlider extends React.Component {
         loaderContent.classList.remove(contentEnterMoveClass);
         setTimeout(() => {
           onceNextCssLayout().then(() => {
-            this.buttons.element.classList.remove(
-              this.classNames.controlsActive
-            );
+            if (this.buttons) {
+              this.buttons.element.classList.remove(
+                this.classNames.controlsActive
+              );
+            }
           });
         }, this.props.controlsReturnDelay);
 
@@ -433,9 +445,11 @@ export default class AwesomeSlider extends React.Component {
 
             setTimeout(() => {
               onceNextCssLayout().then(() => {
-                this.buttons.element.classList.remove(
-                  this.classNames.controlsActive
-                );
+                if (this.buttons) {
+                  this.buttons.element.classList.remove(
+                    this.classNames.controlsActive
+                  );
+                }
               });
             }, this.props.controlsReturnDelay);
 
@@ -516,28 +530,28 @@ export default class AwesomeSlider extends React.Component {
     }
     this.loading = true;
     this.direction = direction;
-    if (touch === false) {
-      this.activateArrows(direction, () => {
-        this.chargeIndex(nextIndex, media => {
-          this.renderedLoader = true;
-          this.startAnimation(direction, media, () => {
-            this.index = this.nextIndex;
-            this.loading = false;
-            this.setState({ index: this.index });
-            if (this.props.onTransitionEnd) {
-              this.props.onTransitionEnd({
-                ...this.getInfo(),
-              });
-            }
-          });
-        });
-      });
-    } else {
-      this.chargeIndex(index, () => {
+    if (touch === true) {
+      this.chargeIndex(nextIndex, () => {
         this.activateArrows(direction);
         this.startAnimationMobile();
       });
+      return;
     }
+    this.activateArrows(direction, () => {
+      this.chargeIndex(nextIndex, media => {
+        this.renderedLoader = true;
+        this.startAnimation(direction, media, () => {
+          this.index = this.nextIndex;
+          this.loading = false;
+          this.setState({ index: this.index });
+          if (this.props.onTransitionEnd) {
+            this.props.onTransitionEnd({
+              ...this.getInfo(),
+            });
+          }
+        });
+      });
+    });
   }
 
   chargeIndex(index, callback) {
@@ -565,9 +579,11 @@ export default class AwesomeSlider extends React.Component {
   }
 
   activateArrows(direction, callback) {
-    const activeArrow = direction ? this.buttons.next : this.buttons.prev;
     const dirName = direction ? 'right' : 'left';
-    this.activeArrow = activeArrow.querySelector('span');
+    if (this.buttons) {
+      const activeArrow = direction ? this.buttons.next : this.buttons.prev;
+      this.activeArrow = activeArrow.querySelector('span');
+    }
     if (!this.activeArrow) {
       if (callback) callback();
       return;
@@ -586,7 +602,10 @@ export default class AwesomeSlider extends React.Component {
       }
     });
 
-    this.buttons.element.classList.add(this.classNames.controlsActive);
+    if (this.buttons) {
+      this.buttons.element.classList.add(this.classNames.controlsActive);
+    }
+
     this.activeArrow.classList.add(this.activeArrowClass);
   }
 

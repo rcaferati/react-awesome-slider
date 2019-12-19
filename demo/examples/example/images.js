@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import AwesomeSlider from 'src/index';
 import AwesomeFrame from 'src/components/react-awesome-frame';
 import AwsSliderStyles from 'src/core/styles.scss';
