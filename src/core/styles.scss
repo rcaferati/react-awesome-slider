@@ -126,6 +126,10 @@ $content-background-color: #2f2f2f;
       top: 0;
       left: 0;
     }
+    > div {
+      position: relative;
+      z-index: 1;
+    }
     &--enter {
       // On content enter
     }

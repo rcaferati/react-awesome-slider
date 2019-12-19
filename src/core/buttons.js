@@ -51,6 +51,7 @@ export default class Buttons extends React.Component {
           ref={next => {
             this.next = next;
           }}
+          aria-label="next"
           className={getClassName(`${rootElement}__next`, cssModule)}
           onClick={onNext}
         >
@@ -69,6 +70,7 @@ export default class Buttons extends React.Component {
           ref={prev => {
             this.prev = prev;
           }}
+          aria-label="prev"
           className={getClassName(`${rootElement}__prev`, cssModule)}
           onClick={onPrev}
         >
