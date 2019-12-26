@@ -164,6 +164,10 @@ const slider = (
 | onTransitionEnd     | `function` |      `null`      | Called on at the slider transition end event passing the slider reference as an argument                                           |
 | onTransitionStart   | `function` |      `null`      | Called on slider transition start passing the slider reference as an argument                                                      |
 | onTransitionRequest | `function` |      `null`      | Called when a user interacts with the slider navigation (arrows or bullets)                                                        |
+| buttons             | `boolean`  |      `true`      | Should render the default left and right navigation buttons.                                                |
+| buttonContentRight  | `node` |      `null`          | Add content as children of the right button.                                              |
+| buttonContentLeft   | `node` |      `null`          | Add content as children of the left button.                                              |
+| customContent       | `node` |      `null`          | Render extra content at the same level of the default buttons. Useful if you want to add an extra slider navigation layer or a fixed overlay element               |
 
 ## Contribute
 
