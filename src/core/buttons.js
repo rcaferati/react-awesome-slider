@@ -70,7 +70,7 @@ export default class Buttons extends React.Component {
           ref={prev => {
             this.prev = prev;
           }}
-          aria-label="prev"
+          aria-label="previous"
           className={getClassName(`${rootElement}__prev`, cssModule)}
           onClick={onPrev}
         >

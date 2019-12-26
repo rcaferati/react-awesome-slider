@@ -240,9 +240,8 @@ export default class AwesomeSlider extends React.Component {
 
     this.setState({
       index,
-      boxA: this.media[this.getIndex(index)],
-      // boxB: this.media[index],
-      boxB: null,
+      [this.active]: this.media[this.getIndex(index)],
+      [this.loader]: null,
     });
   }
 
@@ -265,9 +264,8 @@ export default class AwesomeSlider extends React.Component {
     this.setState(
       {
         index,
-        boxA: this.media[this.getIndex(index)],
-        // boxB: this.media[index],
-        boxB: null,
+        [this.active]: this.media[this.getIndex(index)],
+        [this.loader]: null,
       },
       () => {
         if (this.props.onResetSlider) {
