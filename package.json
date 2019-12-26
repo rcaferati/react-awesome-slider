@@ -1,6 +1,6 @@
 {
   "name": "react-awesome-slider",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "React Awesome Slider is a 60fps performant, extendable, highly customisable, production ready React Component that renders a media (image/video) gallery slider carousel.",
   "main": "dist/index.js",
   "author": "Rafael Caferati",
