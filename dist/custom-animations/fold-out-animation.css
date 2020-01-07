@@ -89,9 +89,6 @@
       position: absolute;
       top: 0;
       left: 0; }
-    .awssld__content > div {
-      position: relative;
-      z-index: 1; }
   .awssld__controls button {
     display: -webkit-box;
     display: -ms-flexbox;

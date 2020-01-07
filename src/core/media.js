@@ -35,13 +35,9 @@ export default class Media extends React.Component {
     }
 
     return (
-      <div
-        className={[className, mediaClass].join(' ').trim()}
-        style={style || null}
-        {...extra}
-      >
+      <div className={className} style={style || null} {...extra}>
         {background}
-        {children && <div>{media.children}</div>}
+        {children && <div className={mediaClass}>{media.children}</div>}
       </div>
     );
   }

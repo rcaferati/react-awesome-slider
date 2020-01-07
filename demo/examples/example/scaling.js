@@ -38,6 +38,7 @@ function Component({ startup }) {
               cssModule={AwsSliderStyles}
               startup={startup}
               startupScreen={startupScreen}
+              animation="scaleOutAnimation"
               onFirstMount={reset}
               onResetSlider={reset}
               onTransitionStart={transitionStart}

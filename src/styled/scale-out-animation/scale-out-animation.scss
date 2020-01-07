@@ -1,13 +1,17 @@
 @import '../../core/styles.scss';
 
 .#{$root-element} {
-  --scale-out-scale: 0.85;
+  &--scaleOutAnimation {
+    --scale-out-scale: 0.85;
 
-  &--exit {
-    &.#{$root-element}--moveRight,
-    &.#{$root-element}--moveLeft {
-      animation: scaleOut var(--slider-transition-duration) both
-        var(--transition-bezier);
+    .#{$root-element} {
+      &--exit {
+        &.#{$root-element}--moveRight,
+        &.#{$root-element}--moveLeft {
+          animation: scaleOut var(--slider-transition-duration) both
+            var(--transition-bezier);
+        }
+      }
     }
   }
 }

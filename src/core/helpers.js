@@ -9,9 +9,13 @@ export function getRootClassName({
   total,
   current,
   infinite,
+  animation,
   fillParent,
 }) {
   let classNames = [rootElement];
+  if (animation) {
+    classNames.push(`${rootElement}--${animation}`);
+  }
   if (organicArrows === true) {
     classNames.push(`${rootElement}--organic-arrows`);
   }

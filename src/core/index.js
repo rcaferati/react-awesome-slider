@@ -20,10 +20,11 @@ const mediaLoader = new MediaLoader();
 
 export default class AwesomeSlider extends React.Component {
   static propTypes = {
+    animation: PropTypes.string,
     bullets: PropTypes.bool,
-    buttons: PropTypes.bool,
-    buttonContentRight: PropTypes.node,
     buttonContentLeft: PropTypes.node,
+    buttonContentRight: PropTypes.node,
+    buttons: PropTypes.bool,
     children: PropTypes.node,
     className: PropTypes.string,
     controlsReturnDelay: PropTypes.number,
@@ -36,25 +37,26 @@ export default class AwesomeSlider extends React.Component {
     name: PropTypes.string,
     onFirstMount: PropTypes.func,
     onResetSlider: PropTypes.func,
+    onStartupRelease: PropTypes.func,
     onTransitionEnd: PropTypes.func,
     onTransitionRequest: PropTypes.func,
     onTransitionStart: PropTypes.func,
-    onStartupRelease: PropTypes.func,
     organicArrows: PropTypes.bool,
     rootElement: PropTypes.string,
     selected: PropTypes.any,
     startup: PropTypes.bool,
-    startupScreen: PropTypes.object,
     startupDelay: PropTypes.number,
+    startupScreen: PropTypes.object,
     style: PropTypes.object,
     transitionDelay: PropTypes.number,
   };
 
   static defaultProps = {
+    animation: null,
     bullets: true,
-    buttons: true,
-    buttonContentRight: null,
     buttonContentLeft: null,
+    buttonContentRight: null,
+    buttons: true,
     children: null,
     className: null,
     controlsReturnDelay: 0,
@@ -67,14 +69,15 @@ export default class AwesomeSlider extends React.Component {
     name: 'awesome-slider',
     onFirstMount: null,
     onResetSlider: null,
+    onStartupRelease: null,
     onTransitionEnd: null,
     onTransitionRequest: null,
     onTransitionStart: null,
-    onStartupRelease: null,
     organicArrows: true,
     rootElement: ROOTELM,
     selected: 0,
     startup: true,
+    startupDelay: 0,
     startupScreen: null,
     style: {},
     transitionDelay: 0,
@@ -152,22 +155,25 @@ export default class AwesomeSlider extends React.Component {
 
   getRootClassName() {
     const {
+      animation,
+      className,
+      cssModule,
+      disabled,
       fillParent,
       infinite,
-      className,
       organicArrows,
-      disabled,
-      cssModule,
     } = this.props;
+
     return getRootClassName({
-      cssModule,
-      disabled,
-      organicArrows,
+      animation,
       className,
-      infinite,
-      fillParent,
-      rootElement: this.rootElement,
+      cssModule,
       current: this.state.index,
+      disabled,
+      fillParent,
+      infinite,
+      organicArrows,
+      rootElement: this.rootElement,
       total: this.media.length,
     });
   }
@@ -262,7 +268,7 @@ export default class AwesomeSlider extends React.Component {
           touch: false,
         });
       });
-    }, 100);
+    }, this.props.startupDelay || 100);
   }
 
   resetSlider(index = 0) {
@@ -296,10 +302,8 @@ export default class AwesomeSlider extends React.Component {
   }
 
   loadContent(active, url) {
-    console.log(url);
     return new Promise(resolve => {
       if (this.loaded.includes(url) || !url) {
-        console.log('ABORT');
         resolve(null);
         return;
       }
@@ -309,7 +313,8 @@ export default class AwesomeSlider extends React.Component {
         onceNextCssLayout().then(() => {
           bar.classList.add(this.classNames.barActive);
         });
-        mediaLoader.load(url).then(() => {
+        // STILL WAITING ON THE MULTIPLE LOADING THING
+        mediaLoader.loadMultiple([url]).then(() => {
           this.loaded.push(url);
           onceNextCssLayout().then(() => {
             onceTransitionEnd(bar).then(() => {

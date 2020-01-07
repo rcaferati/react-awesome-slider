@@ -318,9 +318,6 @@ select {
       position: absolute;
       top: 0;
       left: 0; }
-    .awssld__content > div {
-      position: relative;
-      z-index: 1; }
   .awssld__controls button {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -1891,7 +1888,7 @@ span.aws-btn__bubble {
   background-color: blueviolet;
 }
 
-.page-three > img {
+.awssld__content > img {
   filter: grayscale(100%) opacity(35%);
   mix-blend-mode: multiply;
 }
