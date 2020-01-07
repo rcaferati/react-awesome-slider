@@ -39,11 +39,13 @@ export default class AwesomeSlider extends React.Component {
     onTransitionEnd: PropTypes.func,
     onTransitionRequest: PropTypes.func,
     onTransitionStart: PropTypes.func,
+    onStartupRelease: PropTypes.func,
     organicArrows: PropTypes.bool,
     rootElement: PropTypes.string,
     selected: PropTypes.any,
     startup: PropTypes.bool,
     startupScreen: PropTypes.object,
+    startupDelay: PropTypes.number,
     style: PropTypes.object,
     transitionDelay: PropTypes.number,
   };
@@ -68,6 +70,7 @@ export default class AwesomeSlider extends React.Component {
     onTransitionEnd: null,
     onTransitionRequest: null,
     onTransitionStart: null,
+    onStartupRelease: null,
     organicArrows: true,
     rootElement: ROOTELM,
     selected: 0,
@@ -97,7 +100,11 @@ export default class AwesomeSlider extends React.Component {
     this.boxA.classList.add(this.classNames.active);
     if (this.props.startupScreen) {
       if (this.buttons) {
+        this.buttons.element.classList.add(this.classNames.controlsHidden);
         this.buttons.element.classList.add(this.classNames.controlsActive);
+        onceNextCssLayout().then(() => {
+          this.buttons.element.classList.remove(this.classNames.controlsHidden);
+        });
       }
       if (this.props.startup === true) {
         this.startup();
@@ -289,8 +296,10 @@ export default class AwesomeSlider extends React.Component {
   }
 
   loadContent(active, url) {
+    console.log(url);
     return new Promise(resolve => {
       if (this.loaded.includes(url) || !url) {
+        console.log('ABORT');
         resolve(null);
         return;
       }
@@ -374,24 +383,25 @@ export default class AwesomeSlider extends React.Component {
         activeContent.classList.remove(contentExitMoveClass);
         activeContent.classList.remove(this.classNames.contentExit);
         loaderContent.classList.remove(contentEnterMoveClass);
+
         setTimeout(() => {
-          onceNextCssLayout().then(() => {
-            if (this.buttons) {
-              this.buttons.element.classList.remove(
-                this.classNames.controlsActive
-              );
-            }
-          });
+          if (this.buttons) {
+            this.buttons.element.classList.remove(
+              this.classNames.controlsActive
+            );
+          }
         }, this.props.controlsReturnDelay);
 
         if (this.activeArrow) {
-          this.activeArrow.classList.remove(this.activeArrowClass);
+          // this.activeArrow.classList.remove(this.activeArrowClass);
           this.activeArrow = null;
           this.activeArrowClass = null;
         }
+
         /* INVERT BOXES */
         this.active = this.active === 'boxA' ? 'boxB' : 'boxA';
         this.loader = this.active === 'boxA' ? 'boxB' : 'boxA';
+
         if (callback) {
           callback();
         }
@@ -441,29 +451,35 @@ export default class AwesomeSlider extends React.Component {
               active.removeChild(bar);
             }
 
-            setTimeout(() => {
-              onceNextCssLayout().then(() => {
-                if (this.buttons) {
-                  this.buttons.element.classList.remove(
-                    this.classNames.controlsActive
-                  );
-                }
-              });
-            }, this.props.controlsReturnDelay);
-
-            if (this.activeArrow) {
-              onceNextCssLayout().then(() => {
-                this.activeArrow.classList.remove(this.activeArrowClass);
-                this.activeArrow = null;
-                this.activeArrowClass = null;
-              });
+            if (this.buttons) {
+              setTimeout(() => {
+                this.buttons.element.classList.remove(
+                  this.classNames.controlsActive
+                );
+              }, this.props.controlsReturnDelay);
             }
+
             // * INVERT BOXES *
             this.active = this.active === 'boxA' ? 'boxB' : 'boxA';
             this.loader = this.active === 'boxA' ? 'boxB' : 'boxA';
-            if (callback) {
-              callback();
+            const release = !this.activeArrow;
+
+            if (this.activeArrow) {
+              onceTransitionEnd(this.activeArrow, {
+                tolerance: this.index === null ? 0 : 2,
+              }).then(() => {
+                // RELEASE THE SLIDER JUST AFTER THE OA RETURNS
+                this.loading = false;
+              });
+
+              this.activeArrow.classList.remove(this.activeArrowClass);
+              this.activeArrow = null;
+              this.activeArrowClass = null;
             }
+
+            callback({
+              release,
+            });
           });
         });
       }, transitionDelay);
@@ -524,8 +540,14 @@ export default class AwesomeSlider extends React.Component {
   goTo({ index, direction, touch = false }) {
     const nextIndex = this.getIndex(index);
     if (this.loading === true || index === this.index) {
+      if (this.props.onTransitionReject) {
+        this.props.onTransitionReject({
+          ...this.getInfo(),
+        });
+      }
       return;
     }
+
     this.loading = true;
     this.direction = direction;
     if (touch === true) {
@@ -535,18 +557,22 @@ export default class AwesomeSlider extends React.Component {
       });
       return;
     }
+
     this.activateArrows(direction, () => {
       this.chargeIndex(nextIndex, media => {
         this.renderedLoader = true;
-        this.startAnimation(direction, media, () => {
+        this.startAnimation(direction, media, ({ release = true }) => {
           this.index = this.nextIndex;
-          this.loading = false;
-          this.setState({ index: this.index });
-          if (this.props.onTransitionEnd) {
-            this.props.onTransitionEnd({
-              ...this.getInfo(),
-            });
-          }
+          this.setState({ index: this.index }, () => {
+            if (release === true) {
+              this.loading = false;
+            }
+            if (this.props.onTransitionEnd) {
+              this.props.onTransitionEnd({
+                ...this.getInfo(),
+              });
+            }
+          });
         });
       });
     });
@@ -578,20 +604,29 @@ export default class AwesomeSlider extends React.Component {
 
   activateArrows(direction, callback) {
     const dirName = direction ? 'right' : 'left';
+    const arrowClass = getClassName(
+      `${this.rootElement}__controls__arrow-${dirName}`,
+      this.props.cssModule
+    );
+
     if (this.buttons) {
       const activeArrow = direction ? this.buttons.next : this.buttons.prev;
-      this.activeArrow = activeArrow.querySelector('span');
+      this.activeArrow = activeArrow.querySelector(`.${arrowClass}`);
     }
+
     if (!this.activeArrow) {
-      if (callback) callback();
+      if (callback) {
+        callback();
+      }
       return;
     }
+
     this.activeArrowClass = getClassName(
       `${this.rootElement}__controls__arrow-${dirName}--active`,
       this.props.cssModule
     );
 
-    // This needs to be done due to the usage of pseudo elements animation
+    // This is due to the usage of pseudo elements animation
     onceTransitionEnd(this.activeArrow, {
       tolerance: this.index === null ? 0 : 2,
     }).then(() => {
@@ -600,10 +635,7 @@ export default class AwesomeSlider extends React.Component {
       }
     });
 
-    if (this.buttons) {
-      this.buttons.element.classList.add(this.classNames.controlsActive);
-    }
-
+    this.buttons.element.classList.add(this.classNames.controlsActive);
     this.activeArrow.classList.add(this.activeArrowClass);
   }
 

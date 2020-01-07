@@ -1,6 +1,4 @@
-const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const path = require('path');
 
 const THEME = process.env.AWESOME_THEME;
@@ -45,9 +43,6 @@ module.exports = {
         ],
       },
     ],
-  },
-  optimization: {
-    minimizer: [new OptimizeCSSAssetsPlugin({})],
   },
   plugins: [
     new MiniCssExtractPlugin({

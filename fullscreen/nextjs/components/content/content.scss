@@ -1,0 +1,27 @@
+.content {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  --action-height: 120px;
+}
+
+.content__main {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // background-color: blue;
+}
+
+.content__action {
+  // background-color: red;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: var(--action-height);
+}

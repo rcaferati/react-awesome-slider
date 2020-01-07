@@ -5,6 +5,7 @@ const config = {
   entry: {
     index: ['./src/index.js'],
     autoplay: ['./src/hoc/autoplay/hoc.js'],
+    navigation: ['./src/hoc/navigation/index.js'],
   },
   output: {
     path: path.resolve(__dirname, 'dist'),

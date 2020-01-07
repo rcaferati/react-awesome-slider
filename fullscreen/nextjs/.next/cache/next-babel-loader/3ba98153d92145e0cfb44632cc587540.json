@@ -1,0 +1,1 @@
+{"ast":null,"code":"var __jsx = React.createElement;\nimport React from 'react';\nimport Main from '../components/main';\nimport Slider from '../slider/slider';\n\nconst Home = () => {\n  return __jsx(Main, {\n    page: \"\"\n  }, __jsx(Slider, null));\n};\n\nexport default Home;","map":null,"metadata":{},"sourceType":"module"}

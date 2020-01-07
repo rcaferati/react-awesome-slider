@@ -1,0 +1,1 @@
+{"ast":null,"code":"var __jsx = React.createElement;\nimport React from 'react';\nimport './page.css';\n\nconst Page = ({\n  children\n}) => {\n  return __jsx(\"div\", {\n    className: \"page\"\n  }, children);\n};\n\nexport default Page;","map":null,"metadata":{},"sourceType":"module"}

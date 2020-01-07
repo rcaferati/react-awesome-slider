@@ -10,7 +10,7 @@ fs.readdir(THEMES, (err, files) => {
   files.forEach(file => {
     if (file.match(/-animation/gi)) {
       shell.exec(
-        `${THEMES_ARG}=${file} webpack --mode production --config webpack.animations.config.js`
+        `${THEMES_ARG}=${file} webpack --config webpack.animations.config.js`
       );
       shell.exec(`rm ${THEMES_PATH}/${file}.js`);
     }

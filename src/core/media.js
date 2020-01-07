@@ -11,34 +11,37 @@ export default class Media extends React.Component {
 
   render() {
     const { media, className } = this.props;
-    const { url, children, style, loader, [`data-src`]: dataSrc,className: mediaClass, ...extra } = media;
+    const {
+      url,
+      children,
+      style,
+      loader,
+      [`data-src`]: dataSrc,
+      className: mediaClass,
+      ...extra
+    } = media;
 
     let background = null;
 
     if (url) {
       if (url.match(/\.(mp4|webm)/)) {
         background = (
-          <video
-            title={media.title}
-            src={url}
-            type="video/mp4"
-            controls
-          />
+          <video title={media.title} src={url} type="video/mp4" controls />
         );
       } else {
         // DEFAULTS TO AN IMAGE TAG
-        background = (
-          <img alt={media.alt || media.title || null} src={url} />
-        );
+        background = <img alt={media.alt || media.title || null} src={url} />;
       }
     }
 
     return (
-      <div className={className} style={style || null} {...extra}>
+      <div
+        className={[className, mediaClass].join(' ').trim()}
+        style={style || null}
+        {...extra}
+      >
         {background}
-        {children && (
-          <div className={mediaClass}>{media.children}</div>
-        )}
+        {children && <div>{media.children}</div>}
       </div>
     );
   }

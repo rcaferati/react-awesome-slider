@@ -29,9 +29,11 @@ export function getRootClassName({
       classNames.push(`${rootElement}--last`);
     }
   }
+
   if (cssModule && cssModule[rootElement]) {
     classNames = classToModules(classNames, cssModule);
   }
+
   if (className) {
     classNames.push(...className.split(' '));
   }
@@ -44,6 +46,7 @@ export function getRootClassName({
 export function transformChildren(children) {
   const media = [];
   const items = children.constructor === Array ? children : [children];
+
   items.forEach(child => {
     const item = {
       ...child.props,
@@ -79,6 +82,7 @@ export function setupClassNames(rootElement, cssModule) {
       `${rootElement}__content--moveRight`,
       cssModule
     ),
+    controlsHidden: getClassName(`${rootElement}__controls--hidden`, cssModule),
     controlsActive: getClassName(`${rootElement}__controls--active`, cssModule),
     animated: getClassName(`${rootElement}--animated`, cssModule),
     animatedMobile: getClassName(`${rootElement}--animated-mobile`, cssModule),
