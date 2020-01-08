@@ -429,21 +429,21 @@
     -webkit-transform: translate3d(100%, 0, 0);
             transform: translate3d(100%, 0, 0); } }
 
-.awssld {
+.awssld--fallAnimation {
   --fall-animation-duration: 700ms;
   --fall-animation-angle: 16deg;
   --fall-scaling-in-from: 0.9; }
-  .awssld--moveRight, .awssld--moveLeft {
+  .awssld--fallAnimation .awssld--moveRight, .awssld--fallAnimation .awssld--moveLeft {
     -webkit-animation: scaleUp calc(var(--fall-animation-duration) / 2) var(--transition-bezier) both;
             animation: scaleUp calc(var(--fall-animation-duration) / 2) var(--transition-bezier) both; }
-  .awssld--exit {
+  .awssld--fallAnimation .awssld--exit {
     z-index: 100; }
-    .awssld--exit.awssld--moveLeft {
+    .awssld--fallAnimation .awssld--exit.awssld--moveLeft {
       -webkit-transform-origin: 0% 0%;
               transform-origin: 0% 0%;
       -webkit-animation: rotateFallRight var(--fall-animation-duration) both ease-in-out;
               animation: rotateFallRight var(--fall-animation-duration) both ease-in-out; }
-    .awssld--exit.awssld--moveRight {
+    .awssld--fallAnimation .awssld--exit.awssld--moveRight {
       -webkit-transform-origin: 100% 0%;
               transform-origin: 100% 0%;
       -webkit-animation: rotateFallLeft var(--fall-animation-duration) both ease-in-out;

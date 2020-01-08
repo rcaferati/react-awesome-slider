@@ -429,31 +429,31 @@
     -webkit-transform: translate3d(100%, 0, 0);
             transform: translate3d(100%, 0, 0); } }
 
-.awssld {
+.awssld--cubeAnimation {
   --cube-animation-duration: 675ms;
   --cube-animation-perspective: 1800px;
   --cube-animation-ease-in: cubic-bezier(0.8, 0, 1, 0.8);
   --cube-animation-ease-out: cubic-bezier(0, 0.2, 0.2, 1);
   --cube-translateZ-distance: -225px; }
-  .awssld__container {
+  .awssld--cubeAnimation .awssld__container {
     -webkit-perspective: var(--cube-animation-perspective);
             perspective: var(--cube-animation-perspective); }
-  .awssld--moveRight {
+  .awssld--cubeAnimation .awssld--moveRight {
     -webkit-transform-origin: 0% 50%;
             transform-origin: 0% 50%;
     -webkit-animation: cubeLeftIn var(--cube-animation-duration) both var(--cube-animation-ease-in);
             animation: cubeLeftIn var(--cube-animation-duration) both var(--cube-animation-ease-in); }
-  .awssld--moveLeft {
+  .awssld--cubeAnimation .awssld--moveLeft {
     -webkit-transform-origin: 100% 50%;
             transform-origin: 100% 50%;
     -webkit-animation: cubeRightIn var(--cube-animation-duration) both var(--cube-animation-ease-in);
             animation: cubeRightIn var(--cube-animation-duration) both var(--cube-animation-ease-in); }
-  .awssld--exit.awssld--moveLeft {
+  .awssld--cubeAnimation .awssld--exit.awssld--moveLeft {
     -webkit-transform-origin: 100% 50%;
             transform-origin: 100% 50%;
     -webkit-animation: cubeLeftOut var(--cube-animation-duration) both var(--cube-animation-ease-in);
             animation: cubeLeftOut var(--cube-animation-duration) both var(--cube-animation-ease-in); }
-  .awssld--exit.awssld--moveRight {
+  .awssld--cubeAnimation .awssld--exit.awssld--moveRight {
     -webkit-transform-origin: 0% 50%;
             transform-origin: 0% 50%;
     -webkit-animation: cubeRightOut var(--cube-animation-duration) both var(--cube-animation-ease-in);

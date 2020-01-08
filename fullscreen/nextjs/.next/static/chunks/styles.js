@@ -29,7 +29,7 @@
           .querySelectorAll("link[href][rel=stylesheet]")
           .forEach(function(link) {
             if (!link.href.match(prefix) || link.stale) return;
-            injectCss(link, link.href.split("?")[0] + "?unix=1578423321930");
+            injectCss(link, link.href.split("?")[0] + "?unix=1578446448422");
           });
       }
     }
@@ -66,7 +66,7 @@
           .querySelectorAll("link[href][rel=stylesheet]")
           .forEach(function(link) {
             if (!link.href.match(prefix) || link.stale) return;
-            injectCss(link, link.href.split("?")[0] + "?unix=1578423322102");
+            injectCss(link, link.href.split("?")[0] + "?unix=1578446448539");
           });
       }
     }
@@ -103,7 +103,7 @@
           .querySelectorAll("link[href][rel=stylesheet]")
           .forEach(function(link) {
             if (!link.href.match(prefix) || link.stale) return;
-            injectCss(link, link.href.split("?")[0] + "?unix=1578423883232");
+            injectCss(link, link.href.split("?")[0] + "?unix=1578446448238");
           });
       }
     }
@@ -140,7 +140,7 @@
           .querySelectorAll("link[href][rel=stylesheet]")
           .forEach(function(link) {
             if (!link.href.match(prefix) || link.stale) return;
-            injectCss(link, link.href.split("?")[0] + "?unix=1578423321680");
+            injectCss(link, link.href.split("?")[0] + "?unix=1578446448221");
           });
       }
     }
@@ -177,7 +177,7 @@
           .querySelectorAll("link[href][rel=stylesheet]")
           .forEach(function(link) {
             if (!link.href.match(prefix) || link.stale) return;
-            injectCss(link, link.href.split("?")[0] + "?unix=1578423322028");
+            injectCss(link, link.href.split("?")[0] + "?unix=1578446448473");
           });
       }
     }
@@ -214,7 +214,7 @@
           .querySelectorAll("link[href][rel=stylesheet]")
           .forEach(function(link) {
             if (!link.href.match(prefix) || link.stale) return;
-            injectCss(link, link.href.split("?")[0] + "?unix=1578423322127");
+            injectCss(link, link.href.split("?")[0] + "?unix=1578446448626");
           });
       }
     }
@@ -251,7 +251,7 @@
           .querySelectorAll("link[href][rel=stylesheet]")
           .forEach(function(link) {
             if (!link.href.match(prefix) || link.stale) return;
-            injectCss(link, link.href.split("?")[0] + "?unix=1578423321689");
+            injectCss(link, link.href.split("?")[0] + "?unix=1578446448235");
           });
       }
     }
@@ -288,7 +288,7 @@
           .querySelectorAll("link[href][rel=stylesheet]")
           .forEach(function(link) {
             if (!link.href.match(prefix) || link.stale) return;
-            injectCss(link, link.href.split("?")[0] + "?unix=1578423322041");
+            injectCss(link, link.href.split("?")[0] + "?unix=1578446448518");
           });
       }
     }
@@ -325,7 +325,7 @@
           .querySelectorAll("link[href][rel=stylesheet]")
           .forEach(function(link) {
             if (!link.href.match(prefix) || link.stale) return;
-            injectCss(link, link.href.split("?")[0] + "?unix=1578423322139");
+            injectCss(link, link.href.split("?")[0] + "?unix=1578446448607");
           });
       }
     }
@@ -362,7 +362,7 @@
           .querySelectorAll("link[href][rel=stylesheet]")
           .forEach(function(link) {
             if (!link.href.match(prefix) || link.stale) return;
-            injectCss(link, link.href.split("?")[0] + "?unix=1578423322033");
+            injectCss(link, link.href.split("?")[0] + "?unix=1578446448522");
           });
       }
     }
@@ -399,7 +399,7 @@
           .querySelectorAll("link[href][rel=stylesheet]")
           .forEach(function(link) {
             if (!link.href.match(prefix) || link.stale) return;
-            injectCss(link, link.href.split("?")[0] + "?unix=1578423322092");
+            injectCss(link, link.href.split("?")[0] + "?unix=1578446448593");
           });
       }
     }
@@ -407,10 +407,10 @@
 
 /***/ }),
 
-/***/ "./node_modules/react-awesome-slider/dist/custom-animations/fold-out-animation.css":
-/*!*****************************************************************************************!*\
-  !*** ./node_modules/react-awesome-slider/dist/custom-animations/fold-out-animation.css ***!
-  \*****************************************************************************************/
+/***/ "./node_modules/react-awesome-slider/dist/custom-animations/cube-animation.css":
+/*!*************************************************************************************!*\
+  !*** ./node_modules/react-awesome-slider/dist/custom-animations/cube-animation.css ***!
+  \*************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -436,7 +436,44 @@
           .querySelectorAll("link[href][rel=stylesheet]")
           .forEach(function(link) {
             if (!link.href.match(prefix) || link.stale) return;
-            injectCss(link, link.href.split("?")[0] + "?unix=1578423321684");
+            injectCss(link, link.href.split("?")[0] + "?unix=1578446448226");
+          });
+      }
+    }
+  
+
+/***/ }),
+
+/***/ "./node_modules/react-awesome-slider/dist/custom-animations/fall-animation.css":
+/*!*************************************************************************************!*\
+  !*** ./node_modules/react-awesome-slider/dist/custom-animations/fall-animation.css ***!
+  \*************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin;
+    if (true) {
+      var injectCss = function injectCss(prev, href) {
+        var link = prev.cloneNode();
+        link.href = href;
+        link.onload = function() {
+          prev.parentNode.removeChild(prev);
+        };
+        prev.stale = true;
+        prev.parentNode.insertBefore(link, prev);
+      };
+      module.hot.dispose(function() {
+        window.__webpack_reload_css__ = true;
+      });
+      if (window.__webpack_reload_css__) {
+        module.hot.__webpack_reload_css__ = false;
+        console.log("[HMR] Reloading stylesheets...");
+        var prefix = document.location.protocol + '//' + document.location.host;
+        document
+          .querySelectorAll("link[href][rel=stylesheet]")
+          .forEach(function(link) {
+            if (!link.href.match(prefix) || link.stale) return;
+            injectCss(link, link.href.split("?")[0] + "?unix=1578446448231");
           });
       }
     }

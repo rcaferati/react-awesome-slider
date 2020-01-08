@@ -429,22 +429,22 @@
     -webkit-transform: translate3d(100%, 0, 0);
             transform: translate3d(100%, 0, 0); } }
 
-.awssld {
+.awssld--openAnimation {
   --open-animation-perspective: 600px;
   --open-animation-angle: 8deg;
   --open-animation-enter-delay: 85ms; }
-  .awssld__container {
+  .awssld--openAnimation .awssld__container {
     -webkit-perspective: var(--open-animation-perspective);
             perspective: var(--open-animation-perspective); }
-  .awssld--moveLeft, .awssld--moveRight {
+  .awssld--openAnimation .awssld--moveLeft, .awssld--openAnimation .awssld--moveRight {
     -webkit-animation-delay: var(--open-animation-enter-delay);
             animation-delay: var(--open-animation-enter-delay); }
-  .awssld--exit.awssld--moveLeft {
+  .awssld--openAnimation .awssld--exit.awssld--moveLeft {
     -webkit-transform-origin: 0% 50%;
             transform-origin: 0% 50%;
     -webkit-animation: openRight var(--slider-transition-duration) both var(--transition-bezier);
             animation: openRight var(--slider-transition-duration) both var(--transition-bezier); }
-  .awssld--exit.awssld--moveRight {
+  .awssld--openAnimation .awssld--exit.awssld--moveRight {
     -webkit-transform-origin: 100% 50%;
             transform-origin: 100% 50%;
     -webkit-animation: openLeft var(--slider-transition-duration) both var(--transition-bezier);

@@ -429,21 +429,21 @@
     -webkit-transform: translate3d(100%, 0, 0);
             transform: translate3d(100%, 0, 0); } }
 
-.awssld {
+.awssld--foldOutAnimation {
   --fold-out-perspective: 2000px;
   --fold-out-angle: 90deg; }
-  .awssld__container {
+  .awssld--foldOutAnimation .awssld__container {
     -webkit-perspective: var(--fold-out-perspective);
             perspective: var(--fold-out-perspective); }
-  .awssld--exit.awssld--moveLeft, .awssld--exit.awssld--moveRight {
+  .awssld--foldOutAnimation .awssld--exit.awssld--moveLeft, .awssld--foldOutAnimation .awssld--exit.awssld--moveRight {
     -webkit-transform-style: preserve-3d;
             transform-style: preserve-3d; }
-  .awssld--exit.awssld--moveLeft {
+  .awssld--foldOutAnimation .awssld--exit.awssld--moveLeft {
     -webkit-transform-origin: 100% 50%;
             transform-origin: 100% 50%;
     -webkit-animation: foldLeft var(--slider-transition-duration) both var(--transition-bezier);
             animation: foldLeft var(--slider-transition-duration) both var(--transition-bezier); }
-  .awssld--exit.awssld--moveRight {
+  .awssld--foldOutAnimation .awssld--exit.awssld--moveRight {
     -webkit-transform-origin: 0% 50%;
             transform-origin: 0% 50%;
     -webkit-animation: foldRight var(--slider-transition-duration) both var(--transition-bezier);

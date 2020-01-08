@@ -30,6 +30,7 @@ export default class AwesomeSlider extends React.Component {
     controlsReturnDelay: PropTypes.number,
     cssModule: PropTypes.object,
     customContent: PropTypes.node,
+    onLoadStart: PropTypes.func,
     disabled: PropTypes.bool,
     fillParent: PropTypes.bool,
     infinite: PropTypes.bool,
@@ -62,6 +63,7 @@ export default class AwesomeSlider extends React.Component {
     controlsReturnDelay: 0,
     cssModule: null,
     customContent: null,
+    onLoadStart: null,
     disabled: false,
     fillParent: false,
     infinite: true,
@@ -301,29 +303,67 @@ export default class AwesomeSlider extends React.Component {
     }
   }
 
-  loadContent(active, url) {
+  startBarAnimation({ active }) {
     return new Promise(resolve => {
-      if (this.loaded.includes(url) || !url) {
-        resolve(null);
-        return;
-      }
-      const bar = this.getBar();
-      active.appendChild(bar);
+      this.bar = this.getBar();
+      active.appendChild(this.bar);
       onceNextCssLayout().then(() => {
         onceNextCssLayout().then(() => {
-          bar.classList.add(this.classNames.barActive);
+          this.bar.classList.add(this.classNames.barActive);
+          resolve();
         });
         // STILL WAITING ON THE MULTIPLE LOADING THING
-        mediaLoader.loadMultiple([url]).then(() => {
-          this.loaded.push(url);
-          onceNextCssLayout().then(() => {
-            onceTransitionEnd(bar).then(() => {
-              resolve(bar);
+      });
+    });
+  }
+
+  endBarAnimation(callback) {
+    if (this.bar) {
+      onceNextCssLayout().then(() => {
+        onceTransitionEnd(this.bar).then(() => {
+          callback();
+        });
+        this.bar.classList.add(this.classNames.barEnd);
+      });
+    }
+  }
+
+  // REVISION
+  // -- TINHA QUE UNIFICAR A PROMISE
+  // -- O MEDIA PODE TER .URL
+  // -- O MEDIA PODE TER .MEDIAS -- ARRAY DE MEDIAS PARA SER CARREGADO
+
+  loadContent(active, media) {
+    return new Promise((resolve, reject) => {
+      if (this.props.onLoadStart || media.onLoadStart) {
+        const caller = this.props.onLoadStart || media.onLoadStart;
+        this.startBarAnimation({ active });
+        caller({
+          next: () => {
+            this.endBarAnimation(() => {
+              resolve(this.bar);
             });
-            bar.classList.add(this.classNames.barEnd);
+          },
+          error: reject,
+          ...this.getInfo(),
+        });
+        return;
+      }
+      if (media.url) {
+        if (this.loaded.includes(media.url) || !media.url) {
+          resolve(null);
+          return;
+        }
+        this.startBarAnimation({ active });
+        mediaLoader.loadMultiple([media.url]).then(() => {
+          this.loaded.push(media.url);
+          this.endBarAnimation(() => {
+            resolve(this.bar);
           });
         });
-      });
+        return;
+      }
+      resolve(null);
     });
   }
 
@@ -427,7 +467,7 @@ export default class AwesomeSlider extends React.Component {
     callback,
     transitionDelay,
   }) {
-    this.loadContent(active, media.url).then(bar => {
+    this.loadContent(active, media).then(bar => {
       activeContentElement.classList.add(contentExitMoveClass);
       activeContentElement.classList.add(this.classNames.contentExit);
       loaderContentElement.classList.add(contentEnterMoveClass);
