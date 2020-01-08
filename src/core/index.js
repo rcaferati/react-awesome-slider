@@ -101,11 +101,15 @@ export default class AwesomeSlider extends React.Component {
     this.setupStartup(props);
   }
 
+  componentWillMount() {
+    console.log(this.buttons);
+  }
+
   componentDidMount() {
     this.boxA.classList.add(this.classNames.active);
     if (this.props.startupScreen) {
       if (this.buttons) {
-        this.buttons.element.classList.add(this.classNames.controlsHidden);
+        // this.buttons.element.classList.add(this.classNames.controlsHidden);
         this.buttons.element.classList.add(this.classNames.controlsActive);
         onceNextCssLayout().then(() => {
           this.buttons.element.classList.remove(this.classNames.controlsHidden);
@@ -837,6 +841,8 @@ export default class AwesomeSlider extends React.Component {
       buttonContentRight,
     } = this.props;
     const { rootElement } = this;
+
+    console.log(this.getRootClassName());
 
     return (
       <div

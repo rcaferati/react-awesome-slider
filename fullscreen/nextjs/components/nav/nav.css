@@ -11,6 +11,18 @@
   align-items: center;
 }
 
+.page-header small {
+  font-size: 8px;
+  text-transform: uppercase;
+  font-family: tahoma;
+  color: #fff;
+}
+
+.page-header small a {
+  color: #fff;
+  font-weight: bold;
+}
+
 .page-header > :nth-child(1),
 .page-header > :nth-child(2) {
   transform: translateY(-120px);
@@ -25,7 +37,7 @@
   display: block;
 }
 
-.page-header a {
+.page-header nav a {
   margin-left: 16px;
   padding: 8px 16px;
   border-radius: 4px;

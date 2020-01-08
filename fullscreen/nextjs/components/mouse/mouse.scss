@@ -17,6 +17,7 @@ $opacity: 1;
   opacity: var(--opacity);
   z-index: 1001;
   transition: opacity 0.165s ease-out, transform 0.165s ease-out;
+  position: relative;
 
   &.hidden {
     transform: translate3d(0, 25px, 0);

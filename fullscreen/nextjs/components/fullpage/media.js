@@ -22,12 +22,12 @@ export const Home = withNavigationContext(({ fullpage }) => {
         action={
           <div className="button">
             <AwesomeButton
-              size="medium"
+              size="large"
               onPress={() => {
                 fullpage.navigate('/page-two');
               }}
             >
-              Next Page
+              Goto the next page
             </AwesomeButton>
           </div>
         }

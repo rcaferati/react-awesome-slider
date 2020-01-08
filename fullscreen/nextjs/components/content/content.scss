@@ -25,3 +25,63 @@
   width: 100%;
   height: var(--action-height);
 }
+
+.content__action {
+  display: flex;
+  justify-content: space-around;
+  padding: 0 100px;
+
+  > div {
+    flex: 1;
+    text-align: center;
+  }
+  > div:nth-child(1) {
+    text-align: left;
+  }
+  > div:nth-child(3) {
+    text-align: right;
+  }
+}
+
+.content__action__go {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content__action__github {
+  a {
+    font-family: tahoma;
+    color: #fff;
+    display: inline-block;
+    padding: 10px 16px;
+    font-weight: bold;
+    font-size: 12px;
+    text-decoration: none;
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  svg {
+    width: 20px;
+    vertical-align: text-bottom;
+    margin-bottom: -2px;
+    margin-right: 6px;
+  }
+}
+
+.content__action__select {
+  select {
+    width: 180px;
+    background: none;
+    border: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: 0;
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 10px;
+    color: #fff;
+    font-family: tahoma;
+    font-size: 12px;
+    font-weight: bold;
+  }
+}
