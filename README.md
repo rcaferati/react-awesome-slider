@@ -5,7 +5,7 @@
 `react-awesome-slider` is a 60fps, extendable, highly customizable, production ready React Component that renders a media (image/video) gallery slider/carousel.
 
 ### FULL-SCREEN navigation HOC
-For using the full-screen navigation HOCs please checkout the `GatsbyJS` and `NextJS` examples on the [full-screen folder](https://www.figma.com/file/VItcmlJtKZxyGJhClk4Lg0kQ/react-awesome-slider).
+For using the full-screen navigation HOCs please checkout the `GatsbyJS` and `NextJS` examples on the [full-screen folder](https://github.com/rcaferati/react-awesome-slider/tree/master/fullscreen).
 
 ### Basic usage
 
