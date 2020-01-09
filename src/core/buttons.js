@@ -44,8 +44,16 @@ export default class Buttons extends React.Component {
       <div
         ref={controls => {
           this.controls = controls;
+          this.props.onMount({
+            element: this.controls,
+            next: this.next || null,
+            prev: this.prev || null,
+          });
         }}
-        className={getClassName(`${rootElement}__controls`, cssModule)}
+        className={[
+          getClassName(`${rootElement}__controls`, cssModule),
+          getClassName(`${rootElement}__controls--hidden`, cssModule),
+        ].join(' ')}
       >
         <button
           ref={next => {

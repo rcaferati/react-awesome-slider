@@ -20,15 +20,17 @@ const mediaLoader = new MediaLoader();
 
 export default class AwesomeSlider extends React.Component {
   static propTypes = {
+    animation: PropTypes.string,
     bullets: PropTypes.bool,
-    buttons: PropTypes.bool,
-    buttonContentRight: PropTypes.node,
     buttonContentLeft: PropTypes.node,
+    buttonContentRight: PropTypes.node,
+    buttons: PropTypes.bool,
     children: PropTypes.node,
     className: PropTypes.string,
     controlsReturnDelay: PropTypes.number,
     cssModule: PropTypes.object,
     customContent: PropTypes.node,
+    onLoadStart: PropTypes.func,
     disabled: PropTypes.bool,
     fillParent: PropTypes.bool,
     infinite: PropTypes.bool,
@@ -36,6 +38,7 @@ export default class AwesomeSlider extends React.Component {
     name: PropTypes.string,
     onFirstMount: PropTypes.func,
     onResetSlider: PropTypes.func,
+    onStartupRelease: PropTypes.func,
     onTransitionEnd: PropTypes.func,
     onTransitionRequest: PropTypes.func,
     onTransitionStart: PropTypes.func,
@@ -43,21 +46,24 @@ export default class AwesomeSlider extends React.Component {
     rootElement: PropTypes.string,
     selected: PropTypes.any,
     startup: PropTypes.bool,
+    startupDelay: PropTypes.number,
     startupScreen: PropTypes.object,
     style: PropTypes.object,
     transitionDelay: PropTypes.number,
   };
 
   static defaultProps = {
+    animation: null,
     bullets: true,
-    buttons: true,
-    buttonContentRight: null,
     buttonContentLeft: null,
+    buttonContentRight: null,
+    buttons: true,
     children: null,
     className: null,
     controlsReturnDelay: 0,
     cssModule: null,
     customContent: null,
+    onLoadStart: null,
     disabled: false,
     fillParent: false,
     infinite: true,
@@ -65,6 +71,7 @@ export default class AwesomeSlider extends React.Component {
     name: 'awesome-slider',
     onFirstMount: null,
     onResetSlider: null,
+    onStartupRelease: null,
     onTransitionEnd: null,
     onTransitionRequest: null,
     onTransitionStart: null,
@@ -72,6 +79,7 @@ export default class AwesomeSlider extends React.Component {
     rootElement: ROOTELM,
     selected: 0,
     startup: true,
+    startupDelay: 0,
     startupScreen: null,
     style: {},
     transitionDelay: 0,
@@ -93,11 +101,19 @@ export default class AwesomeSlider extends React.Component {
     this.setupStartup(props);
   }
 
+  componentWillMount() {
+    console.log(this.buttons);
+  }
+
   componentDidMount() {
     this.boxA.classList.add(this.classNames.active);
     if (this.props.startupScreen) {
       if (this.buttons) {
+        // this.buttons.element.classList.add(this.classNames.controlsHidden);
         this.buttons.element.classList.add(this.classNames.controlsActive);
+        onceNextCssLayout().then(() => {
+          this.buttons.element.classList.remove(this.classNames.controlsHidden);
+        });
       }
       if (this.props.startup === true) {
         this.startup();
@@ -145,22 +161,25 @@ export default class AwesomeSlider extends React.Component {
 
   getRootClassName() {
     const {
+      animation,
+      className,
+      cssModule,
+      disabled,
       fillParent,
       infinite,
-      className,
       organicArrows,
-      disabled,
-      cssModule,
     } = this.props;
+
     return getRootClassName({
-      cssModule,
-      disabled,
-      organicArrows,
+      animation,
       className,
-      infinite,
-      fillParent,
-      rootElement: this.rootElement,
+      cssModule,
       current: this.state.index,
+      disabled,
+      fillParent,
+      infinite,
+      organicArrows,
+      rootElement: this.rootElement,
       total: this.media.length,
     });
   }
@@ -255,7 +274,7 @@ export default class AwesomeSlider extends React.Component {
           touch: false,
         });
       });
-    }, 100);
+    }, this.props.startupDelay || 100);
   }
 
   resetSlider(index = 0) {
@@ -288,29 +307,84 @@ export default class AwesomeSlider extends React.Component {
     }
   }
 
-  loadContent(active, url) {
+  startBarAnimation({ active }) {
     return new Promise(resolve => {
-      if (this.loaded.includes(url) || !url) {
-        resolve(null);
-        return;
-      }
-      const bar = this.getBar();
-      active.appendChild(bar);
+      this.bar = this.getBar();
+      active.appendChild(this.bar);
       onceNextCssLayout().then(() => {
         onceNextCssLayout().then(() => {
-          bar.classList.add(this.classNames.barActive);
+          this.bar.classList.add(this.classNames.barActive);
+          resolve();
         });
-        mediaLoader.load(url).then(() => {
-          this.loaded.push(url);
-          onceNextCssLayout().then(() => {
-            onceTransitionEnd(bar).then(() => {
-              resolve(bar);
-            });
-            bar.classList.add(this.classNames.barEnd);
-          });
-        });
+        // STILL WAITING ON THE MULTIPLE LOADING THING
       });
     });
+  }
+
+  endBarAnimation(callback) {
+    if (this.bar) {
+      onceNextCssLayout().then(() => {
+        onceTransitionEnd(this.bar).then(() => {
+          callback();
+        });
+        this.bar.classList.add(this.classNames.barEnd);
+      });
+    }
+  }
+
+  // REVISION
+  // -- TINHA QUE UNIFICAR A PROMISE
+  // -- O MEDIA PODE TER .URL
+  // -- O MEDIA PODE TER .MEDIAS -- ARRAY DE MEDIAS PARA SER CARREGADO
+
+  loadContent(active, media) {
+    return new Promise((resolve, reject) => {
+      if (this.props.onLoadStart || media.onLoadStart) {
+        const caller = this.props.onLoadStart || media.onLoadStart;
+        this.startBarAnimation({ active });
+        caller({
+          next: () => {
+            this.endBarAnimation(() => {
+              resolve(this.bar);
+            });
+          },
+          error: reject,
+          ...this.getInfo(),
+        });
+        return;
+      }
+      if (media.url || media.preload) {
+        const urls = media.url ? [media.url] : media.preload || [];
+
+        if (this.checkLoadedUrls(urls) === true) {
+          resolve(null);
+          return;
+        }
+        this.startBarAnimation({ active });
+        mediaLoader.loadMultiple(urls).then(() => {
+          this.pushLoaded(urls);
+          this.endBarAnimation(() => {
+            resolve(this.bar);
+          });
+        });
+        return;
+      }
+      resolve(null);
+    });
+  }
+
+  pushLoaded(urls) {
+    this.loaded = [...this.loaded, ...urls];
+  }
+
+  checkLoadedUrls(urls) {
+    let loaded = true;
+    urls.forEach(url => {
+      if (!this.loaded.includes(url)) {
+        loaded = false;
+      }
+    });
+    return loaded;
   }
 
   startAnimationMobile() {
@@ -328,6 +402,7 @@ export default class AwesomeSlider extends React.Component {
         ...this.getInfo(),
         nextSlide: this[this.loader],
         nextIndex: this.nextIndex,
+        nextMedia: this.media[this.nextIndex],
       });
     }
     const activeContent = active.querySelector(`.${this.classNames.content}`);
@@ -374,24 +449,25 @@ export default class AwesomeSlider extends React.Component {
         activeContent.classList.remove(contentExitMoveClass);
         activeContent.classList.remove(this.classNames.contentExit);
         loaderContent.classList.remove(contentEnterMoveClass);
+
         setTimeout(() => {
-          onceNextCssLayout().then(() => {
-            if (this.buttons) {
-              this.buttons.element.classList.remove(
-                this.classNames.controlsActive
-              );
-            }
-          });
+          if (this.buttons) {
+            this.buttons.element.classList.remove(
+              this.classNames.controlsActive
+            );
+          }
         }, this.props.controlsReturnDelay);
 
         if (this.activeArrow) {
-          this.activeArrow.classList.remove(this.activeArrowClass);
+          // this.activeArrow.classList.remove(this.activeArrowClass);
           this.activeArrow = null;
           this.activeArrowClass = null;
         }
+
         /* INVERT BOXES */
         this.active = this.active === 'boxA' ? 'boxB' : 'boxA';
         this.loader = this.active === 'boxA' ? 'boxB' : 'boxA';
+
         if (callback) {
           callback();
         }
@@ -412,7 +488,7 @@ export default class AwesomeSlider extends React.Component {
     callback,
     transitionDelay,
   }) {
-    this.loadContent(active, media.url).then(bar => {
+    this.loadContent(active, media).then(bar => {
       activeContentElement.classList.add(contentExitMoveClass);
       activeContentElement.classList.add(this.classNames.contentExit);
       loaderContentElement.classList.add(contentEnterMoveClass);
@@ -441,33 +517,50 @@ export default class AwesomeSlider extends React.Component {
               active.removeChild(bar);
             }
 
-            setTimeout(() => {
-              onceNextCssLayout().then(() => {
-                if (this.buttons) {
-                  this.buttons.element.classList.remove(
-                    this.classNames.controlsActive
-                  );
-                }
-              });
-            }, this.props.controlsReturnDelay);
-
-            if (this.activeArrow) {
-              onceNextCssLayout().then(() => {
-                this.activeArrow.classList.remove(this.activeArrowClass);
-                this.activeArrow = null;
-                this.activeArrowClass = null;
-              });
+            if (this.buttons) {
+              setTimeout(() => {
+                this.buttons.element.classList.remove(
+                  this.classNames.controlsActive
+                );
+              }, this.props.controlsReturnDelay);
             }
+
             // * INVERT BOXES *
             this.active = this.active === 'boxA' ? 'boxB' : 'boxA';
             this.loader = this.active === 'boxA' ? 'boxB' : 'boxA';
-            if (callback) {
-              callback();
+            const release = !this.activeArrow;
+
+            if (this.activeArrow) {
+              onceTransitionEnd(this.activeArrow, {
+                tolerance: this.index === null ? 0 : 2,
+              }).then(() => {
+                // RELEASE THE SLIDER JUST AFTER THE OA RETURNS
+                console.log('TRANSITION END VIA ARROW RETURN');
+                // WE SHOULD END IT HERE
+                this.releaseTransition();
+              });
+
+              this.activeArrow.classList.remove(this.activeArrowClass);
+              this.activeArrow = null;
+              this.activeArrowClass = null;
             }
+
+            callback({
+              release,
+            });
           });
         });
       }, transitionDelay);
     });
+  }
+
+  releaseTransition() {
+    this.loading = false;
+    if (this.props.onTransitionEnd) {
+      this.props.onTransitionEnd({
+        ...this.getInfo(),
+      });
+    }
   }
 
   startAnimation(direction, media, callback) {
@@ -501,6 +594,7 @@ export default class AwesomeSlider extends React.Component {
         ...this.getInfo(),
         nextSlide: this[this.loader],
         nextIndex: this.nextIndex,
+        nextMedia: this.media[this.nextIndex],
       });
     }
 
@@ -521,11 +615,20 @@ export default class AwesomeSlider extends React.Component {
     this.runAnimation(animationObject);
   }
 
-  goTo({ index, direction, touch = false }) {
+  goTo({ index, direction, touch = false, force = false }) {
     const nextIndex = this.getIndex(index);
     if (this.loading === true || index === this.index) {
+      if (this.props.onTransitionReject) {
+        this.props.onTransitionReject({
+          ...this.getInfo(),
+          forceTransition: () => {
+            this.goTo({ index, direction, touch, force: true });
+          },
+        });
+      }
       return;
     }
+
     this.loading = true;
     this.direction = direction;
     if (touch === true) {
@@ -535,18 +638,17 @@ export default class AwesomeSlider extends React.Component {
       });
       return;
     }
+
     this.activateArrows(direction, () => {
       this.chargeIndex(nextIndex, media => {
         this.renderedLoader = true;
-        this.startAnimation(direction, media, () => {
+        this.startAnimation(direction, media, ({ release = true }) => {
           this.index = this.nextIndex;
-          this.loading = false;
-          this.setState({ index: this.index });
-          if (this.props.onTransitionEnd) {
-            this.props.onTransitionEnd({
-              ...this.getInfo(),
-            });
-          }
+          this.setState({ index: this.index }, () => {
+            if (release === true) {
+              this.releaseTransition();
+            }
+          });
         });
       });
     });
@@ -578,32 +680,39 @@ export default class AwesomeSlider extends React.Component {
 
   activateArrows(direction, callback) {
     const dirName = direction ? 'right' : 'left';
+    const arrowClass = getClassName(
+      `${this.rootElement}__controls__arrow-${dirName}`,
+      this.props.cssModule
+    );
+
     if (this.buttons) {
       const activeArrow = direction ? this.buttons.next : this.buttons.prev;
-      this.activeArrow = activeArrow.querySelector('span');
+      this.activeArrow = activeArrow.querySelector(`.${arrowClass}`);
     }
+
     if (!this.activeArrow) {
-      if (callback) callback();
+      if (callback) {
+        callback();
+      }
       return;
     }
+
     this.activeArrowClass = getClassName(
       `${this.rootElement}__controls__arrow-${dirName}--active`,
       this.props.cssModule
     );
 
-    // This needs to be done due to the usage of pseudo elements animation
+    // This is due to the usage of pseudo elements animation
     onceTransitionEnd(this.activeArrow, {
       tolerance: this.index === null ? 0 : 2,
     }).then(() => {
+      console.log('TRANSITION END VIA ');
       if (callback) {
         callback();
       }
     });
 
-    if (this.buttons) {
-      this.buttons.element.classList.add(this.classNames.controlsActive);
-    }
-
+    this.buttons.element.classList.add(this.classNames.controlsActive);
     this.activeArrow.classList.add(this.activeArrowClass);
   }
 

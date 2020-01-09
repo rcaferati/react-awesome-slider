@@ -1,31 +1,35 @@
 @import '../../core/styles.scss';
 
 .#{$root-element} {
-  --open-animation-perspective: 600px;
-  --open-animation-angle: 8deg;
-  --open-animation-enter-delay: 85ms;
+  &--openAnimation {
+    --open-animation-perspective: 600px;
+    --open-animation-angle: 8deg;
+    --open-animation-enter-delay: 85ms;
 
-  &__container {
-    perspective: var(--open-animation-perspective);
-  }
+    .#{$root-element} {
+      &__container {
+        perspective: var(--open-animation-perspective);
+      }
 
-  // Delaying the next slide entering animation
-  &--moveLeft,
-  &--moveRight {
-    animation-delay: var(--open-animation-enter-delay);
-  }
+      // Delaying the next slide entering animation
+      &--moveLeft,
+      &--moveRight {
+        animation-delay: var(--open-animation-enter-delay);
+      }
 
-  &--exit {
-    &.#{$root-element}--moveLeft {
-      transform-origin: 0% 50%;
-      animation: openRight var(--slider-transition-duration) both
-        var(--transition-bezier);
-    }
+      &--exit {
+        &.#{$root-element}--moveLeft {
+          transform-origin: 0% 50%;
+          animation: openRight var(--slider-transition-duration) both
+            var(--transition-bezier);
+        }
 
-    &.#{$root-element}--moveRight {
-      transform-origin: 100% 50%;
-      animation: openLeft var(--slider-transition-duration) both
-        var(--transition-bezier);
+        &.#{$root-element}--moveRight {
+          transform-origin: 100% 50%;
+          animation: openLeft var(--slider-transition-duration) both
+            var(--transition-bezier);
+        }
+      }
     }
   }
 }

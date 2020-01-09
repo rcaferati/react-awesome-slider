@@ -41,6 +41,7 @@ function Component({ startup }) {
               cssModule={AwsSliderStyles}
               startup={startup}
               // fillParent
+              animation="cubeAnimation"
               startupScreen={startupScreen}
               onFirstMount={reset}
               onResetSlider={reset}

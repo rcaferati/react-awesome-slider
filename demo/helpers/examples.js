@@ -83,19 +83,17 @@ export function transitionStart(slider) {
         '--control-bullet-active-color',
         shadeRGBColor(color, -0.15)
       );
+      slider.element.style.setProperty(
+        '--organic-arrow-color',
+        shadeRGBColor(color, -0.15)
+      );
       slider.element.style.setProperty('--control-bullet-color', color);
-    }, 400);
+    }, 250);
   }
 }
 
 export function transitionEnd(slider) {
   if (typeof window !== 'undefined') {
-    const divs = slider.currentSlide.querySelectorAll('div');
-    const color = getComputedStyle(divs[0]).backgroundColor;
-    slider.element.style.setProperty(
-      '--organic-arrow-color',
-      shadeRGBColor(color, -0.15)
-    );
     window.setElement(slider.element);
   }
 }

@@ -28,6 +28,7 @@ function Component({ startup }) {
               cancelOnInteraction={false}
               interval={6000}
               startup={startup}
+              animation="cubeAnimation"
               startupScreen={startupScreen}
               onFirstMount={resetSlider}
               onResetSlider={resetSlider}

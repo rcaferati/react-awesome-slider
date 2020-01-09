@@ -126,10 +126,10 @@ $content-background-color: #2f2f2f;
       top: 0;
       left: 0;
     }
-    > div {
-      position: relative;
-      z-index: 1;
-    }
+    // > div {
+    //   position: relative;
+    //   z-index: 1;
+    // }
     &--enter {
       // On content enter
     }
@@ -173,6 +173,9 @@ $content-background-color: #2f2f2f;
         transform: translate3d(100%, 0, 0);
       }
     }
+    &--hidden {
+      display: none;
+    }
     @media all and (max-width: 520px) {
       visibility: hidden;
     }
@@ -185,7 +188,7 @@ $content-background-color: #2f2f2f;
     position: absolute;
     top: 0;
     left: 0;
-    // z-index: 1;
+    z-index: 101;
     transition: transform 3000ms var(--transition-bezier);
     transform: translate3d(-100%, 0, 0);
     &--active {

@@ -1,0 +1,41 @@
+.awesome-slider {
+  --organic-arrow-color: #fff;
+}
+
+.sectioned {
+  display: block;
+  overflow: scroll;
+}
+
+.slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  min-height: 100%;
+  width: 100%;
+  background-color: teal;
+}
+
+.page-one {
+  background-color: #ff6f5e;
+}
+
+.page-two {
+  background-color: #617be3;
+}
+
+.page-three {
+  background-color: #df5344;
+}
+
+.awssld__content > img {
+  filter: grayscale(100%) opacity(35%);
+  mix-blend-mode: multiply;
+}
+
+.button {
+  font-family: monospace;
+  text-align: center;
+  color: #fff;
+}

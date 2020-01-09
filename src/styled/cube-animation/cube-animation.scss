@@ -1,38 +1,44 @@
 @import '../../core/styles.scss';
 
+// CHANGE THE CSS AND ADD THE PROPERTY
+
 .#{$root-element} {
-  --cube-animation-duration: 675ms;
-  --cube-animation-perspective: 1800px;
-  --cube-animation-ease-in: cubic-bezier(0.8, 0, 1, 0.8);
-  --cube-animation-ease-out: cubic-bezier(0, 0.2, 0.2, 1);
-  --cube-translateZ-distance: -225px;
+  &--cubeAnimation {
+    --cube-animation-duration: 675ms;
+    --cube-animation-perspective: 1800px;
+    --cube-animation-ease-in: cubic-bezier(0.8, 0, 1, 0.8);
+    --cube-animation-ease-out: cubic-bezier(0, 0.2, 0.2, 1);
+    --cube-translateZ-distance: -225px;
 
-  &__container {
-    perspective: var(--cube-animation-perspective);
-  }
+    .#{$root-element} {
+      &__container {
+        perspective: var(--cube-animation-perspective);
+      }
 
-  &--moveRight {
-    transform-origin: 0% 50%;
-    animation: cubeLeftIn var(--cube-animation-duration) both
-      var(--cube-animation-ease-in);
-  }
+      &--moveRight {
+        transform-origin: 0% 50%;
+        animation: cubeLeftIn var(--cube-animation-duration) both
+          var(--cube-animation-ease-in);
+      }
 
-  &--moveLeft {
-    transform-origin: 100% 50%;
-    animation: cubeRightIn var(--cube-animation-duration) both
-      var(--cube-animation-ease-in);
-  }
+      &--moveLeft {
+        transform-origin: 100% 50%;
+        animation: cubeRightIn var(--cube-animation-duration) both
+          var(--cube-animation-ease-in);
+      }
 
-  &--exit {
-    &.#{$root-element}--moveLeft {
-      transform-origin: 100% 50%;
-      animation: cubeLeftOut var(--cube-animation-duration) both
-        var(--cube-animation-ease-in);
-    }
-    &.#{$root-element}--moveRight {
-      transform-origin: 0% 50%;
-      animation: cubeRightOut var(--cube-animation-duration) both
-        var(--cube-animation-ease-in);
+      &--exit {
+        &.#{$root-element}--moveLeft {
+          transform-origin: 100% 50%;
+          animation: cubeLeftOut var(--cube-animation-duration) both
+            var(--cube-animation-ease-in);
+        }
+        &.#{$root-element}--moveRight {
+          transform-origin: 0% 50%;
+          animation: cubeRightOut var(--cube-animation-duration) both
+            var(--cube-animation-ease-in);
+        }
+      }
     }
   }
 }

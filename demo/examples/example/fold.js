@@ -40,6 +40,7 @@ function Component({ startup }) {
               name="images"
               cssModule={AwsSliderStyles}
               startup={startup}
+              animation="foldOutAnimation"
               startupScreen={startupScreen}
               onFirstMount={reset}
               onResetSlider={reset}

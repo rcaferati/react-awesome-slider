@@ -1,0 +1,30 @@
+.page {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+  background-color: transparent;
+}
+
+.page::-webkit-scrollbar {
+  height: 20px;
+  width: 6px;
+}
+.page::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.page::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.1);
+  /* Add :hover, :active as needed */
+}
+.page::-webkit-scrollbar-thumb:vertical {
+  min-height: purple;
+}
+.page::-webkit-scrollbar-thumb:horizontal {
+  min-width: 20px;
+}

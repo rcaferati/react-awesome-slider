@@ -1,27 +1,31 @@
 @import '../../core/styles.scss';
 
 .#{$root-element} {
-  --fold-out-perspective: 2000px;
-  --fold-out-angle: 90deg;
+  &--foldOutAnimation {
+    --fold-out-perspective: 2000px;
+    --fold-out-angle: 90deg;
 
-  &__container {
-    perspective: var(--fold-out-perspective);
-  }
+    .#{$root-element} {
+      &__container {
+        perspective: var(--fold-out-perspective);
+      }
 
-  &--exit {
-    &.#{$root-element}--moveLeft,
-    &.#{$root-element}--moveRight {
-      transform-style: preserve-3d;
-    }
-    &.#{$root-element}--moveLeft {
-      transform-origin: 100% 50%;
-      animation: foldLeft var(--slider-transition-duration) both
-        var(--transition-bezier);
-    }
-    &.#{$root-element}--moveRight {
-      transform-origin: 0% 50%;
-      animation: foldRight var(--slider-transition-duration) both
-        var(--transition-bezier);
+      &--exit {
+        &.#{$root-element}--moveLeft,
+        &.#{$root-element}--moveRight {
+          transform-style: preserve-3d;
+        }
+        &.#{$root-element}--moveLeft {
+          transform-origin: 100% 50%;
+          animation: foldLeft var(--slider-transition-duration) both
+            var(--transition-bezier);
+        }
+        &.#{$root-element}--moveRight {
+          transform-origin: 0% 50%;
+          animation: foldRight var(--slider-transition-duration) both
+            var(--transition-bezier);
+        }
+      }
     }
   }
 }

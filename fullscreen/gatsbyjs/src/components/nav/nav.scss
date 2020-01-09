@@ -1,0 +1,146 @@
+.page-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 101;
+  width: 100%;
+}
+
+.page-header nav {
+  display: block;
+}
+
+.page-header nav a {
+  margin-left: 16px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: bold;
+  text-decoration: none;
+  color: white;
+  font-family: tahoma;
+
+  &:first-child {
+    margin-left: 0;
+  }
+}
+
+.page-header__wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px 10%;
+  align-items: center;
+
+  @media all and (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px 24px;
+
+    nav {
+      margin-top: 24px;
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+
+      a {
+        background-color: rgba(0, 0, 0, 0.05);
+        margin-left: 10px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 18px;
+      }
+    }
+
+    .page-header__title h1 {
+      font-size: 20px;
+      line-height: 28px;
+    }
+
+    .logo-container {
+      --size: 64px;
+    }
+  }
+  @media all and (max-width: 475px) {
+    padding: 20px;
+
+    .page-header__title h1 {
+      font-size: 18px;
+      line-height: 24px;
+    }
+    .page-header__title h2 {
+      font-size: 12px;
+      line-height: 18px;
+    }
+  }
+}
+
+.page-header small {
+  font-size: 8px;
+  text-transform: uppercase;
+  font-family: tahoma;
+  color: #fff;
+}
+
+.page-header small a {
+  color: #fff;
+  font-weight: bold;
+}
+
+.page-header > :nth-child(1),
+.page-header > :nth-child(2) {
+  transform: translateY(-100%);
+  transition: transform 375ms cubic-bezier(0.05, 0.55, 0.15, 1);
+}
+
+.page-header > :nth-child(2) {
+  transition-delay: 0.125s;
+}
+
+.page-header__title {
+  display: flex;
+  align-items: center;
+}
+
+.page-header__title h1 {
+  font-size: 24px;
+  line-height: 32px;
+  color: #fff;
+  font-family: tahoma;
+  display: block;
+}
+
+.page-header__title h2 {
+  color: #fff;
+  font-family: tahoma;
+  display: block;
+  font-size: 14px;
+  display: block;
+}
+
+.page-header__title > div {
+  margin-left: 8px;
+}
+
+.page-header__title h1 span {
+  color: #fff;
+  font-family: tahoma;
+  display: inline-block;
+}
+.page-header__title h1 span:first-child {
+  margin-right: 10px;
+  color: #61dafb;
+}
+
+.page-header a.selected,
+.page-header a:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.visible .page-header > :nth-child(1),
+.visible .page-header > :nth-child(2) {
+  transform: translateY(0);
+}

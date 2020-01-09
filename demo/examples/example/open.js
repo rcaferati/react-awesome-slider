@@ -36,6 +36,7 @@ function Component({ startup }) {
               name="images"
               cssModule={AwsSliderStyles}
               startup={startup}
+              animation="openAnimation"
               startupScreen={startupScreen}
               onFirstMount={reset}
               onResetSlider={reset}

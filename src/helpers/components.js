@@ -38,6 +38,55 @@ export class MediaLoader {
       }
     });
   }
+  loadImage(url) {
+    const image = new Image();
+    let loaded = false;
+    image.onload = () => {
+      if (!loaded) this.pumpLoaded();
+    };
+    image.onerror = () => {
+      if (!loaded) this.pumpLoaded();
+    };
+    image.src = url;
+    if (loaded === false && (image.width > 0 || image.height > 0)) {
+      loaded = true;
+      this.pumpLoaded();
+    }
+  }
+  loadVideo(url) {
+    const video = document.createElement('video');
+    video.addEventListener('loadeddata', () => {
+      this.pumpLoaded();
+    });
+    video.addEventListener('error', () => {
+      this.pumpLoaded();
+    });
+    video.setAttribute('src', url);
+  }
+  pumpLoaded() {
+    this.loaded += 1;
+    if (this.loaded === this.toLoad) {
+      this.resolver(true);
+    }
+  }
+  startLoad(url) {
+    if (url.match(/\.(mp4|webm)/i)) {
+      this.loadVideo(url);
+    }
+    if (url.match(/\.(png|jp(e)?g|gif|webp)/i)) {
+      this.loadImage(url);
+    }
+  }
+  loadMultiple(urls) {
+    this.loaded = 0;
+    this.toLoad = urls.length;
+    return new Promise(resolve => {
+      this.resolver = resolve;
+      urls.forEach(url => {
+        this.startLoad(url);
+      });
+    });
+  }
 }
 
 export function serialize(obj, separator = '&') {
