@@ -353,14 +353,16 @@ export default class AwesomeSlider extends React.Component {
         });
         return;
       }
-      if (media.url) {
-        if (this.loaded.includes(media.url) || !media.url) {
+      if (media.url || media.preload) {
+        const urls = media.url ? [media.url] : media.preload || [];
+
+        if (this.checkLoadedUrls(urls) === true) {
           resolve(null);
           return;
         }
         this.startBarAnimation({ active });
-        mediaLoader.loadMultiple([media.url]).then(() => {
-          this.loaded.push(media.url);
+        mediaLoader.loadMultiple(urls).then(() => {
+          this.pushLoaded(urls);
           this.endBarAnimation(() => {
             resolve(this.bar);
           });
@@ -369,6 +371,20 @@ export default class AwesomeSlider extends React.Component {
       }
       resolve(null);
     });
+  }
+
+  pushLoaded(urls) {
+    this.loaded = [...this.loaded, ...urls];
+  }
+
+  checkLoadedUrls(urls) {
+    let loaded = true;
+    urls.forEach(url => {
+      if (!this.loaded.includes(url)) {
+        loaded = false;
+      }
+    });
+    return loaded;
   }
 
   startAnimationMobile() {

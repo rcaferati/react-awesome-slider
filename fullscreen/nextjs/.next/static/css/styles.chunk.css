@@ -144,43 +144,14 @@ select {
     transform: rotateZ(360deg) translateX(var(--ellipse)) rotateZ(-360deg) rotateY(var(--angle)); } }
 
 .page-header {
-  display: flex;
-  justify-content: space-between;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 101;
-  height: 120px;
-  width: 100%;
-  padding: 0 100px;
-  align-items: center;
-}
-
-.page-header small {
-  font-size: 8px;
-  text-transform: uppercase;
-  font-family: tahoma;
-  color: #fff;
-}
-
-.page-header small a {
-  color: #fff;
-  font-weight: bold;
-}
-
-.page-header > :nth-child(1),
-.page-header > :nth-child(2) {
-  transform: translateY(-120px);
-  transition: transform 375ms cubic-bezier(0.05, 0.55, 0.15, 1);
-}
-
-.page-header > :nth-child(2) {
-  transition-delay: 0.125s;
-}
+  width: 100%; }
 
 .page-header nav {
-  display: block;
-}
+  display: block; }
 
 .page-header nav a {
   margin-left: 16px;
@@ -191,53 +162,104 @@ select {
   font-weight: bold;
   text-decoration: none;
   color: white;
+  font-family: tahoma; }
+  .page-header nav a:first-child {
+    margin-left: 0; }
+
+.page-header__wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px 10%;
+  align-items: center; }
+  @media all and (max-width: 768px) {
+    .page-header__wrapper {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 12px 24px; }
+      .page-header__wrapper nav {
+        margin-top: 24px;
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center; }
+        .page-header__wrapper nav a {
+          background-color: rgba(0, 0, 0, 0.05);
+          margin-left: 10px;
+          padding: 6px 12px;
+          font-size: 14px;
+          line-height: 18px; }
+      .page-header__wrapper .page-header__title h1 {
+        font-size: 20px;
+        line-height: 28px; }
+      .page-header__wrapper .logo-container {
+        --size: 64px; } }
+  @media all and (max-width: 475px) {
+    .page-header__wrapper {
+      padding: 20px; }
+      .page-header__wrapper .page-header__title h1 {
+        font-size: 18px;
+        line-height: 24px; }
+      .page-header__wrapper .page-header__title h2 {
+        font-size: 12px;
+        line-height: 18px; } }
+
+.page-header small {
+  font-size: 8px;
+  text-transform: uppercase;
   font-family: tahoma;
-}
+  color: #fff; }
+
+.page-header small a {
+  color: #fff;
+  font-weight: bold; }
+
+.page-header > :nth-child(1),
+.page-header > :nth-child(2) {
+  transform: translateY(-100%);
+  transition: transform 375ms cubic-bezier(0.05, 0.55, 0.15, 1); }
+
+.page-header > :nth-child(2) {
+  transition-delay: 0.125s; }
 
 .page-header__title {
   display: flex;
-  align-items: center;
-}
+  align-items: center; }
 
 .page-header__title h1 {
   font-size: 24px;
   line-height: 32px;
   color: #fff;
   font-family: tahoma;
-  display: block;
-}
+  display: block; }
 
 .page-header__title h2 {
   color: #fff;
   font-family: tahoma;
   display: block;
   font-size: 14px;
-  display: block;
-}
+  display: block; }
 
 .page-header__title > div {
-  margin-left: 8px;
-}
+  margin-left: 8px; }
 
 .page-header__title h1 span {
   color: #fff;
   font-family: tahoma;
-  display: inline-block;
-}
+  display: inline-block; }
+
 .page-header__title h1 span:first-child {
   margin-right: 10px;
-  color: #61dafb;
-}
+  color: #61dafb; }
 
 .page-header a.selected,
 .page-header a:hover {
-  background-color: rgba(0, 0, 0, 0.1);
-}
+  background-color: rgba(0, 0, 0, 0.1); }
 
 .visible .page-header > :nth-child(1),
 .visible .page-header > :nth-child(2) {
-  transform: translateY(0);
-}
+  transform: translateY(0); }
 
 .awssld__container figure, .awssld__content, .awssld__box {
   display: block;
@@ -3690,6 +3712,19 @@ span.aws-btn__bubble {
   height: 100%;
   position: relative;
   --action-height: 120px; }
+  @media all and (max-width: 768px) {
+    .content .content__main {
+      padding: 0 12%; }
+    .content .content__action {
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 50px; }
+      .content .content__action > div:nth-child(1) {
+        margin-bottom: 16px; }
+      .content .content__action > div:nth-child(2) {
+        margin-bottom: 16px; }
+      .content .content__action select {
+        width: auto; } }
 
 .content__main {
   height: 100vh;
@@ -3711,7 +3746,7 @@ span.aws-btn__bubble {
 .content__action {
   display: flex;
   justify-content: space-around;
-  padding: 0 100px; }
+  padding: 12px 10%; }
   .content__action > div {
     flex: 1;
     text-align: center; }
