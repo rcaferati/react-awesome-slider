@@ -18,16 +18,13 @@ export default Component => {
 
       const handleTransitionStart = element => {
         const cleanPath = getCleanPath(window.location.pathname);
-        const newPath = window.location.pathname.match(/\/$/)
-          ? `/${element.nextMedia.slug}/`
-          : `/${element.nextMedia.slug}`;
 
         if (
           typeof window !== 'undefined' &&
           cleanPath !== element.nextMedia.slug
         ) {
           if (navigation.pop === false) {
-            window.history.pushState({}, '', newPath);
+            window.history.pushState({}, '', `/${element.nextMedia.slug}`);
           } else {
             navigate({
               ...navigation,
