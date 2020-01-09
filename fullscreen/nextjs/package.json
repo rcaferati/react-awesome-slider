@@ -13,7 +13,8 @@
     "next": "9.1.7",
     "node-sass": "^4.13.0",
     "react": "16.12.0",
-    "react-awesome-slider": "^2.4.0",
+    "react-awesome-slider": "^3.0.0",
+    "react-awesome-button": "^6.4.0",
     "react-dom": "16.12.0"
   }
 }
