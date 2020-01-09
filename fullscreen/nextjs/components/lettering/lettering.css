@@ -2,6 +2,7 @@
   color: #fff;
   font-family: monospace;
   text-align: center;
+  position: relative;
 }
 
 .lettering h1 {

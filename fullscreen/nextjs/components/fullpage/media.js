@@ -3,6 +3,7 @@ import { AwesomeButton } from 'react-awesome-button';
 import 'react-awesome-button/dist/themes/theme-c137.css';
 import { withNavigationContext } from 'react-awesome-slider/dist/navigation';
 import Lettering from '../lettering/lettering';
+import Background from '../background/background';
 import Content from '../content/content';
 import Mouse from '../mouse/mouse';
 import Section from '../section/section';
@@ -16,7 +17,10 @@ export const Home = withNavigationContext(({ fullpage }) => {
         main={
           <Lettering
             title="INDEX"
-            text={['This is a single full page fixed screen.']}
+            text={[
+              'This is a single full page fixed screen.',
+              'Use the button bellow to navigate to the next page',
+            ]}
           />
         }
         action={
@@ -28,6 +32,34 @@ export const Home = withNavigationContext(({ fullpage }) => {
               }}
             >
               Goto the next page
+            </AwesomeButton>
+          </div>
+        }
+      />
+    </Section>
+  );
+});
+
+export const Third = withNavigationContext(({ fullpage }) => {
+  return (
+    <Section wrapper={false} backgroundColor="#292c35">
+      <Background src="https://caferati.me/images/series/bojack-0.png" />
+      <Content
+        main={
+          <Lettering
+            title="PAGE-THREE"
+            text={['This is a screen with preloaded background image.']}
+          />
+        }
+        action={
+          <div className="button">
+            <AwesomeButton
+              size="large"
+              onPress={() => {
+                fullpage.navigate('/page-two');
+              }}
+            >
+              Goto the prev page
             </AwesomeButton>
           </div>
         }
@@ -71,13 +103,8 @@ export const media = [
   },
   {
     slug: 'page-three',
-    url: 'https://caferati.me/images/series/bojack-0.png',
+    preload: ['https://caferati.me/images/series/bojack-0.png'],
     className: 'slide page-three',
-    children: (
-      <Lettering
-        title="PAGE-THREE"
-        text={['Screen with preloaded background image.']}
-      />
-    ),
+    children: <Third />,
   },
 ];

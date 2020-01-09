@@ -386,6 +386,7 @@ export default class AwesomeSlider extends React.Component {
         ...this.getInfo(),
         nextSlide: this[this.loader],
         nextIndex: this.nextIndex,
+        nextMedia: this.media[this.nextIndex],
       });
     }
     const activeContent = active.querySelector(`.${this.classNames.content}`);
@@ -518,7 +519,9 @@ export default class AwesomeSlider extends React.Component {
                 tolerance: this.index === null ? 0 : 2,
               }).then(() => {
                 // RELEASE THE SLIDER JUST AFTER THE OA RETURNS
-                this.loading = false;
+                console.log('TRANSITION END VIA ARROW RETURN');
+                // WE SHOULD END IT HERE
+                this.releaseTransition();
               });
 
               this.activeArrow.classList.remove(this.activeArrowClass);
@@ -533,6 +536,15 @@ export default class AwesomeSlider extends React.Component {
         });
       }, transitionDelay);
     });
+  }
+
+  releaseTransition() {
+    this.loading = false;
+    if (this.props.onTransitionEnd) {
+      this.props.onTransitionEnd({
+        ...this.getInfo(),
+      });
+    }
   }
 
   startAnimation(direction, media, callback) {
@@ -566,6 +578,7 @@ export default class AwesomeSlider extends React.Component {
         ...this.getInfo(),
         nextSlide: this[this.loader],
         nextIndex: this.nextIndex,
+        nextMedia: this.media[this.nextIndex],
       });
     }
 
@@ -586,12 +599,15 @@ export default class AwesomeSlider extends React.Component {
     this.runAnimation(animationObject);
   }
 
-  goTo({ index, direction, touch = false }) {
+  goTo({ index, direction, touch = false, force = false }) {
     const nextIndex = this.getIndex(index);
     if (this.loading === true || index === this.index) {
       if (this.props.onTransitionReject) {
         this.props.onTransitionReject({
           ...this.getInfo(),
+          forceTransition: () => {
+            this.goTo({ index, direction, touch, force: true });
+          },
         });
       }
       return;
@@ -614,12 +630,7 @@ export default class AwesomeSlider extends React.Component {
           this.index = this.nextIndex;
           this.setState({ index: this.index }, () => {
             if (release === true) {
-              this.loading = false;
-            }
-            if (this.props.onTransitionEnd) {
-              this.props.onTransitionEnd({
-                ...this.getInfo(),
-              });
+              this.releaseTransition();
             }
           });
         });
@@ -679,6 +690,7 @@ export default class AwesomeSlider extends React.Component {
     onceTransitionEnd(this.activeArrow, {
       tolerance: this.index === null ? 0 : 2,
     }).then(() => {
+      console.log('TRANSITION END VIA ');
       if (callback) {
         callback();
       }
@@ -841,8 +853,6 @@ export default class AwesomeSlider extends React.Component {
       buttonContentRight,
     } = this.props;
     const { rootElement } = this;
-
-    console.log(this.getRootClassName());
 
     return (
       <div

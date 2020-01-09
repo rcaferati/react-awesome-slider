@@ -104,6 +104,55 @@ module.exports =
 
 /***/ }),
 
+/***/ "./components/background/background.js":
+/*!*********************************************!*\
+  !*** ./components/background/background.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _background_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./background.scss */ "./components/background/background.scss");
+/* harmony import */ var _background_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_background_scss__WEBPACK_IMPORTED_MODULE_1__);
+var _jsxFileName = "/Users/rcaferati/Projects/github/react-awesome-slider/fullscreen/nextjs/components/background/background.js";
+var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
+
+
+
+const Background = ({
+  src,
+  alt = 'background'
+}) => {
+  return __jsx("img", {
+    alt: alt,
+    src: src,
+    className: "background",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 5
+    },
+    __self: undefined
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Background);
+
+/***/ }),
+
+/***/ "./components/background/background.scss":
+/*!***********************************************!*\
+  !*** ./components/background/background.scss ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
+
+/***/ }),
+
 /***/ "./components/content/content.js":
 /*!***************************************!*\
   !*** ./components/content/content.js ***!
@@ -364,12 +413,13 @@ const Slider = Object(react_awesome_slider_dist_navigation__WEBPACK_IMPORTED_MOD
 /*!**************************************!*\
   !*** ./components/fullpage/media.js ***!
   \**************************************/
-/*! exports provided: Home, media */
+/*! exports provided: Home, Third, media */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Home", function() { return Home; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Third", function() { return Third; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "media", function() { return media; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
@@ -380,14 +430,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_awesome_slider_dist_navigation__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-awesome-slider/dist/navigation */ "react-awesome-slider/dist/navigation");
 /* harmony import */ var react_awesome_slider_dist_navigation__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_awesome_slider_dist_navigation__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _lettering_lettering__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../lettering/lettering */ "./components/lettering/lettering.js");
-/* harmony import */ var _content_content__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../content/content */ "./components/content/content.js");
-/* harmony import */ var _mouse_mouse__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../mouse/mouse */ "./components/mouse/mouse.js");
-/* harmony import */ var _section_section__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../section/section */ "./components/section/section.js");
-/* harmony import */ var _page_page__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../page/page */ "./components/page/page.js");
-/* harmony import */ var _fullpage_css__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./fullpage.css */ "./components/fullpage/fullpage.css");
-/* harmony import */ var _fullpage_css__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_fullpage_css__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _background_background__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../background/background */ "./components/background/background.js");
+/* harmony import */ var _content_content__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../content/content */ "./components/content/content.js");
+/* harmony import */ var _mouse_mouse__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../mouse/mouse */ "./components/mouse/mouse.js");
+/* harmony import */ var _section_section__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../section/section */ "./components/section/section.js");
+/* harmony import */ var _page_page__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../page/page */ "./components/page/page.js");
+/* harmony import */ var _fullpage_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./fullpage.css */ "./components/fullpage/fullpage.css");
+/* harmony import */ var _fullpage_css__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_fullpage_css__WEBPACK_IMPORTED_MODULE_10__);
 var _jsxFileName = "/Users/rcaferati/Projects/github/react-awesome-slider/fullscreen/nextjs/components/fullpage/media.js";
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
+
 
 
 
@@ -401,21 +453,21 @@ var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 const Home = Object(react_awesome_slider_dist_navigation__WEBPACK_IMPORTED_MODULE_3__["withNavigationContext"])(({
   fullpage
 }) => {
-  return __jsx(_section_section__WEBPACK_IMPORTED_MODULE_7__["default"], {
+  return __jsx(_section_section__WEBPACK_IMPORTED_MODULE_8__["default"], {
     wrapper: false,
     backgroundColor: "#292c35",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 14
+      lineNumber: 15
     },
     __self: undefined
-  }, __jsx(_content_content__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }, __jsx(_content_content__WEBPACK_IMPORTED_MODULE_6__["default"], {
     main: __jsx(_lettering_lettering__WEBPACK_IMPORTED_MODULE_4__["default"], {
       title: "INDEX",
-      text: ['This is a single full page fixed screen.'],
+      text: ['This is a single full page fixed screen.', 'Use the button bellow to navigate to the next page'],
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 17
+        lineNumber: 18
       },
       __self: undefined
     }),
@@ -423,7 +475,7 @@ const Home = Object(react_awesome_slider_dist_navigation__WEBPACK_IMPORTED_MODUL
       className: "button",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 23
+        lineNumber: 27
       },
       __self: undefined
     }, __jsx(react_awesome_button__WEBPACK_IMPORTED_MODULE_1__["AwesomeButton"], {
@@ -433,13 +485,66 @@ const Home = Object(react_awesome_slider_dist_navigation__WEBPACK_IMPORTED_MODUL
       },
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 24
+        lineNumber: 28
       },
       __self: undefined
     }, "Goto the next page")),
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 15
+      lineNumber: 16
+    },
+    __self: undefined
+  }));
+});
+const Third = Object(react_awesome_slider_dist_navigation__WEBPACK_IMPORTED_MODULE_3__["withNavigationContext"])(({
+  fullpage
+}) => {
+  return __jsx(_section_section__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    wrapper: false,
+    backgroundColor: "#292c35",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 45
+    },
+    __self: undefined
+  }, __jsx(_background_background__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    src: "https://caferati.me/images/series/bojack-0.png",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 46
+    },
+    __self: undefined
+  }), __jsx(_content_content__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    main: __jsx(_lettering_lettering__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      title: "PAGE-THREE",
+      text: ['This is a screen with preloaded background image.'],
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 49
+      },
+      __self: undefined
+    }),
+    action: __jsx("div", {
+      className: "button",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 55
+      },
+      __self: undefined
+    }, __jsx(react_awesome_button__WEBPACK_IMPORTED_MODULE_1__["AwesomeButton"], {
+      size: "large",
+      onPress: () => {
+        fullpage.navigate('/page-two');
+      },
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 56
+      },
+      __self: undefined
+    }, "Goto the prev page")),
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 47
     },
     __self: undefined
   }));
@@ -450,54 +555,54 @@ const media = [{
   children: __jsx(Home, {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 43
+      lineNumber: 75
     },
     __self: undefined
   })
 }, {
   slug: 'page-two',
   className: 'sectioned page-two',
-  children: __jsx(_page_page__WEBPACK_IMPORTED_MODULE_8__["default"], {
+  children: __jsx(_page_page__WEBPACK_IMPORTED_MODULE_9__["default"], {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 49
+      lineNumber: 81
     },
     __self: undefined
-  }, __jsx(_section_section__WEBPACK_IMPORTED_MODULE_7__["default"], {
+  }, __jsx(_section_section__WEBPACK_IMPORTED_MODULE_8__["default"], {
     wrapper: false,
     backgroundColor: "#4158b4",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 50
+      lineNumber: 82
     },
     __self: undefined
-  }, __jsx(_content_content__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }, __jsx(_content_content__WEBPACK_IMPORTED_MODULE_6__["default"], {
     main: __jsx(_lettering_lettering__WEBPACK_IMPORTED_MODULE_4__["default"], {
       title: "PAGE-TWO",
       text: ['This is multiple section page, scroll down to view more content.'],
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 53
+        lineNumber: 85
       },
       __self: undefined
     }),
-    action: __jsx(_mouse_mouse__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    action: __jsx(_mouse_mouse__WEBPACK_IMPORTED_MODULE_7__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 60
+        lineNumber: 92
       },
       __self: undefined
     }),
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 51
+      lineNumber: 83
     },
     __self: undefined
-  })), __jsx(_section_section__WEBPACK_IMPORTED_MODULE_7__["default"], {
+  })), __jsx(_section_section__WEBPACK_IMPORTED_MODULE_8__["default"], {
     backgroundColor: "#617be3",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 63
+      lineNumber: 95
     },
     __self: undefined
   }, __jsx(_lettering_lettering__WEBPACK_IMPORTED_MODULE_4__["default"], {
@@ -505,20 +610,18 @@ const media = [{
     text: ['This is a continued page section.'],
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 64
+      lineNumber: 96
     },
     __self: undefined
   })))
 }, {
   slug: 'page-three',
-  url: 'https://caferati.me/images/series/bojack-0.png',
+  preload: ['https://caferati.me/images/series/bojack-0.png'],
   className: 'slide page-three',
-  children: __jsx(_lettering_lettering__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    title: "PAGE-THREE",
-    text: ['Screen with preloaded background image.'],
+  children: __jsx(Third, {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 77
+      lineNumber: 108
     },
     __self: undefined
   })

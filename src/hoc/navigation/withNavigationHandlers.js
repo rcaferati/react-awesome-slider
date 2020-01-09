@@ -13,32 +13,55 @@ export default Component => {
       const { navigation, navigate } = fullpage;
 
       const handleTransitionStart = element => {
+        if (
+          typeof window !== 'undefined' &&
+          window.location.pathname !== `/${element.nextMedia.slug}`
+        ) {
+          if (navigation.pop === false) {
+            window.history.pushState({}, '', `/${element.nextMedia.slug}`);
+          } else {
+            navigate({
+              ...navigation,
+              pop: false,
+              goto: window.location.pathname,
+            });
+            return;
+          }
+        }
+
         navigate({
           ...navigation,
           slug: navigation.goto,
           navigating: true,
         });
+
         if (onTransitionStart) {
           onTransitionStart(element);
         }
       };
 
       const handleTransitionEnd = element => {
-        if (typeof window !== 'undefined') {
-          window.history.pushState({}, '', `/${element.currentMedia.slug}`);
-        }
         const state = {
           ...navigation,
           navigating: false,
+          pop: false,
         };
         if (element.currentMedia.slug !== state.goto) {
           state.slug = element.currentMedia.slug;
           state.goto = element.currentMedia.slug;
         }
+
         navigate(state);
 
         if (onTransitionEnd) {
           onTransitionEnd(element);
+        }
+
+        if (window.location.pathname !== `/${element.currentMedia.slug}`) {
+          navigate({
+            ...state,
+            goto: window.location.pathname.replace(/^\//, ''),
+          });
         }
       };
 
@@ -46,6 +69,7 @@ export default Component => {
         if (navigation.navigating === true) {
           return;
         }
+
         navigate({
           slug: element.currentMedia.slug,
           goto: element.currentMedia.slug,
@@ -63,6 +87,19 @@ export default Component => {
           fillParent
           bullets={false}
           infinite={false}
+          onFirstMount={() => {
+            window.addEventListener('popstate', () => {
+              event.stopPropagation();
+              event.preventDefault();
+              if (event.path && event.path[0]) {
+                navigate({
+                  ...navigation,
+                  pop: true,
+                  goto: event.path[0].location.pathname.replace(/^\//, ''),
+                });
+              }
+            });
+          }}
           selected={navigation.goto}
           onTransitionReject={handleTransitionReject}
           onTransitionStart={handleTransitionStart}
