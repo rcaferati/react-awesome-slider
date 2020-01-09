@@ -1,8 +1,11 @@
-# React Awesome Slider v2 [New Transitions]
+# React Awesome Slider v2 [New full-screen navigation HOC]
 
 [![Travis](https://img.shields.io/travis/rcaferati/react-awesome-slider/master.svg)](https://travis-ci.org/rcaferati/react-awesome-slider) ![NPM](https://img.shields.io/npm/v/react-awesome-slider.svg)
 
 `react-awesome-slider` is a 60fps, extendable, highly customizable, production ready React Component that renders a media (image/video) gallery slider/carousel.
+
+### FULL-SCREEN NAVIGATION
+
 
 ### Basic usage
 
@@ -83,12 +86,14 @@ const slider = (
 
 Checkout more recipes on the styled folder. For more animation recipes check out the [styled folder](https://github.com/rcaferati/react-awesome-slider/tree/master/src/styled).
 
+Note that on v3 there's an adition of the `animation` prop. The animation name is the cammel-cased version of the animation css file.
+
 ```jsx
 import AwesomeSlider from 'react-awesome-slider';
 import AwesomeSliderStyles from 'react-awesome-slider/src/styled/fold-out-animation';
 
 const slider = (
-  <AwesomeSlider cssModule={AwesomeSliderStyles}>
+  <AwesomeSlider animation="foldOutAnimation" cssModule={AwesomeSliderStyles}>
     <div data-src="/path/to/image-0.png" />
     <div data-src="/path/to/image-1.png" />
     <div data-src="/path/to/image-2.jpg" />
@@ -105,7 +110,7 @@ import AwesomeSlider from 'react-awesome-slider';
 import AwesomeSliderStyles from 'react-awesome-slider/src/styled/cube-animation';
 
 const slider = (
-  <AwesomeSlider cssModule={AwesomeSliderStyles}>
+  <AwesomeSlider animation="cubeAnimation" cssModule={AwesomeSliderStyles}>
     <div data-src="/path/to/image-0.png" />
     <div data-src="/path/to/image-1.png" />
     <div data-src="/path/to/image-2.jpg" />
