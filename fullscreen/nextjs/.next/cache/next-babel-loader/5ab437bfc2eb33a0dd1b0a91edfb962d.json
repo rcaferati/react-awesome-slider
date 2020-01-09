@@ -1,1 +1,0 @@
-{"ast":null,"code":"var __jsx = React.createElement;\nimport React from 'react';\nimport './section.css';\n\nconst Section = ({\n  children\n}) => {\n  return __jsx(\"section\", {\n    className: \"section\"\n  }, children);\n};\n\nexport default Section;","map":null,"metadata":{},"sourceType":"module"}

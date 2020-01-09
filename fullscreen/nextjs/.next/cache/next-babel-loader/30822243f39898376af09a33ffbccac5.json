@@ -1,1 +1,0 @@
-{"ast":null,"code":"\"use strict\";\n\nrequire(\"__next_polyfill__fetch\");\n\nrequire(\"url-polyfill\");\n\nObject.assign = require('__next_polyfill__object_assign');","map":null,"metadata":{},"sourceType":"script"}

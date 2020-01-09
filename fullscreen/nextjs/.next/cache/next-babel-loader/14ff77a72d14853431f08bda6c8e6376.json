@@ -1,1 +1,0 @@
-{"ast":null,"code":"var __jsx = React.createElement;\nimport React from 'react';\nimport Main from '../components/main';\nimport Slider from '../slider/slider';\n\nvar PageTwo = function PageTwo() {\n  return __jsx(Main, {\n    page: \"page-two\"\n  }, __jsx(Slider, null));\n};\n\nexport default PageTwo;","map":null,"metadata":{},"sourceType":"module"}
