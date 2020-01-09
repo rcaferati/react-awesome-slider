@@ -1,4 +1,4 @@
-# React Awesome Slider v2 [New full-screen navigation HOC]
+# React Awesome Slider v3 [New full-screen navigation HOC]
 
 [![Travis](https://img.shields.io/travis/rcaferati/react-awesome-slider/master.svg)](https://travis-ci.org/rcaferati/react-awesome-slider) ![NPM](https://img.shields.io/npm/v/react-awesome-slider.svg)
 
