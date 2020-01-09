@@ -19,7 +19,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-awesome-button": "^6.4.0",
-    "react-awesome-slider": "^2.4.0",
+    "react-awesome-slider": "^3.0.0",
     "react-dom": "^16.12.0",
     "react-helmet": "^5.2.1"
   },

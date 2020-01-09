@@ -534,9 +534,6 @@ export default class AwesomeSlider extends React.Component {
               onceTransitionEnd(this.activeArrow, {
                 tolerance: this.index === null ? 0 : 2,
               }).then(() => {
-                // RELEASE THE SLIDER JUST AFTER THE OA RETURNS
-                console.log('TRANSITION END VIA ARROW RETURN');
-                // WE SHOULD END IT HERE
                 this.releaseTransition();
               });
 
@@ -706,7 +703,6 @@ export default class AwesomeSlider extends React.Component {
     onceTransitionEnd(this.activeArrow, {
       tolerance: this.index === null ? 0 : 2,
     }).then(() => {
-      console.log('TRANSITION END VIA ');
       if (callback) {
         callback();
       }

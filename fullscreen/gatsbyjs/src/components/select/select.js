@@ -1,26 +1,27 @@
-import React from 'react';
-import './select.scss';
+import React from "react"
+import "./select.scss"
 
 const Select = ({ options = [], onChange, selected }) => {
   const renderOptions = () => {
     return options.map(({ value, label }) => {
       return (
-        <option selected={value === selected} value={value}>
+        <option key={value} value={value}>
           {label}
         </option>
-      );
-    });
-  };
+      )
+    })
+  }
 
   return (
     <select
+      value={selected}
       onChange={event => {
-        onChange(event.currentTarget.value);
+        onChange(event.currentTarget.value)
       }}
     >
       {renderOptions()}
     </select>
-  );
-};
+  )
+}
 
-export default Select;
+export default Select

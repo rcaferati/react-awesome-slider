@@ -9732,10 +9732,10 @@ react-awesome-button@^6.4.0:
   dependencies:
     web-animation-club "^0.6.0"
 
-react-awesome-slider@^2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/react-awesome-slider/-/react-awesome-slider-2.4.0.tgz#d05165fd5c206db8c6c128fc6e256a066763184f"
-  integrity sha512-jzMI2CSlHsVKjT36YDpybsLw6pxY/qXVDzJtf/QNotyUM5RyWMfuPjDJMu0OqjZK+gnmOZ3GhzKS4s/vxcWAkA==
+react-awesome-slider@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/react-awesome-slider/-/react-awesome-slider-3.0.0.tgz#736500a0f94fb510b436efc02cfa1e03a18eba99"
+  integrity sha512-xdxO3KHPsGrjcXqYuwu3i12iESr/XOAnDpqtZJ4v1D69bbh5v1HcwASpgj+wJjdX/PYjMwf9qhugF8PWYl8xkw==
   dependencies:
     web-animation-club "^0.6.0"
 
