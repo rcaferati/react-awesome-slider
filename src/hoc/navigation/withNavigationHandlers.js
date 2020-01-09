@@ -1,6 +1,10 @@
 import React from 'react';
 import withNavigationContext from './withNavigationContext';
 
+const getCleanPath = path => {
+  return path.replace(/^\//, '').replace(/\/$/);
+};
+
 export default Component => {
   return withNavigationContext(
     ({
@@ -13,17 +17,22 @@ export default Component => {
       const { navigation, navigate } = fullpage;
 
       const handleTransitionStart = element => {
+        const cleanPath = getCleanPath(window.location.pathname);
+        const newPath = window.location.pathname.match(/\/$/)
+          ? `/${element.nextMedia.slug}/`
+          : `/${element.nextMedia.slug}`;
+
         if (
           typeof window !== 'undefined' &&
-          window.location.pathname !== `/${element.nextMedia.slug}`
+          cleanPath !== element.nextMedia.slug
         ) {
           if (navigation.pop === false) {
-            window.history.pushState({}, '', `/${element.nextMedia.slug}`);
+            window.history.pushState({}, '', newPath);
           } else {
             navigate({
               ...navigation,
               pop: false,
-              goto: window.location.pathname,
+              goto: cleanPath,
             });
             return;
           }
@@ -57,10 +66,12 @@ export default Component => {
           onTransitionEnd(element);
         }
 
-        if (window.location.pathname !== `/${element.currentMedia.slug}`) {
+        const cleanPath = getCleanPath(window.location.pathname);
+
+        if (cleanPath !== element.currentMedia.slug) {
           navigate({
             ...state,
-            goto: window.location.pathname.replace(/^\//, ''),
+            goto: cleanPath,
           });
         }
       };
@@ -95,7 +106,7 @@ export default Component => {
                 navigate({
                   ...navigation,
                   pop: true,
-                  goto: event.path[0].location.pathname.replace(/^\//, ''),
+                  goto: getCleanPath(event.path[0].location.pathname),
                 });
               }
             });
