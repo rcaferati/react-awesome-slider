@@ -101,10 +101,6 @@ export default class AwesomeSlider extends React.Component {
     this.setupStartup(props);
   }
 
-  componentWillMount() {
-    console.log(this.buttons);
-  }
-
   componentDidMount() {
     this.boxA.classList.add(this.classNames.active);
     if (this.props.startupScreen) {
@@ -112,7 +108,11 @@ export default class AwesomeSlider extends React.Component {
         // this.buttons.element.classList.add(this.classNames.controlsHidden);
         this.buttons.element.classList.add(this.classNames.controlsActive);
         onceNextCssLayout().then(() => {
-          this.buttons.element.classList.remove(this.classNames.controlsHidden);
+          if (this.buttons) {
+            this.buttons.element.classList.remove(
+              this.classNames.controlsHidden
+            );
+          }
         });
       }
       if (this.props.startup === true) {
@@ -450,13 +450,15 @@ export default class AwesomeSlider extends React.Component {
         activeContent.classList.remove(this.classNames.contentExit);
         loaderContent.classList.remove(contentEnterMoveClass);
 
-        setTimeout(() => {
-          if (this.buttons) {
-            this.buttons.element.classList.remove(
-              this.classNames.controlsActive
-            );
-          }
-        }, this.props.controlsReturnDelay);
+        if (this.buttons) {
+          setTimeout(() => {
+            if (this.buttons) {
+              this.buttons.element.classList.remove(
+                this.classNames.controlsActive
+              );
+            }
+          }, this.props.controlsReturnDelay);
+        }
 
         if (this.activeArrow) {
           // this.activeArrow.classList.remove(this.activeArrowClass);
@@ -519,9 +521,11 @@ export default class AwesomeSlider extends React.Component {
 
             if (this.buttons) {
               setTimeout(() => {
-                this.buttons.element.classList.remove(
-                  this.classNames.controlsActive
-                );
+                if (this.buttons) {
+                  this.buttons.element.classList.remove(
+                    this.classNames.controlsActive
+                  );
+                }
               }, this.props.controlsReturnDelay);
             }
 

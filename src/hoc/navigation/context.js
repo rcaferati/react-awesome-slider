@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 const Context = React.createContext([{}, () => {}]);
 
@@ -8,14 +8,6 @@ const Provider = ({ page, children }) => {
     goto: page,
     navigating: false,
   });
-
-  useEffect(() => {
-    setState({
-      slug: page,
-      goto: page,
-      navigating: false,
-    });
-  }, [page]);
 
   const setNavigation = params => {
     if (typeof params === 'object') {
