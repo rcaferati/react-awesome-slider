@@ -616,14 +616,14 @@ export default class AwesomeSlider extends React.Component {
     this.runAnimation(animationObject);
   }
 
-  goTo({ index, direction, touch = false, force = false }) {
+  goTo({ index, direction, touch = false }) {
     const nextIndex = this.getIndex(index);
     if (this.loading === true || index === this.index) {
       if (this.props.onTransitionReject) {
         this.props.onTransitionReject({
           ...this.getInfo(),
           forceTransition: () => {
-            this.goTo({ index, direction, touch, force: true });
+            this.goTo({ index, direction, touch });
           },
         });
       }
@@ -803,6 +803,7 @@ export default class AwesomeSlider extends React.Component {
     if (this.animating || !this.touchStartPoint || !this.loading) {
       return;
     }
+
     this.touchStartPoint = null;
     this.animating = true;
     this.touchEnabled = false;
