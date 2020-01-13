@@ -89,8 +89,6 @@ export default Component => {
         }
       };
 
-      console.log(navigation.goto);
-
       return (
         <Component
           buttons

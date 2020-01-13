@@ -6,8 +6,8 @@ const getCleanPath = path => {
   return path.replace(/^\//, '').replace(/\/$/);
 };
 
-const Provider = ({ page, children }) => {
-  const cleanPage = getCleanPath(page);
+const Provider = ({ slug, children }) => {
+  const cleanPage = getCleanPath(slug);
   const [state, setState] = useState({
     slug: cleanPage,
     goto: cleanPage,
