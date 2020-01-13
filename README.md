@@ -15,6 +15,22 @@ For using the full-screen navigation HOCs please checkout the `GatsbyJS` and `Ne
 [<img width="400" alt="react-awesome-slider demo" src="https://github.com/rcaferati/react-awesome-slider/blob/master/demo/public/images/demo-bojack.gif?raw=true">](https://caferati.me/demo/react-awesome-slider)
 [<img width="400" alt="react-awesome-slider demo" src="https://github.com/rcaferati/react-awesome-slider/blob/master/demo/public/images/demo-lettering.gif?raw=true">](https://caferati.me/demo/react-awesome-slider)
 
+### Basic usage with pure CSS
+
+```jsx
+import AwesomeSlider from 'react-awesome-slider';
+import 'react-awesome-slider/dist/styles.css';
+
+const slider = (
+  <AwesomeSlider>
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+  </AwesomeSlider>
+);
+```
+
 ### Animation recipes: scale-out, fold-out, cube, open and fall.
 
 For analysing how the animations are built, please check out to [this folder](https://github.com/rcaferati/react-awesome-slider/tree/master/src/styled). Collaborations with new creative ones are welcome, just open a PR.
@@ -23,6 +39,23 @@ For analysing how the animations are built, please check out to [this folder](ht
 [<img width="400" alt="react-awesome-slider demo" src="https://github.com/rcaferati/react-awesome-slider/blob/master/demo/public/images/demo-cube.gif?raw=true">](https://caferati.me/demo/react-awesome-slider)
 [<img width="400" alt="react-awesome-slider demo" src="https://github.com/rcaferati/react-awesome-slider/blob/master/demo/public/images/demo-open.gif?raw=true">](https://caferati.me/demo/react-awesome-slider)
 [<img width="400" alt="react-awesome-slider demo" src="https://github.com/rcaferati/react-awesome-slider/blob/master/demo/public/images/demo-fall.gif?raw=true">](https://caferati.me/demo/react-awesome-slider)
+
+### Cube animation recipe with CSS Modules
+
+Checkout more recipes on the styled folder. For more animation recipes check out the [styled folder](https://github.com/rcaferati/react-awesome-slider/tree/master/src/styled).
+
+```jsx
+import AwesomeSlider from 'react-awesome-slider';
+import AwesomeSliderStyles from 'react-awesome-slider/src/styled/cube-animation';
+
+const slider = (
+  <AwesomeSlider animation="cubeAnimation" cssModule={AwesomeSliderStyles}>
+    <div data-src="/path/to/image-0.png" />
+    <div data-src="/path/to/image-1.png" />
+    <div data-src="/path/to/image-2.jpg" />
+  </AwesomeSlider>
+);
+```
 
 ### Touch enabled
 
@@ -52,23 +85,7 @@ or
 yarn add react-awesome-slider
 ```
 
-## Examples
-
-### Basic usage with and plain CSS
-
-```jsx
-import AwesomeSlider from 'react-awesome-slider';
-import 'react-awesome-slider/dist/styles.css';
-
-const slider = (
-  <AwesomeSlider>
-    <div>1</div>
-    <div>2</div>
-    <div>3</div>
-    <div>4</div>
-  </AwesomeSlider>
-);
-```
+## More Examples
 
 ### Basic usage with CSS Modules
 
@@ -97,23 +114,6 @@ import AwesomeSliderStyles from 'react-awesome-slider/src/styled/fold-out-animat
 
 const slider = (
   <AwesomeSlider animation="foldOutAnimation" cssModule={AwesomeSliderStyles}>
-    <div data-src="/path/to/image-0.png" />
-    <div data-src="/path/to/image-1.png" />
-    <div data-src="/path/to/image-2.jpg" />
-  </AwesomeSlider>
-);
-```
-
-### Cube animation recipe with CSS Modules
-
-Checkout more recipes on the styled folder. For more animation recipes check out the [styled folder](https://github.com/rcaferati/react-awesome-slider/tree/master/src/styled).
-
-```jsx
-import AwesomeSlider from 'react-awesome-slider';
-import AwesomeSliderStyles from 'react-awesome-slider/src/styled/cube-animation';
-
-const slider = (
-  <AwesomeSlider animation="cubeAnimation" cssModule={AwesomeSliderStyles}>
     <div data-src="/path/to/image-0.png" />
     <div data-src="/path/to/image-1.png" />
     <div data-src="/path/to/image-2.jpg" />
