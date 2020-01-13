@@ -107,13 +107,6 @@ export default class AwesomeSlider extends React.Component {
       if (this.buttons) {
         // this.buttons.element.classList.add(this.classNames.controlsHidden);
         this.buttons.element.classList.add(this.classNames.controlsActive);
-        onceNextCssLayout().then(() => {
-          if (this.buttons) {
-            this.buttons.element.classList.remove(
-              this.classNames.controlsHidden
-            );
-          }
-        });
       }
       if (this.props.startup === true) {
         this.startup();
@@ -122,6 +115,13 @@ export default class AwesomeSlider extends React.Component {
     if (this.props.onFirstMount) {
       this.props.onFirstMount({
         ...this.getInfo(),
+      });
+    }
+    if (this.buttons) {
+      onceNextCssLayout().then(() => {
+        if (this.buttons) {
+          this.buttons.element.classList.remove(this.classNames.controlsHidden);
+        }
       });
     }
   }
