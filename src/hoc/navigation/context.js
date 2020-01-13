@@ -1,13 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Context = React.createContext([{}, () => {}]);
 
+const getCleanPath = path => {
+  return path.replace(/^\//, '').replace(/\/$/);
+};
+
 const Provider = ({ page, children }) => {
+  const cleanPage = getCleanPath(page);
   const [state, setState] = useState({
-    slug: page,
-    goto: page,
+    slug: cleanPage,
+    goto: cleanPage,
     navigating: false,
   });
+
+  useEffect(() => {
+    setState({
+      slug: cleanPage,
+      goto: cleanPage,
+      navigating: false,
+    });
+  }, [cleanPage]);
 
   const setNavigation = params => {
     if (typeof params === 'object') {
