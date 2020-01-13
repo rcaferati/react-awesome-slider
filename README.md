@@ -7,6 +7,8 @@
 ## FULLPAGE navigation HOC
 For using the full-screen navigation HOCs please checkout the `GatsbyJS` and `NextJS` examples on the [ras fullpage strategies repository](https://github.com/rcaferati/ras-fullpage-strategies).
 
+You can access the demo for the FULLPAGE navigation here: [fullpage.caferati.me](https://fullpage.caferati.me)
+
 [<img width="600" alt="react-awesome-slider demo" src="https://github.com/rcaferati/react-awesome-slider/blob/master/demo/public/images/fullscreen.gif?raw=true">](https://fullpage.caferati.me/)
 
 
