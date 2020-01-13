@@ -268,14 +268,12 @@ export default class AwesomeSlider extends React.Component {
   startup() {
     this.started = true;
     setTimeout(() => {
-      onceNextCssLayout().then(() => {
-        this.goTo({
-          index: this.props.selected,
-          direction: true,
-          touch: false,
-        });
+      this.goTo({
+        index: this.props.selected,
+        direction: true,
+        touch: false,
       });
-    }, this.props.startupDelay || 100);
+    }, this.props.startupDelay || 75);
   }
 
   resetSlider(index = 0) {
