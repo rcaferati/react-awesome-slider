@@ -1,11 +1,11 @@
-# React Awesome Slider v3 [NEW full-screen navigation HOC]
+# React Awesome Slider v3 [NEW fullpage navigation HOC]
 
 [![Travis](https://img.shields.io/travis/rcaferati/react-awesome-slider/master.svg)](https://travis-ci.org/rcaferati/react-awesome-slider) ![NPM](https://img.shields.io/npm/v/react-awesome-slider.svg)
 
 `react-awesome-slider` is a 60fps, extendable, highly customizable, production ready React Component that renders a media (image/video) gallery slider/carousel.
 
 ### FULL-SCREEN navigation HOC
-For using the full-screen navigation HOCs please checkout the `GatsbyJS` and `NextJS` examples on the [full-screen example repository](https://github.com/rcaferati/react-awesome-slider/tree/master/fullscreen).
+For using the full-screen navigation HOCs please checkout the `GatsbyJS` and `NextJS` examples on the [fullpage example repository](https://github.com/rcaferati/react-awesome-slider/tree/master/fullscreen).
 
 [<img width="600" alt="react-awesome-slider demo" src="https://github.com/rcaferati/react-awesome-slider/blob/master/demo/public/images/fullscreen.gif?raw=true">](https://fullpage.caferati.me/)
 
