@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import withNavigationContext from './withNavigationContext';
 
 const getCleanPath = path => {
@@ -16,26 +16,6 @@ export default Component => {
     }) => {
       const { navigation, navigate } = fullpage;
 
-      useEffect(() => {
-        if (typeof window !== 'undefined') {
-          window.addEventListener(
-            'popstate',
-            event => {
-              event.preventDefault();
-              event.stopImmediatePropagation();
-              if (event.path && event.path[0]) {
-                navigate({
-                  ...navigation,
-                  pop: true,
-                  goto: getCleanPath(event.path[0].location.pathname),
-                });
-              }
-            }
-            // { once: true }
-          );
-        }
-      }, []);
-
       const handleTransitionStart = element => {
         const cleanPath = getCleanPath(window.location.pathname);
 
@@ -44,18 +24,11 @@ export default Component => {
           cleanPath !== element.nextMedia.slug
         ) {
           if (navigation.pop === false) {
-            window.history.pushState(
-              {
-                url: window.location.pathname,
-                to: window.location.pathname,
-              },
-              '',
-              `/${element.nextMedia.slug}`
-            );
+            window.history.pushState({}, '', `/${element.nextMedia.slug}`);
           } else {
             navigate({
               ...navigation,
-              // pop: false,
+              pop: false,
               goto: cleanPath,
             });
             return;
@@ -101,7 +74,7 @@ export default Component => {
       };
 
       const handleTransitionReject = element => {
-        if (navigation.navigating === true || !element.currentMedia) {
+        if (navigation.navigating === true) {
           return;
         }
 
@@ -116,16 +89,25 @@ export default Component => {
         }
       };
 
-      if (navigation.goto === null) {
-        return null;
-      }
-
       return (
         <Component
           buttons
           fillParent
           bullets={false}
           infinite={false}
+          onFirstMount={() => {
+            window.addEventListener('popstate', () => {
+              event.stopPropagation();
+              event.preventDefault();
+              if (event.path && event.path[0]) {
+                navigate({
+                  ...navigation,
+                  pop: true,
+                  goto: getCleanPath(event.path[0].location.pathname),
+                });
+              }
+            });
+          }}
           selected={navigation.goto}
           onTransitionReject={handleTransitionReject}
           onTransitionStart={handleTransitionStart}
