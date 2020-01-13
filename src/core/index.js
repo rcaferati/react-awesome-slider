@@ -188,6 +188,7 @@ export default class AwesomeSlider extends React.Component {
     this.checkChildren(props);
     this.setupClassNames(props.cssModule);
     if (props.startupScreen) {
+      const nextIndex = this.getIndex(this.props.selected);
       this.index = null;
       this.state = {
         index: this.index,
@@ -195,7 +196,7 @@ export default class AwesomeSlider extends React.Component {
           className: this.classNames.startUp,
           children: props.startupScreen,
         },
-        boxB: null,
+        boxB: this.media[nextIndex] || null,
       };
     } else {
       this.started = true;
