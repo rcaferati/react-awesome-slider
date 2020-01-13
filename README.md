@@ -10,6 +10,8 @@ For using the full-screen navigation HOCs please checkout the `GatsbyJS` and `Ne
 [<img width="600" alt="react-awesome-slider demo" src="https://github.com/rcaferati/react-awesome-slider/blob/master/demo/public/images/fullscreen.gif?raw=true">](https://fullpage.caferati.me/)
 
 
+
+
 ### Basic usage
 
 [<img width="400" alt="react-awesome-slider demo" src="https://github.com/rcaferati/react-awesome-slider/blob/master/demo/public/images/demo-bojack.gif?raw=true">](https://caferati.me/demo/react-awesome-slider)
