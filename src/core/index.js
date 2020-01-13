@@ -101,19 +101,12 @@ export default class AwesomeSlider extends React.Component {
     this.setupStartup(props);
   }
 
-  componentWillMount() {
-    console.log(this.buttons);
-  }
-
   componentDidMount() {
     this.boxA.classList.add(this.classNames.active);
     if (this.props.startupScreen) {
       if (this.buttons) {
         // this.buttons.element.classList.add(this.classNames.controlsHidden);
         this.buttons.element.classList.add(this.classNames.controlsActive);
-        onceNextCssLayout().then(() => {
-          this.buttons.element.classList.remove(this.classNames.controlsHidden);
-        });
       }
       if (this.props.startup === true) {
         this.startup();
@@ -122,6 +115,13 @@ export default class AwesomeSlider extends React.Component {
     if (this.props.onFirstMount) {
       this.props.onFirstMount({
         ...this.getInfo(),
+      });
+    }
+    if (this.buttons) {
+      onceNextCssLayout().then(() => {
+        if (this.buttons) {
+          this.buttons.element.classList.remove(this.classNames.controlsHidden);
+        }
       });
     }
   }
@@ -450,13 +450,15 @@ export default class AwesomeSlider extends React.Component {
         activeContent.classList.remove(this.classNames.contentExit);
         loaderContent.classList.remove(contentEnterMoveClass);
 
-        setTimeout(() => {
-          if (this.buttons) {
-            this.buttons.element.classList.remove(
-              this.classNames.controlsActive
-            );
-          }
-        }, this.props.controlsReturnDelay);
+        if (this.buttons) {
+          setTimeout(() => {
+            if (this.buttons) {
+              this.buttons.element.classList.remove(
+                this.classNames.controlsActive
+              );
+            }
+          }, this.props.controlsReturnDelay);
+        }
 
         if (this.activeArrow) {
           // this.activeArrow.classList.remove(this.activeArrowClass);
@@ -519,9 +521,11 @@ export default class AwesomeSlider extends React.Component {
 
             if (this.buttons) {
               setTimeout(() => {
-                this.buttons.element.classList.remove(
-                  this.classNames.controlsActive
-                );
+                if (this.buttons) {
+                  this.buttons.element.classList.remove(
+                    this.classNames.controlsActive
+                  );
+                }
               }, this.props.controlsReturnDelay);
             }
 
@@ -534,9 +538,6 @@ export default class AwesomeSlider extends React.Component {
               onceTransitionEnd(this.activeArrow, {
                 tolerance: this.index === null ? 0 : 2,
               }).then(() => {
-                // RELEASE THE SLIDER JUST AFTER THE OA RETURNS
-                console.log('TRANSITION END VIA ARROW RETURN');
-                // WE SHOULD END IT HERE
                 this.releaseTransition();
               });
 
@@ -615,14 +616,14 @@ export default class AwesomeSlider extends React.Component {
     this.runAnimation(animationObject);
   }
 
-  goTo({ index, direction, touch = false, force = false }) {
+  goTo({ index, direction, touch = false }) {
     const nextIndex = this.getIndex(index);
     if (this.loading === true || index === this.index) {
       if (this.props.onTransitionReject) {
         this.props.onTransitionReject({
           ...this.getInfo(),
           forceTransition: () => {
-            this.goTo({ index, direction, touch, force: true });
+            this.goTo({ index, direction, touch });
           },
         });
       }
@@ -706,7 +707,6 @@ export default class AwesomeSlider extends React.Component {
     onceTransitionEnd(this.activeArrow, {
       tolerance: this.index === null ? 0 : 2,
     }).then(() => {
-      console.log('TRANSITION END VIA ');
       if (callback) {
         callback();
       }
@@ -803,6 +803,7 @@ export default class AwesomeSlider extends React.Component {
     if (this.animating || !this.touchStartPoint || !this.loading) {
       return;
     }
+
     this.touchStartPoint = null;
     this.animating = true;
     this.touchEnabled = false;
