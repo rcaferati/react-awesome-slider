@@ -21,7 +21,7 @@ class Popover extends React.Component {
     this.toggleTimer = null;
   }
 
-  componentWillReceiveProps(newProps) {
+  UNSAFE_componentWillReceiveProps(newProps) {
     if (this.props.opened !== newProps.opened) {
       this.toggleVisibility(newProps.opened);
     }

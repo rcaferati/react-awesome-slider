@@ -31,7 +31,7 @@ class PageRibbon extends React.Component {
     }
   }
 
-  componentWillReceiveProps(newProps) {
+  UNSAFE_componentWillReceiveProps(newProps) {
     if (this.props.startup === false && newProps.startup === true) {
       this.setState({
         hidden: false,
