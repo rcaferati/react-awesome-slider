@@ -126,7 +126,7 @@ export default class AwesomeSlider extends React.Component {
     }
   }
 
-  componentWillReceiveProps(newProps) {
+  UNSAFE_componentWillReceiveProps(newProps) {
     this.checkChildren(newProps);
     this.setupClassNames(newProps.cssModule);
     if (newProps.name !== this.props.name) {
