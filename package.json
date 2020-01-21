@@ -32,11 +32,11 @@
     "@babel/cli": "^7.8.3",
     "@babel/core": "^7.8.3",
     "@babel/helper-plugin-utils": "^7.8.3",
-    "@babel/register": "^7.8.3",
     "@babel/node": "^7.8.3",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/preset-env": "^7.8.3",
     "@babel/preset-react": "^7.8.3",
+    "@babel/register": "^7.8.3",
     "autoprefixer": "^7.0.1",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^8.2.1",
@@ -44,6 +44,8 @@
     "babel-loader": "^8.0.0-beta",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "css-loader": "^0.28.1",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
     "eslint": "^4.15.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-prettier": "^4.3.0",
@@ -94,6 +96,7 @@
     "web-animation-club": "^0.6.0"
   },
   "jest": {
+    "setupFilesAfterEnv": ["<rootDir>/configs/testConfig.js"],
     "coveragePathIgnorePatterns": [
       "/node_modules"
     ],
