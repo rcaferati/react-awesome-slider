@@ -6,14 +6,16 @@ export default class Bullets extends React.Component {
   static propTypes = {
     cssModule: PropTypes.object,
     rootElement: PropTypes.string.isRequired,
-    media: PropTypes.array.isRequired,
-    onClick: PropTypes.func.isRequired,
+    media: PropTypes.array,
+    onClick: PropTypes.func,
     selected: PropTypes.number,
   };
 
   static defaultProps = {
     cssModule: null,
     selected: 0,
+    media: [],
+    onClick: () => {},
   };
 
   constructor(props) {
@@ -21,22 +23,26 @@ export default class Bullets extends React.Component {
     this.rootElement = props.rootElement;
   }
 
-  bulletClick = (event) => {
+  bulletClick = event => {
     const button = event.currentTarget;
-    button.classList.add(getClassName(`${this.rootElement}__bullets--loading`, this.props.cssModule));
+    button.classList.add(
+      getClassName(
+        `${this.rootElement}__bullets--loading`,
+        this.props.cssModule
+      )
+    );
     const index = parseInt(button.getAttribute('data-index'), 10);
     const direction = !(this.props.selected > index);
     this.props.onClick({ index, direction });
-  }
+  };
 
   renderBullets() {
-    const {
-      cssModule,
-      selected,
-      media = []
-    } = this.props;
+    const { cssModule, selected, media = [] } = this.props;
     return media.map((item, index) => {
-      const className = index === selected ? getClassName(`${this.rootElement}__bullets--active`, cssModule) : null;
+      const className =
+        index === selected
+          ? getClassName(`${this.rootElement}__bullets--active`, cssModule)
+          : null;
       return (
         <button
           key={`bullet-${index}`}
@@ -51,14 +57,9 @@ export default class Bullets extends React.Component {
   }
 
   render() {
-    const {
-      cssModule,
-      rootElement,
-    } = this.props;
+    const { cssModule, rootElement } = this.props;
     return (
-      <nav
-        className={getClassName(`${rootElement}__bullets`, cssModule)}
-      >
+      <nav className={getClassName(`${rootElement}__bullets`, cssModule)}>
         {this.renderBullets()}
       </nav>
     );
