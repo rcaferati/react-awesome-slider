@@ -1,5 +1,5 @@
 import React from 'react';
-import AwesomeSlider from 'src/index';
+import AwesomeSlider from 'src';
 import AwesomeFrame from 'src/components/react-awesome-frame';
 import AwsSliderStyles from 'src/core/styles.scss';
 import AwsFrameStyles from 'src/components/react-awesome-frame/styles.scss';
@@ -49,7 +49,7 @@ function Component({ startup }) {
               <div
                 data-slug="this-is-zero"
                 style={{ backgroundColor: '#2d5182' }}
-                data-src="https://images.befunky.com/wp/wp-2014-08-milky-way-1023340_1280.jpg?auto=format&fm=jpg&q=75&w=1776&ixlib=js-1.4.1"
+                data-src="/images/series/bojack-0.png"
               />
               <div
                 data-slug="this-is-one"

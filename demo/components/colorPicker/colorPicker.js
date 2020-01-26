@@ -19,10 +19,10 @@ class ColorPicker extends React.Component {
   setTransparency = () => {
     this.props.onChange({
       target: {
-        value: 'transparent',
+        value: 'rgba(0,0,0,0)',
       },
     });
-  }
+  };
 
   render() {
     return (
@@ -34,10 +34,7 @@ class ColorPicker extends React.Component {
           onChange={this.props.onChange}
           {...this.props.inputProps}
         />
-        <button
-          title="Transparent"
-          onClick={this.setTransparency}
-        />
+        <button title="Transparent" onClick={this.setTransparency} />
       </div>
     );
   }

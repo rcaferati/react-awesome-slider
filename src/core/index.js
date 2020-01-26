@@ -105,7 +105,7 @@ export default class AwesomeSlider extends React.Component {
     this.boxA.classList.add(this.classNames.active);
     if (this.props.startupScreen) {
       if (this.buttons) {
-        // this.buttons.element.classList.add(this.classNames.controlsHidden);
+        this.buttons.element.classList.add(this.classNames.controlsHidden);
         this.buttons.element.classList.add(this.classNames.controlsActive);
       }
       if (this.props.startup === true) {
@@ -325,8 +325,10 @@ export default class AwesomeSlider extends React.Component {
   }
 
   startup() {
+    console.log('STARTING UP');
     this.started = true;
     setTimeout(() => {
+      console.log('STARTING UP TIMEOUT LOADED');
       this.goTo({
         index: this.props.selected,
         direction: true,
@@ -664,6 +666,7 @@ export default class AwesomeSlider extends React.Component {
   }
 
   goTo({ index, direction, touch = false }) {
+    console.log('GOTO CALLED');
     const nextIndex = this.getIndex(index);
     if (this.loading === true || index === this.index) {
       if (this.props.onTransitionReject) {
@@ -686,8 +689,9 @@ export default class AwesomeSlider extends React.Component {
       });
       return;
     }
-
+    console.log('GOTO ACTIVATE ARROW');
     this.activateArrows(direction, () => {
+      console.log('ARROWS ACTIVATED');
       this.chargeIndex(nextIndex, media => {
         this.renderedLoader = true;
         this.startAnimation(direction, media, ({ release = true }) => {
@@ -741,7 +745,10 @@ export default class AwesomeSlider extends React.Component {
       this.activeArrow = activeArrow.querySelector(`.${arrowClass}`);
     }
 
-    if (!this.activeArrow) {
+    if (
+      !this.activeArrow ||
+      this.buttons.element.classList.contains(this.classNames.controlsActive)
+    ) {
       if (callback) {
         callback();
       }

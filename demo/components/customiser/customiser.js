@@ -26,7 +26,7 @@ class Customiser extends React.Component {
 
   static defaultProps = {
     componentClass: null,
-  }
+  };
 
   constructor(props) {
     super(props);
