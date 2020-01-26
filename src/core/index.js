@@ -325,10 +325,8 @@ export default class AwesomeSlider extends React.Component {
   }
 
   startup() {
-    console.log('STARTING UP');
     this.started = true;
     setTimeout(() => {
-      console.log('STARTING UP TIMEOUT LOADED');
       this.goTo({
         index: this.props.selected,
         direction: true,
@@ -666,7 +664,6 @@ export default class AwesomeSlider extends React.Component {
   }
 
   goTo({ index, direction, touch = false }) {
-    console.log('GOTO CALLED');
     const nextIndex = this.getIndex(index);
     if (this.loading === true || index === this.index) {
       if (this.props.onTransitionReject) {
@@ -689,9 +686,7 @@ export default class AwesomeSlider extends React.Component {
       });
       return;
     }
-    console.log('GOTO ACTIVATE ARROW');
     this.activateArrows(direction, () => {
-      console.log('ARROWS ACTIVATED');
       this.chargeIndex(nextIndex, media => {
         this.renderedLoader = true;
         this.startAnimation(direction, media, ({ release = true }) => {
