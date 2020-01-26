@@ -11,7 +11,7 @@ const config = {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].js',
     libraryTarget: 'umd',
-    library: 'react-awesome-button',
+    library: 'react-awesome-slider',
     globalObject: 'this',
   },
   externals: {
@@ -34,8 +34,8 @@ const config = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader'
-        }
+          loader: 'babel-loader',
+        },
       },
     ],
   },
