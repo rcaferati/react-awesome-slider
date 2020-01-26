@@ -33,8 +33,9 @@ export default class Bullets extends React.Component {
     const {
       cssModule,
       selected,
+      media = []
     } = this.props;
-    return this.props.media.map((item, index) => {
+    return media.map((item, index) => {
       const className = index === selected ? getClassName(`${this.rootElement}__bullets--active`, cssModule) : null;
       return (
         <button

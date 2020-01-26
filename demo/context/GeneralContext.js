@@ -13,7 +13,7 @@ export class GeneralContextProvider extends React.Component {
     general: initialState,
   };
 
-  componentWillReceiveProps() {}
+  UNSAFE_componentWillReceiveProps() {}
 
   setGeneral = general => {
     this.setState({ general });
