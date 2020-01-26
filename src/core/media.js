@@ -18,6 +18,11 @@ export default class Media extends React.Component {
       loader,
       [`data-src`]: dataSrc,
       className: mediaClass,
+      onTransitionEnd,
+      onTransitionStartOut,
+      onTransitionStartIn,
+      onTransitionRequestOut,
+      onTransitionRequestIn,
       ...extra
     } = media;
 
