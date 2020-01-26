@@ -24,6 +24,7 @@ const startupScreen = (
 );
 
 function Component({ startup }) {
+  console.log(startup);
   return (
     <GeneralContext.Consumer>
       {context => {
