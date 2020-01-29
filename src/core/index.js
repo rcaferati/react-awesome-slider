@@ -108,7 +108,7 @@ export default class AwesomeSlider extends React.Component {
         this.buttons.element.classList.add(this.classNames.controlsHidden);
         this.buttons.element.classList.add(this.classNames.controlsActive);
       }
-      if (this.props.startup === true) {
+      if (this.props.startup === true && this.media.length > 0) {
         this.startup();
       }
     }
@@ -356,12 +356,20 @@ export default class AwesomeSlider extends React.Component {
 
   checkChildren(props) {
     if (props.children) {
-      if (props.children !== this.props.children || !this.media) {
+      if (
+        props.children !== this.props.children ||
+        (this.props.children && !this.media)
+      ) {
         this.media = transformChildren(props.children);
+        return;
       }
-    } else if (props.media && props.media.length) {
-      // props.media !== this.props.media
+    }
+    if (props.media && props.media.length) {
       this.media = props.media;
+      return;
+    }
+    if (!this.media) {
+      this.media = [];
     }
   }
 
@@ -397,8 +405,8 @@ export default class AwesomeSlider extends React.Component {
 
   loadContent(active, media) {
     return new Promise((resolve, reject) => {
-      if (this.props.onLoadStart || media.onLoadStart) {
-        const caller = this.props.onLoadStart || media.onLoadStart;
+      if (this.props.onLoadStart || (media && media.onLoadStart)) {
+        const caller = this.props.onLoadStart || (media && media.onLoadStart);
         this.startBarAnimation({ active });
         caller({
           next: () => {
@@ -411,7 +419,7 @@ export default class AwesomeSlider extends React.Component {
         });
         return;
       }
-      if (media.url || media.preload) {
+      if (media && (media.url || media.preload)) {
         const urls = media.url ? [media.url] : media.preload || [];
 
         if (this.checkLoadedUrls(urls) === true) {
