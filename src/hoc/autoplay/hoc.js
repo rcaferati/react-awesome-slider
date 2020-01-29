@@ -155,10 +155,19 @@ export default function AutoplayHoc(WrappedComponent) {
       );
     }
 
+    forceClearBar(info) {
+      const bar = this.getBarFromSlide(info.currentSlide);
+      this.restartBarAnimation(bar);
+    }
+
     goTonext() {
       const { currentIndex, slides } = this.currentInfo;
       const next = currentIndex + 1;
       const selected = next > slides - 1 ? 0 : next;
+      if (selected === this.state.selected) {
+        this.forceClearBar(this.currentInfo);
+        return;
+      }
       this.setState({ selected });
     }
 
