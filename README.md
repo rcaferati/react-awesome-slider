@@ -5,12 +5,12 @@
 `react-awesome-slider` is a 60fps, extendable, highly customizable, production ready React Component that renders a media (image/video) gallery slider/carousel.
 
 ## FULLPAGE navigation HOC
+
 For using the full-screen navigation HOCs please checkout the `GatsbyJS` and `NextJS` examples on the [ras fullpage strategies repository](https://github.com/rcaferati/ras-fullpage-strategies).
 
 You can access the demo for the FULLPAGE navigation here: [fullpage.caferati.me](https://fullpage.caferati.me)
 
 [<img width="600" alt="react-awesome-slider demo" src="https://github.com/rcaferati/react-awesome-slider/blob/master/demo/public/images/fullscreen.gif?raw=true">](https://fullpage.caferati.me/)
-
 
 ## Basic usage
 
@@ -89,6 +89,29 @@ yarn add react-awesome-slider
 
 ## More Examples
 
+### Basic usage with Media object
+
+```jsx
+import AwesomeSlider from 'react-awesome-slider';
+import 'react-awesome-slider/dist/styles.css';
+
+const slider = (
+  <AwesomeSlider
+    media={[
+      {
+        source: '/path/to/image-0.png',
+      },
+      {
+        source: '/path/to/image-1.png',
+      },
+      {
+        source: '/path/to/image-2.png',
+      },
+    ]}
+  />
+);
+```
+
 ### Basic usage with CSS Modules
 
 ```jsx
@@ -124,6 +147,7 @@ const slider = (
 ```
 
 ### Using the Autoplay HOC with plain CSS
+
 ```jsx
 import AwesomeSlider from 'react-awesome-slider';
 import withAutoplay from 'react-awesome-slider/dist/autoplay';
@@ -144,7 +168,6 @@ const slider = (
 );
 ```
 
-
 ## Key Features
 
 - Look and feel customisable and extendable via SASS and CSS Variables ([custom-properties](https://github.com/rcaferati/react-awesome-slider/blob/master/src/core/styles.scss#L48)) ([scss main file](https://github.com/rcaferati/react-awesome-slider/blob/master/src/core/styles.scss))
@@ -157,28 +180,27 @@ const slider = (
 
 ## Main Props
 
-| Attributes          |    Type    |     Default      | Description                                                                                                                        |
-| :------------------ | :--------: | :--------------: | :--------------------------------------------------------------------------------------------------------------------------------- |
-| className           |  `string`  |      `null`      | Add a className to the component container                                                                                         |
-| cssModule           |  `object`  |      `null`      | CSS Module object if you choose to use this styling approach                                                                       |
-| name                |  `string`  | `awesome-slider` | Unique name of the rendered slider. Useful if you're navigating between multiple pages that contains a slider component.           |
-| selected            |  `number`  |       `0`        | Sets the current active/selected screen                                                                                            |
-| bullets             | `boolean`  |      `true`      | When set to true show the bullet controls underneath the slider                                                                    |
-| organicArrows       | `boolean`  |      `true`      | When set to true show the organic arrow `next` and `prev` controls                                                                 |
-| fillParent          | `boolean`  |     `false`      | When set to true the slider will fill the dimensions of the parent element. Usefull for using it in full-screen mode.              |
-| infinite            | `boolean`  |      `true`      | When set to true the slider will behave on an infinite fashion returing to the first slide after the last one.                     |
-| startupScreen       |   `node`   |      `null`      | Set's the startup screen component to be shown before the first screen is loaded. It works like a pre-loading screen.              |
-| startup             | `boolean`  |      `true`      | Used together with `startupScreen` controls weather or not the startupScreen should auto-start.                                    |
-| transitionDelay     |  `number`  |       `0`        | Sets a delay in `ms` between the slide transitions. Useful if you're waiting for an exit animation to finish in the current slide. |
-| buttons             | `boolean`  |      `true`      | Should render the default left and right navigation buttons.                                                |
-| buttonContentRight  | `node` |      `null`          | Add content as children of the right button.                                              |
-| buttonContentLeft   | `node` |      `null`          | Add content as children of the left button.                                              |
-| customContent       | `node` |      `null`          | Render extra content at the same level of the default buttons. Useful if you want to add an extra slider navigation layer or a fixed overlay element               |
-| onFirstMount        | `function` |      `null`      | Called on componentDidMount passing the slider reference as an argument                                                            |
-| onTransitionEnd     | `function` |      `null`      | Called on at the slider transition end event passing the slider reference as an argument                                           |
-| onTransitionStart   | `function` |      `null`      | Called on slider transition start passing the slider reference as an argument                                                      |
-| onTransitionRequest | `function` |      `null`      | Called when a user interacts with the slider navigation (arrows or bullets)                                                        |
-
+| Attributes          |    Type    |     Default      | Description                                                                                                                                          |
+| :------------------ | :--------: | :--------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------- |
+| className           |  `string`  |      `null`      | Add a className to the component container                                                                                                           |
+| cssModule           |  `object`  |      `null`      | CSS Module object if you choose to use this styling approach                                                                                         |
+| name                |  `string`  | `awesome-slider` | Unique name of the rendered slider. Useful if you're navigating between multiple pages that contains a slider component.                             |
+| selected            |  `number`  |       `0`        | Sets the current active/selected screen                                                                                                              |
+| bullets             | `boolean`  |      `true`      | When set to true show the bullet controls underneath the slider                                                                                      |
+| organicArrows       | `boolean`  |      `true`      | When set to true show the organic arrow `next` and `prev` controls                                                                                   |
+| fillParent          | `boolean`  |     `false`      | When set to true the slider will fill the dimensions of the parent element. Usefull for using it in full-screen mode.                                |
+| infinite            | `boolean`  |      `true`      | When set to true the slider will behave on an infinite fashion returing to the first slide after the last one.                                       |
+| startupScreen       |   `node`   |      `null`      | Set's the startup screen component to be shown before the first screen is loaded. It works like a pre-loading screen.                                |
+| startup             | `boolean`  |      `true`      | Used together with `startupScreen` controls weather or not the startupScreen should auto-start.                                                      |
+| transitionDelay     |  `number`  |       `0`        | Sets a delay in `ms` between the slide transitions. Useful if you're waiting for an exit animation to finish in the current slide.                   |
+| buttons             | `boolean`  |      `true`      | Should render the default left and right navigation buttons.                                                                                         |
+| buttonContentRight  |   `node`   |      `null`      | Add content as children of the right button.                                                                                                         |
+| buttonContentLeft   |   `node`   |      `null`      | Add content as children of the left button.                                                                                                          |
+| customContent       |   `node`   |      `null`      | Render extra content at the same level of the default buttons. Useful if you want to add an extra slider navigation layer or a fixed overlay element |
+| onFirstMount        | `function` |      `null`      | Called on componentDidMount passing the slider reference as an argument                                                                              |
+| onTransitionEnd     | `function` |      `null`      | Called on at the slider transition end event passing the slider reference as an argument                                                             |
+| onTransitionStart   | `function` |      `null`      | Called on slider transition start passing the slider reference as an argument                                                                        |
+| onTransitionRequest | `function` |      `null`      | Called when a user interacts with the slider navigation (arrows or bullets)                                                                          |
 
 ## Contribute
 

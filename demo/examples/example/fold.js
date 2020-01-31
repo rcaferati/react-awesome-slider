@@ -50,20 +50,21 @@ function Component({ startup }) {
               organicArrows={context.general['--organicArrows']}
               bullets={context.general['--bullets']}
               fillParent={context.general['--fillParent']}
-            >
-              <div
-                style={{ backgroundColor: '#fad0ce' }}
-                data-src="/images/series/stranger-things-5.jpg"
-              />
-              <div
-                style={{ backgroundColor: '#5ed6ff' }}
-                data-src="/images/series/stranger-things-6.jpg"
-              />
-              <div
-                style={{ backgroundColor: '#f09297' }}
-                data-src="/images/series/stranger-things-7.png"
-              />
-            </AwesomeSlider>
+              media={[
+                {
+                  style: { backgroundColor: '#fad0ce' },
+                  source: '/images/series/stranger-things-5.jpg',
+                },
+                {
+                  style: { backgroundColor: '#5ed6ff' },
+                  source: '/images/series/stranger-things-6.jpg',
+                },
+                {
+                  style: { backgroundColor: '#f09297' },
+                  source: '/images/series/stranger-things-7.png',
+                },
+              ]}
+            />
           </AwesomeFrame>
         );
       }}

@@ -278,7 +278,7 @@ export default class AwesomeSlider extends React.Component {
     };
   }
 
-  getBar() {
+  getProgressBar() {
     if (!document) {
       return {};
     }
@@ -375,7 +375,7 @@ export default class AwesomeSlider extends React.Component {
 
   startBarAnimation({ active }) {
     return new Promise(resolve => {
-      this.bar = this.getBar();
+      this.bar = this.getProgressBar();
       active.appendChild(this.bar);
       onceNextCssLayout().then(() => {
         onceNextCssLayout().then(() => {
@@ -419,8 +419,10 @@ export default class AwesomeSlider extends React.Component {
         });
         return;
       }
-      if (media && (media.url || media.preload)) {
-        const urls = media.url ? [media.url] : media.preload || [];
+      if (media && (media.source || media.preload)) {
+        const urls = media.preload
+          ? media.preload
+          : (media.source && [media.source]) || [];
 
         if (this.checkLoadedUrls(urls) === true) {
           resolve(null);
