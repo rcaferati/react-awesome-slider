@@ -12,11 +12,12 @@ export default class Media extends React.Component {
   render() {
     const { media, className } = this.props;
     const {
-      url,
+      source,
       children,
       style,
       loader,
       [`data-src`]: dataSrc,
+      [`data-alt`]: dataAlt,
       className: mediaClass,
       onTransitionEnd,
       onTransitionStartOut,
@@ -28,14 +29,24 @@ export default class Media extends React.Component {
 
     let background = null;
 
-    if (url) {
-      if (url.match(/\.(mp4|webm)/)) {
+    if (source) {
+      if (source.match(/\.(mp4|webm)/)) {
         background = (
-          <video title={media.title} src={url} type="video/mp4" controls />
+          <video
+            title={media.title || media[`data-title`]}
+            src={source}
+            type="video/mp4"
+            controls
+          />
         );
       } else {
         // DEFAULTS TO AN IMAGE TAG
-        background = <img alt={media.alt || media.title || null} src={url} />;
+        background = (
+          <img
+            alt={media.alt || media.title || media[`data-alt`] || null}
+            src={source}
+          />
+        );
       }
     }
 

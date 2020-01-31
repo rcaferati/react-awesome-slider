@@ -56,7 +56,7 @@ export function transformChildren(children) {
       ...child.props,
     };
     if (child.props['data-src']) {
-      item.url = child.props['data-src'];
+      item.source = child.props['data-src'];
     }
     if (child.props['data-slug']) {
       item.slug = child.props['data-slug'];
