@@ -42,16 +42,16 @@ For analysing how the animations are built, please check out to [this folder](ht
 [<img width="400" alt="react-awesome-slider demo" src="https://github.com/rcaferati/react-awesome-slider/blob/master/demo/public/images/demo-open.gif?raw=true">](https://caferati.me/demo/react-awesome-slider)
 [<img width="400" alt="react-awesome-slider demo" src="https://github.com/rcaferati/react-awesome-slider/blob/master/demo/public/images/demo-fall.gif?raw=true">](https://caferati.me/demo/react-awesome-slider)
 
-### Cube animation recipe with CSS Modules
+### Cube animation recipe
 
 Checkout more recipes on the styled folder. For more animation recipes check out the [styled folder](https://github.com/rcaferati/react-awesome-slider/tree/master/src/styled).
 
 ```jsx
 import AwesomeSlider from 'react-awesome-slider';
-import AwesomeSliderStyles from 'react-awesome-slider/src/styled/cube-animation';
+import 'react-awesome-slider/dist/custom-animations/cube-animation.css';
 
 const slider = (
-  <AwesomeSlider animation="cubeAnimation" cssModule={AwesomeSliderStyles}>
+  <AwesomeSlider animation="cubeAnimation">
     <div data-src="/path/to/image-0.png" />
     <div data-src="/path/to/image-1.png" />
     <div data-src="/path/to/image-2.jpg" />
@@ -135,10 +135,14 @@ Note that on v3 there's an adition of the `animation` prop. The animation name i
 
 ```jsx
 import AwesomeSlider from 'react-awesome-slider';
-import AwesomeSliderStyles from 'react-awesome-slider/src/styled/fold-out-animation';
+import CoreStyles from 'react-awesome-slider/src/core/styles.scss';
+import AnimationStyles from 'react-awesome-slider/src/styled/fold-out-animation/fold-out-animation.scss';
 
 const slider = (
-  <AwesomeSlider animation="foldOutAnimation" cssModule={AwesomeSliderStyles}>
+  <AwesomeSlider
+    animation="foldOutAnimation"
+    cssModule={[coreStyles, animationStyles]}
+  >
     <div data-src="/path/to/image-0.png" />
     <div data-src="/path/to/image-1.png" />
     <div data-src="/path/to/image-2.jpg" />
@@ -165,6 +169,36 @@ const slider = (
     <div data-src="/path/to/image-1.png" />
     <div data-src="/path/to/image-2.jpg" />
   </AutoplaySlider>
+);
+```
+
+### Using the Captioned HOC with plain CSS
+
+```jsx
+import AwesomeSlider from 'react-awesome-slider';
+import withCaption from 'react-awesome-slider/dist/captioned';
+import 'react-awesome-slider/dist/styles.css';
+import 'react-awesome-slider/dist/captioned.css';
+
+const CaptionedSlider = withCaption(AwesomeSlider);
+
+const component = (
+  <CaptionedSlider
+    startupScreen={StartupScreen}
+    cssModule={CaptionedStyles}
+    screens={[
+      {
+        backgroundColor: '#4a9c8c',
+        media: '/images/series/ricknmorty-3.png',
+        caption: 'I want to see what you got.',
+      },
+      {
+        backgroundColor: '#4a9c8c',
+        media: '/images/series/ricknmorty-3.png',
+        caption: "The answer is -- Don't think about it.",
+      },
+    ]}
+  />
 );
 ```
 
