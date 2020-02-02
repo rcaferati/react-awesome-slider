@@ -1,19 +1,20 @@
 import React from 'react';
 import AwesomeSlider from 'src';
 import AwesomeFrame from 'src/components/react-awesome-frame';
+import AwsSliderStylesCore from 'src/core/styles.scss';
 import AwsSliderStyles from 'src/styled/cube-animation';
 import AwsFrameStyles from 'src/components/react-awesome-frame/styles.scss';
 import { transitionStart, transitionEnd, resetSlider } from 'helpers/examples';
 import { GeneralContext } from 'context/GeneralContext';
 import { features, properties, globalProps } from 'examples/common';
 
-function reset(slider) {
+function onFirstMount(slider) {
   resetSlider(slider, function() {
     slider.element.style.setProperty(
       '--transition-bezier',
       'cubic-bezier(0.45, 0, 0.2, 1)'
     );
-    slider.element.style.setProperty('--slider-transition-duration', '770ms');
+    slider.element.style.setProperty('--slider-transition-duration', '670ms');
   });
 }
 
@@ -38,13 +39,12 @@ function Component({ startup }) {
           >
             <AwesomeSlider
               name="images"
-              cssModule={AwsSliderStyles}
+              cssModule={[AwsSliderStylesCore, AwsSliderStyles]}
               startup={startup}
-              // fillParent
               animation="cubeAnimation"
               startupScreen={startupScreen}
-              onFirstMount={reset}
-              onResetSlider={reset}
+              onFirstMount={onFirstMount}
+              onResetSlider={resetSlider}
               onTransitionStart={transitionStart}
               onTransitionEnd={transitionEnd}
               tranisionDelay={300}
@@ -111,7 +111,7 @@ const Slider = (
     },
   ],
   Component,
-  componentClass: AwsSliderStyles['aws-sld'],
+  componentClass: AwsSliderStyles.awssld,
 };
 
 export default {

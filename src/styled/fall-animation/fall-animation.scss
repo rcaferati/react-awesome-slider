@@ -1,15 +1,14 @@
-@import '../../core/styles.scss';
+@import '../../core/constants.scss';
 
 .#{$root-element} {
   &--fallAnimation {
-    --fall-animation-duration: 700ms;
     --fall-animation-angle: 16deg;
     --fall-scaling-in-from: 0.9;
 
     .#{$root-element} {
       &--moveRight,
       &--moveLeft {
-        animation: scaleUp calc(var(--fall-animation-duration) / 2)
+        animation: scaleUp calc(var(--slider-transition-duration) / 2)
           var(--transition-bezier) both;
       }
 
@@ -18,13 +17,13 @@
 
         &.#{$root-element}--moveLeft {
           transform-origin: 0% 0%;
-          animation: rotateFallRight var(--fall-animation-duration) both
+          animation: rotateFallRight var(--slider-transition-duration) both
             ease-in-out;
         }
 
         &.#{$root-element}--moveRight {
           transform-origin: 100% 0%;
-          animation: rotateFallLeft var(--fall-animation-duration) both
+          animation: rotateFallLeft var(--slider-transition-duration) both
             ease-in-out;
         }
       }

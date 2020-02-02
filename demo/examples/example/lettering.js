@@ -1,6 +1,7 @@
 import React from 'react';
 import AwesomeFrame from 'src/components/react-awesome-frame';
 import Lettering from 'src/hoc/animated-lettering';
+import AwsSliderStyles from 'src/core/styles.scss';
 import LetteringStyles from 'src/hoc/animated-lettering/styles.scss';
 import AwsFrameStyles from 'src/components/react-awesome-frame/styles.scss';
 import { resetSlider, transitionStart, transitionEnd } from 'helpers/examples';
@@ -44,7 +45,7 @@ function Component({ startup }) {
             <Lettering
               name="lettering"
               startup={startup}
-              cssModule={LetteringStyles}
+              cssModule={[AwsSliderStyles, LetteringStyles]}
               startupScreen={startupScreen}
               onTransitionStart={transitionStart}
               onTransitionEnd={transitionEnd}
@@ -106,7 +107,7 @@ const example = {
     },
   ],
   Component,
-  componentClass: LetteringStyles['aws-sld'],
+  componentClass: AwsSliderStyles.awssld,
 };
 
 export default {

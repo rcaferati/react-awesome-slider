@@ -1,9 +1,12 @@
 import React from 'react';
-import Captioned from 'src/hoc/captioned-images';
+import AwesomeSlider from 'src';
+import CaptionedHoc from 'src/hoc/captioned-images/hoc';
+import AutoplayHoc from 'src/hoc/autoplay/hoc';
+import AwsSliderStyles from 'src/core/styles.scss';
 import CaptionedStyles from 'src/hoc/captioned-images/styles.scss';
 import AwesomeFrame from 'src/components/react-awesome-frame';
 import AwsFrameStyles from 'src/components/react-awesome-frame/styles.scss';
-import { shadeRGBColor } from 'helpers/examples';
+import { shadeRGBColor, transitionEnd, resetSlider } from 'helpers/examples';
 import { GeneralContext } from 'context/GeneralContext';
 import {
   features,
@@ -12,59 +15,44 @@ import {
   // examples,
 } from 'examples/common';
 
+const Slider = AutoplayHoc(AwesomeSlider);
+const Captioned = CaptionedHoc(Slider);
 /**
  * START CUSTOM RESETS
  */
-function resetSlider(slider) {
-  if (typeof window === 'undefined') {
-    return;
-  }
-  clearTimeout(window.transitionUpdateTimer);
-  const divs = slider.currentSlide.querySelectorAll('div');
-  const color = getComputedStyle(divs[0]).backgroundColor;
-  slider.element.style.setProperty(
-    '--transition-bezier',
-    'cubic-bezier(0.45, 0, 0.2, 1)'
-  );
-  slider.element.style.setProperty('--slider-transition-duration', '770ms');
-  slider.element.style.setProperty('--slider-height-percentage', '60%');
-  slider.element.style.setProperty(
-    '--caption-background-color',
-    shadeRGBColor(color, -0.2)
-  );
-  window.setElement(slider.element);
-}
-
 function transitionStart(slider) {
   if (typeof window === 'undefined') {
     return;
   }
   const divs = slider.nextSlide.querySelectorAll('div');
   const color = getComputedStyle(divs[0]).backgroundColor;
+  const captionColor = shadeRGBColor(color, -0.2)
+    .replace('rgb', 'rgba')
+    .replace(')', ', 0.75)');
+  const duration =
+    parseInt(
+      getComputedStyle(slider.element)
+        .getPropertyValue('--slider-transition-duration')
+        .trim()
+        .replace('ms', ''),
+      10
+    ) - 75;
+
   window.transitionUpdateTimer = setTimeout(() => {
+    slider.element.style.setProperty(
+      '--organic-arrow-color',
+      shadeRGBColor(color, -0.15)
+    );
     slider.element.style.setProperty(
       '--control-bullet-active-color',
       shadeRGBColor(color, -0.15)
     );
+    slider.element.style.setProperty(
+      '--caption-background-color',
+      captionColor
+    );
     slider.element.style.setProperty('--control-bullet-color', color);
-  }, 400);
-}
-
-function transitionEnd(slider) {
-  if (typeof window === 'undefined') {
-    return;
-  }
-  const divs = slider.currentSlide.querySelectorAll('div');
-  const color = getComputedStyle(divs[0]).backgroundColor;
-  const captionColor = shadeRGBColor(color, -0.2)
-    .replace('rgb', 'rgba')
-    .replace(')', ', 0.75)');
-  slider.element.style.setProperty(
-    '--organic-arrow-color',
-    shadeRGBColor(color, -0.15)
-  );
-  slider.element.style.setProperty('--caption-background-color', captionColor);
-  window.setElement(slider.element);
+  }, duration);
 }
 
 /**
@@ -114,10 +102,12 @@ function Component({ startup }) {
             title="Adult Swim &mdash; Rick and Morty"
           >
             <Captioned
+              play
+              interval={2000}
               startup={startup}
               name="captioned-mixed"
               startupScreen={startupScreen}
-              cssModule={CaptionedStyles}
+              cssModule={[CaptionedStyles, AwsSliderStyles]}
               screens={media}
               onFirstMount={resetSlider}
               onResetSlider={resetSlider}
@@ -192,7 +182,7 @@ const component = (
     },
   ],
   Component,
-  componentClass: CaptionedStyles['aws-sld'],
+  componentClass: AwsSliderStyles.awssld,
 };
 
 export default {

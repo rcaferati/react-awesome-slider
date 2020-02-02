@@ -68,28 +68,29 @@ export function resetSlider(slider, customFnc = null) {
     if (customFnc) {
       customFnc();
     } else {
-      slider.element.style.setProperty('--slider-transition-duration', '525ms');
+      slider.element.style.setProperty('--slider-transition-duration', '575ms');
     }
     window.setElement(slider.element);
   }
 }
 
 export function transitionStart(slider) {
-  if (typeof window !== 'undefined') {
-    const divs = slider.nextSlide.querySelectorAll('div');
-    const color = getComputedStyle(divs[0]).backgroundColor;
-    window.transitionUpdateTimer = setTimeout(() => {
-      slider.element.style.setProperty(
-        '--control-bullet-active-color',
-        shadeRGBColor(color, -0.15)
-      );
-      slider.element.style.setProperty(
-        '--organic-arrow-color',
-        shadeRGBColor(color, -0.15)
-      );
-      slider.element.style.setProperty('--control-bullet-color', color);
-    }, 250);
+  if (typeof window === 'undefined') {
+    return;
   }
+  const divs = slider.nextSlide.querySelectorAll('div');
+  const color = getComputedStyle(divs[0]).backgroundColor;
+  window.transitionUpdateTimer = setTimeout(() => {
+    slider.element.style.setProperty(
+      '--control-bullet-active-color',
+      shadeRGBColor(color, -0.15)
+    );
+    slider.element.style.setProperty(
+      '--organic-arrow-color',
+      shadeRGBColor(color, -0.15)
+    );
+    slider.element.style.setProperty('--control-bullet-color', color);
+  }, 250);
 }
 
 export function transitionEnd(slider) {

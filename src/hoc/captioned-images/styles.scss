@@ -1,10 +1,10 @@
-@import '../../core/styles.scss';
+@import '../../core/constants.scss';
 
 .#{$root-element} {
   --caption-background-color: rgba(0, 0, 0, 0.15);
 
   &__content {
-    .caption {
+    [data-type='caption'] {
       display: flex;
       padding: 15px;
       position: absolute;
@@ -37,7 +37,7 @@
     }
 
     &--exit {
-      .caption {
+      [data-type='caption'] {
         p {
           transition: transform 225ms cubic-bezier(0.85, 0, 0.85, 0.7) 75ms,
             opacity 275ms ease-out 175ms;
@@ -46,7 +46,7 @@
     }
 
     &--moveLeft {
-      .caption {
+      [data-type='caption'] {
         p {
           transform: translate3d(-50px, 0, 0.01px);
           opacity: 0;
@@ -55,7 +55,7 @@
     }
 
     &--moveRight {
-      .caption {
+      [data-type='caption'] {
         p {
           transform: translate3d(50px, 0, 0.01px);
           opacity: 0;

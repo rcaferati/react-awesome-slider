@@ -7,7 +7,7 @@ import { transitionStart, transitionEnd, resetSlider } from 'helpers/examples';
 import { GeneralContext } from 'context/GeneralContext';
 import { features, properties, globalProps } from 'examples/common';
 
-function reset(slider) {
+function onFirstMount(slider) {
   resetSlider(slider, function() {
     slider.element.style.setProperty(
       '--transition-bezier',
@@ -24,7 +24,6 @@ const startupScreen = (
 );
 
 function Component({ startup }) {
-  console.log(startup);
   return (
     <GeneralContext.Consumer>
       {context => {
@@ -38,8 +37,8 @@ function Component({ startup }) {
               startup={startup}
               cssModule={AwsSliderStyles}
               startupScreen={startupScreen}
-              onFirstMount={reset}
-              onResetSlider={reset}
+              onFirstMount={onFirstMount}
+              onResetSlider={resetSlider}
               onTransitionStart={transitionStart}
               onTransitionEnd={transitionEnd}
               organicArrows={context.general['--organicArrows']}
@@ -155,7 +154,7 @@ const slider = (
     },
   ],
   Component,
-  componentClass: AwsSliderStyles['aws-sld'],
+  componentClass: AwsSliderStyles.awssld,
 };
 
 export default {

@@ -4,6 +4,8 @@ const path = require('path');
 const config = {
   entry: {
     styles: ['./src/core/styles.scss'],
+    lettering: ['./src/hoc/animated-lettering/styles.scss'],
+    captioned: ['./src/hoc/captioned-images/styles.scss'],
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -16,8 +18,8 @@ const config = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader'
-        }
+          loader: 'babel-loader',
+        },
       },
       {
         test: /\.scss$/i,
@@ -43,7 +45,7 @@ const config = {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: `styles.css`,
+      filename: `[name].css`,
     }),
   ],
 };

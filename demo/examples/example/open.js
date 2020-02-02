@@ -1,7 +1,8 @@
 import React from 'react';
 import AwesomeSlider from 'src';
 import AwesomeFrame from 'src/components/react-awesome-frame';
-import AwsSliderStyles from 'src/styled/open-animation';
+import AwsSliderStyles from 'src/core/styles.scss';
+import AwsSliderAnimationStyles from 'src/styled/open-animation';
 import AwsFrameStyles from 'src/components/react-awesome-frame/styles.scss';
 import { transitionStart, transitionEnd, resetSlider } from 'helpers/examples';
 import { GeneralContext } from 'context/GeneralContext';
@@ -34,7 +35,7 @@ function Component({ startup }) {
           >
             <AwesomeSlider
               name="images"
-              cssModule={AwsSliderStyles}
+              cssModule={[AwsSliderStyles, AwsSliderAnimationStyles]}
               startup={startup}
               animation="openAnimation"
               startupScreen={startupScreen}
@@ -108,7 +109,7 @@ const Slider = (
     },
   ],
   Component,
-  componentClass: AwsSliderStyles['aws-sld'],
+  componentClass: AwsSliderStyles.awssld,
 };
 
 export default {

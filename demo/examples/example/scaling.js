@@ -1,6 +1,7 @@
 import React from 'react';
 import AwesomeSlider from 'src';
-import AwsSliderStyles from 'src/styled/scale-out-animation';
+import AwsSliderStyles from 'src/core/styles.scss';
+import AwsSliderAnimationStyles from 'src/styled/scale-out-animation';
 import AwesomeFrame from 'src/components/react-awesome-frame';
 import AwsFrameStyles from 'src/components/react-awesome-frame/styles.scss';
 import { resetSlider, transitionStart, transitionEnd } from 'helpers/examples';
@@ -35,7 +36,7 @@ function Component({ startup }) {
           >
             <AwesomeSlider
               name="images"
-              cssModule={AwsSliderStyles}
+              cssModule={[AwsSliderStyles, AwsSliderAnimationStyles]}
               startup={startup}
               startupScreen={startupScreen}
               animation="scaleOutAnimation"
@@ -111,7 +112,7 @@ const Slider = (
     },
   ],
   Component,
-  componentClass: AwsSliderStyles['aws-sld'],
+  componentClass: AwsSliderStyles.awssld,
 };
 
 export default {
