@@ -1,6 +1,7 @@
 import React from 'react';
 import AwesomeSlider from 'src';
-import AwsSliderStyles from 'src/styled/scale-out-animation';
+import AwsSliderStyles from 'src/core/styles.scss';
+import AwsSliderAnimationStyles from 'src/styled/scale-out-animation';
 import AwesomeFrame from 'src/components/react-awesome-frame';
 import AwsFrameStyles from 'src/components/react-awesome-frame/styles.scss';
 import { resetSlider, transitionStart, transitionEnd } from 'helpers/examples';
@@ -35,12 +36,12 @@ function Component({ startup }) {
           >
             <AwesomeSlider
               name="images"
-              cssModule={AwsSliderStyles}
+              cssModule={[AwsSliderStyles, AwsSliderAnimationStyles]}
               startup={startup}
               startupScreen={startupScreen}
               animation="scaleOutAnimation"
               onFirstMount={reset}
-              onResetSlider={reset}
+              onResetSlider={resetSlider}
               onTransitionStart={transitionStart}
               onTransitionEnd={transitionEnd}
               organicArrows={context.general['--organicArrows']}
@@ -76,10 +77,10 @@ const example = {
         "For this example we're importing the scale-out-animation overwritten style modules.",
       jsx: `
 import AwesomeSlider from 'react-awesome-slider';
-import AwesomeSliderStyles from 'react-awesome-slider/src/styled/scale-out-animation.scss';
+import 'react-awesome-slider/dist/custom-animations/scale-out-animation.css';
 
 const Slider = (
-  <AwesomeSlider cssModule={AwesomeSliderStyles}>
+  <AwesomeSlider animation="scaleOutAnimation">
     <div data-src="/path/to/image-0.jpg" />
     <div data-src="/path/to/image-1.jpg" />
     <div data-src="/path/to/image-2.jpg" />
@@ -111,7 +112,7 @@ const Slider = (
     },
   ],
   Component,
-  componentClass: AwsSliderStyles['aws-sld'],
+  componentClass: AwsSliderStyles.awssld,
 };
 
 export default {

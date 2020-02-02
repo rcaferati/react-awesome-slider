@@ -1,4 +1,53 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable guard-for-in */
 import { classToModules, getClassName } from '../helpers/components';
+
+export const classListAdd = (element, classString) => {
+  if (typeof classString !== 'string' || !element) {
+    return;
+  }
+  classString.split(' ').forEach(className => {
+    element.classList.add(className);
+  });
+};
+
+export const classListRemove = (element, classString) => {
+  if (typeof classString !== 'string' || !element) {
+    return;
+  }
+  classString.split(' ').forEach(className => {
+    element.classList.remove(className);
+  });
+};
+
+export const getAnyClassName = className => {
+  if (typeof className === 'string') {
+    const cls = className.split(' ');
+    return cls[0] || '';
+  }
+  return '';
+};
+
+export const mergeStyles = styles => {
+  const local = !Array.isArray(styles) ? [styles] : styles;
+  if (local.length === 1) {
+    return local[0];
+  }
+  const main = { ...local[0] };
+  for (let i = 1; i < local.length; i += 1) {
+    for (const item in main) {
+      if (local[i][item]) {
+        main[item] = [main[item], local[i][item]].join(' ');
+      }
+    }
+    for (const item in local[i]) {
+      if (!main[item]) {
+        main[item] = local[i][item];
+      }
+    }
+  }
+  return main;
+};
 
 export function getRootClassName({
   rootElement,

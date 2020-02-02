@@ -1,19 +1,20 @@
 import React from 'react';
 import AwesomeSlider from 'src';
-import AwsSliderStyles from 'src/styled/fold-out-animation';
+import AwsSliderStyles from 'src/core/styles.scss';
+import AnimationStyles from 'src/styled/fold-out-animation';
 import AwesomeFrame from 'src/components/react-awesome-frame';
 import AwsFrameStyles from 'src/components/react-awesome-frame/styles.scss';
 import { transitionStart, transitionEnd, resetSlider } from 'helpers/examples';
 import { GeneralContext } from 'context/GeneralContext';
 import { features, properties, globalProps } from 'examples/common';
 
-function reset(slider) {
+function onFirstMount(slider) {
   resetSlider(slider, function() {
     slider.element.style.setProperty(
       '--transition-bezier',
       'cubic-bezier(0.45, 0, 0.2, 1)'
     );
-    slider.element.style.setProperty('--slider-transition-duration', '770ms');
+    slider.element.style.setProperty('--slider-transition-duration', '625ms');
   });
 }
 
@@ -38,12 +39,12 @@ function Component({ startup }) {
           >
             <AwesomeSlider
               name="images"
-              cssModule={AwsSliderStyles}
+              cssModule={[AwsSliderStyles, AnimationStyles]}
               startup={startup}
               animation="foldOutAnimation"
               startupScreen={startupScreen}
-              onFirstMount={reset}
-              onResetSlider={reset}
+              onFirstMount={onFirstMount}
+              onResetSlider={resetSlider}
               onTransitionStart={transitionStart}
               onTransitionEnd={transitionEnd}
               tranisionDelay={300}
@@ -81,10 +82,10 @@ const example = {
         "For this example we're importing the fold-out-animation style modules.",
       jsx: `
 import AwesomeSlider from 'react-awesome-slider';
-import AwesomeSliderStyles from 'react-awesome-slider/src/styled/fold-out-animation.scss';
+import 'react-awesome-slider/dist/custom-animations/fold-out-animation.css';
 
 const Slider = (
-  <AwesomeSlider cssModule={AwesomeSliderStyles}>
+  <AwesomeSlider animation="foldOutAnimation">
     <div data-src="/path/to/image-0.jpg" />
     <div data-src="/path/to/image-1.jpg" />
     <div data-src="/path/to/image-2.jpg" />
@@ -146,7 +147,7 @@ const Slider = (
     },
   ],
   Component,
-  componentClass: AwsSliderStyles['aws-sld'],
+  componentClass: AwsSliderStyles.awssld,
 };
 
 export default {

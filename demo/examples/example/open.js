@@ -1,7 +1,8 @@
 import React from 'react';
 import AwesomeSlider from 'src';
 import AwesomeFrame from 'src/components/react-awesome-frame';
-import AwsSliderStyles from 'src/styled/open-animation';
+import AwsSliderStyles from 'src/core/styles.scss';
+import AwsSliderAnimationStyles from 'src/styled/open-animation';
 import AwsFrameStyles from 'src/components/react-awesome-frame/styles.scss';
 import { transitionStart, transitionEnd, resetSlider } from 'helpers/examples';
 import { GeneralContext } from 'context/GeneralContext';
@@ -34,7 +35,7 @@ function Component({ startup }) {
           >
             <AwesomeSlider
               name="images"
-              cssModule={AwsSliderStyles}
+              cssModule={[AwsSliderStyles, AwsSliderAnimationStyles]}
               startup={startup}
               animation="openAnimation"
               startupScreen={startupScreen}
@@ -80,10 +81,10 @@ const example = {
         "For this example we're importing the open-animation style modules.",
       jsx: `
 import AwesomeSlider from 'react-awesome-slider';
-import AwesomeSliderStyles from 'react-awesome-slider/src/styled/open-animation.scss';
+import 'react-awesome-slider/dist/custom-animations/open-animation.css';
 
 const Slider = (
-  <AwesomeSlider cssModule={AwesomeSliderStyles}>
+  <AwesomeSlider animation="openAnimation">
     <div data-src="/path/to/image-0.jpg" />
     <div data-src="/path/to/image-1.jpg" />
     <div data-src="/path/to/image-2.jpg" />
@@ -108,7 +109,7 @@ const Slider = (
     },
   ],
   Component,
-  componentClass: AwsSliderStyles['aws-sld'],
+  componentClass: AwsSliderStyles.awssld,
 };
 
 export default {

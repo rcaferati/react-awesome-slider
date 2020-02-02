@@ -1,21 +1,12 @@
 import React from 'react';
 import AwesomeSlider from 'src';
-import AwsSliderStyles from 'src/styled/fall-animation';
+import AwsSliderStyles from 'src/core/styles.scss';
+import AnimationStyles from 'src/styled/fall-animation';
 import AwesomeFrame from 'src/components/react-awesome-frame';
 import AwsFrameStyles from 'src/components/react-awesome-frame/styles.scss';
 import { transitionStart, transitionEnd, resetSlider } from 'helpers/examples';
 import { GeneralContext } from 'context/GeneralContext';
 import { features, properties, globalProps } from 'examples/common';
-
-function reset(slider) {
-  resetSlider(slider, function() {
-    slider.element.style.setProperty(
-      '--transition-bezier',
-      'cubic-bezier(0.45, 0, 0.2, 1)'
-    );
-    slider.element.style.setProperty('--slider-transition-duration', '770ms');
-  });
-}
 
 const startupScreen = (
   <div style={{ backgroundColor: '#353464' }}>
@@ -34,13 +25,12 @@ function Component({ startup }) {
           >
             <AwesomeSlider
               name="images"
-              cssModule={AwsSliderStyles}
+              cssModule={[AwsSliderStyles, AnimationStyles]}
               startup={startup}
               animation="fallAnimation"
-              // fillParent
               startupScreen={startupScreen}
-              onFirstMount={reset}
-              onResetSlider={reset}
+              onFirstMount={resetSlider}
+              onResetSlider={resetSlider}
               onTransitionStart={transitionStart}
               onTransitionEnd={transitionEnd}
               tranisionDelay={300}
@@ -74,13 +64,13 @@ const example = {
     {
       title: 'Fall Animation Styles',
       description:
-        "For this example we're importing the fall-animation style modules.",
+        "For this example we're injecting the fall-animation styles.",
       jsx: `
 import AwesomeSlider from 'react-awesome-slider';
-import AwesomeSliderStyles from 'react-awesome-slider/src/styled/fall-animation.scss';
+import 'react-awesome-slider/dist/custom-animations/fall-animation.css';
 
 const Slider = (
-  <AwesomeSlider cssModule={AwesomeSliderStyles}>
+  <AwesomeSlider animation="fallAnimation">
     <div data-src="/path/to/image-0.jpg" />
     <div data-src="/path/to/image-1.jpg" />
     <div data-src="/path/to/image-2.jpg" />
@@ -92,10 +82,9 @@ const Slider = (
     {
       title: 'Styling the fold animation',
       description:
-        'The animation exit styling on the <b>fall-animation</b> .scss file is not that straight forward but you can easily customize it using the <b>--fall</b> CSS custom properties. Checkout the full style source <a target="_blank" href="https://github.com/rcaferati/react-awesome-slider/tree/master/src/styled/fall-animation.scss">here</a>.',
+        'The animation exit styling on the <b>fall-animation</b> .scss file is not that straight forward but you can easily customize it using the <b>--fall</b> CSS custom properties. Checkout the full style source <a target="_blank" href="https://github.com/rcaferati/react-awesome-slider/tree/master/src/styled/fall-animation/fall-animation.scss">here</a>.',
       scss: `
 .aws-sld {
-  --fall-animation-duration: 700ms;
   --fall-animation-angle: 16deg;
   --fall-scaling-in-from: 0.9;
 
@@ -105,7 +94,7 @@ const Slider = (
     },
   ],
   Component,
-  componentClass: AwsSliderStyles['aws-sld'],
+  componentClass: AwsSliderStyles.awssld,
 };
 
 export default {

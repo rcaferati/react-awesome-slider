@@ -1,8 +1,8 @@
 import React from 'react';
 import AwesomeFrame from 'src/components/react-awesome-frame';
-import 'dist/custom-animations/cube-animation.css';
 import AwesomeSlider from 'src';
 import AutoplayHoc from 'src/hoc/autoplay/hoc';
+import AwsSliderStyles from 'src/core/styles.scss';
 import AwsFrameStyles from 'src/components/react-awesome-frame/styles.scss';
 import { transitionEnd, transitionStart, resetSlider } from 'helpers/examples';
 import { features, properties, globalProps } from 'examples/common';
@@ -28,6 +28,7 @@ function Component({ startup }) {
               cancelOnInteraction={false}
               interval={6000}
               startup={startup}
+              cssModule={AwsSliderStyles}
               animation="cubeAnimation"
               startupScreen={startupScreen}
               onFirstMount={resetSlider}
@@ -68,15 +69,17 @@ const example = {
       title: 'Autoplay HOC',
       description: `For this example we're importing the Autplay HOC that can be imported from de HOC folder. You can checkout it's full source <a target="_blank" href="https://github.com/rcaferati/react-awesome-slider/tree/master/src/hoc/autoplay/hoc.js">here</a>.`,
       jsx: `
-import AutoplaySlider from 'react-awesome-slider/hoc/autoplay';
-import AwesomeSliderStyles from 'react-awesome-slider/src/styled/fold-out-animation.scss';
+import AwesomeSlider from 'react-awesome-slider';
+import withAutoplay from 'react-awesome-slider/dist/autoplay';
+import 'react-awesome-slider/dist/styles.css';
+
+const AutoplaySlider = withAutoplay(AwesomeSlider);
 
 const Slider = (
   <AutoplaySlider
     play={true}
     cancelOnInteraction={false}
     interval={6000}
-    cssModule={AwesomeSliderStyles}
   >
     <div data-src="/path/to/image-0.jpg" />
     <div data-src="/path/to/image-1.jpg" />
@@ -88,7 +91,7 @@ const Slider = (
     },
   ],
   Component,
-  // componentClass: AwsSliderStyles['aws-sld'],
+  componentClass: AwsSliderStyles.awssld,
 };
 
 export default {

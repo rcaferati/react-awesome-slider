@@ -7,7 +7,7 @@ import { transitionStart, transitionEnd, resetSlider } from 'helpers/examples';
 import { GeneralContext } from 'context/GeneralContext';
 import { features, properties, globalProps } from 'examples/common';
 
-function reset(slider) {
+function onFirstMount(slider) {
   resetSlider(slider, function() {
     slider.element.style.setProperty(
       '--transition-bezier',
@@ -24,7 +24,6 @@ const startupScreen = (
 );
 
 function Component({ startup }) {
-  console.log(startup);
   return (
     <GeneralContext.Consumer>
       {context => {
@@ -38,8 +37,8 @@ function Component({ startup }) {
               startup={startup}
               cssModule={AwsSliderStyles}
               startupScreen={startupScreen}
-              onFirstMount={reset}
-              onResetSlider={reset}
+              onFirstMount={onFirstMount}
+              onResetSlider={resetSlider}
               onTransitionStart={transitionStart}
               onTransitionEnd={transitionEnd}
               organicArrows={context.general['--organicArrows']}
@@ -85,10 +84,10 @@ const example = {
       title: 'Basic Image Example',
       jsx: `
 import AwesomeSlider from 'react-awesome-slider';
-import AwsSliderStyles from 'react-awesome-slider/src/styles.scss';
+import 'react-awesome-slider/dist/styles.css';
 
 const slider = (
-  <AwesomeSlider cssModule={styles}>
+  <AwesomeSlider>
     <div data-src="/path/to/image-0.png" />
     <div data-src="/path/to/image-1.png" />
     <div data-src="/path/to/image-2.jpg" />
@@ -102,7 +101,7 @@ const slider = (
         "The <b>startupScreen</b> prop defines the first screen that's rendered when the component mounts, it works like a pre-load screen. If not defined the component will default to the first child screen or to the screen defined on the <b>selected</b> prop.",
       jsx: `
 import AwesomeSlider from 'react-awesome-slider';
-import AwsSliderStyles from 'react-awesome-slider/src/styles.scss';
+import 'react-awesome-slider/dist/styles.css';
 
 const startupScreen = (
   <div>
@@ -113,9 +112,10 @@ const startupScreen = (
 const slider = (
   <AwesomeSlider
     startupScreen={startupScreen}
-    cssModule={styles}
   >
-    /* ... */
+    <div data-src="/path/to/image-0.png" />
+    <div data-src="/path/to/image-1.png" />
+    <div data-src="/path/to/image-2.jpg" />
   </AwesomeSlider>
 );
       `,
@@ -123,7 +123,7 @@ const slider = (
     {
       title: 'Animation hooks',
       description:
-        "The three main hooks are <b>onFirstMount</b>, <b>onAnimationStart</b> and <b>onAnimationEnd</b>. They're called with an object containing the component main <b>element</b>, <b>currentIndex</b>, <b>nextIndex</b>, <b>currentScreen</b> and <b>nextScreen</b>",
+        "The three main hooks are <b>onFirstMount</b>, <b>onAnimationStart</b> and <b>onAnimationEnd</b>. They're called with an object parameter containing the component's main <b>element</b>, <b>currentIndex</b>, <b>nextIndex</b>, <b>currentScreen</b> and <b>nextScreen</b>",
       jsx: `
 const onAnimationStart = ({
   element,
@@ -155,7 +155,7 @@ const slider = (
     },
   ],
   Component,
-  componentClass: AwsSliderStyles['aws-sld'],
+  componentClass: AwsSliderStyles.awssld,
 };
 
 export default {

@@ -1,6 +1,4 @@
-@import '../../core/styles.scss';
-
-// CHANGE THE CSS AND ADD THE PROPERTY
+@import '../../core/constants.scss';
 
 .#{$root-element} {
   &--cubeAnimation {
