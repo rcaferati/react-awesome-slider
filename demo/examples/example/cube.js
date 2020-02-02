@@ -81,10 +81,10 @@ const example = {
         "For this example we're importing the cube-animation style modules.",
       jsx: `
 import AwesomeSlider from 'react-awesome-slider';
-import AwesomeSliderStyles from 'react-awesome-slider/src/styled/cube-animation.scss';
+import 'react-awesome-slider/dist/custom-animations/cube-animation.css';
 
 const Slider = (
-  <AwesomeSlider cssModule={AwesomeSliderStyles}>
+  <AwesomeSlider animation="cubeAnimation">
     <div data-src="/path/to/image-0.jpg" />
     <div data-src="/path/to/image-1.jpg" />
     <div data-src="/path/to/image-2.jpg" />
@@ -99,7 +99,6 @@ const Slider = (
         'The animation exit styling on the <b>cube-animation</b> .scss file is not that straight forward but you can easily customize it using the <b>--cube</b> CSS properties. Checkout the full style source <a target="_blank" href="https://github.com/rcaferati/react-awesome-slider/tree/master/src/styled/cube-animation.scss">here</a>.',
       scss: `
 .aws-sld {
-  --cube-animation-duration: 675ms;
   --cube-animation-perspective: 1800px;
   --cube-animation-ease-in: cubic-bezier(0.8, 0, 1, 0.8);
   --cube-animation-ease-out: cubic-bezier(0, 0.2, 0.2, 1);

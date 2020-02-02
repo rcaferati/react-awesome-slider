@@ -12,6 +12,8 @@ import {
   transformChildren,
   mergeStyles,
   getAnyClassName,
+  classListAdd,
+  classListRemove,
 } from './helpers';
 import Bullets from './bullets';
 import Buttons from './buttons';
@@ -19,24 +21,6 @@ import Media from './media';
 
 const ROOTELM = 'awssld';
 const mediaLoader = new MediaLoader();
-
-const classListAdd = (element, classString) => {
-  if (typeof classString !== 'string' || !element) {
-    return;
-  }
-  classString.split(' ').forEach(className => {
-    element.classList.add(className);
-  });
-};
-
-const classListRemove = (element, classString) => {
-  if (typeof classString !== 'string' || !element) {
-    return;
-  }
-  classString.split(' ').forEach(className => {
-    element.classList.remove(className);
-  });
-};
 
 export default class AwesomeSlider extends React.Component {
   static propTypes = {

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { onceNextCssLayout, onceTransitionEnd } from 'web-animation-club';
 import PropTypes from 'prop-types';
 import { getClassName } from '../../helpers/components';
+import { mergeStyles, getAnyClassName } from '../../core/helpers';
 
 const ROOTELM = 'awssld';
 
@@ -9,7 +10,7 @@ export default function AutoplayHoc(WrappedComponent) {
   return class extends Component {
     static propTypes = {
       interval: PropTypes.number,
-      cssModule: PropTypes.object,
+      cssModule: PropTypes.any,
       play: PropTypes.bool,
       cancelOnInteraction: PropTypes.bool,
       timerHeight: PropTypes.string,
@@ -39,9 +40,14 @@ export default function AutoplayHoc(WrappedComponent) {
       super(props);
       this.forceStop = false;
       this.rootElement = props.rootElement || ROOTELM;
+      this.mergedStyles = mergeStyles(props.cssModule);
       this.state = {
         selected: 0,
       };
+    }
+
+    componentWillReceiveProps(newProps) {
+      this.mergedStyles = mergeStyles(newProps.cssModule);
     }
 
     setInfo(info) {
@@ -56,38 +62,34 @@ export default function AutoplayHoc(WrappedComponent) {
         return;
       }
       let bar = element.querySelector(
-        `.${getClassName(`${this.rootElement}__timer`, this.props.cssModule)}`
+        `.${getAnyClassName(
+          getClassName(`${this.rootElement}__timer`, this.mergedStyles)
+        )}`
       );
       if (!bar) {
         bar = this.createBarElement();
         element.querySelector('div').appendChild(bar);
       }
       bar.classList.remove(
-        getClassName(
-          `${this.rootElement}__timer--animated`,
-          this.props.cssModule
-        )
+        getClassName(`${this.rootElement}__timer--animated`, this.mergedStyles)
       );
       onceNextCssLayout().then(() => {
         bar.classList.remove(
-          getClassName(`${this.rootElement}__timer--run`, this.props.cssModule)
+          getClassName(`${this.rootElement}__timer--run`, this.mergedStyles)
         );
         bar.classList.remove(
-          getClassName(`${this.rootElement}__timer--fast`, this.props.cssModule)
+          getClassName(`${this.rootElement}__timer--fast`, this.mergedStyles)
         );
         onceNextCssLayout().then(() => {
           bar.classList.add(
             getClassName(
               `${this.rootElement}__timer--animated`,
-              this.props.cssModule
+              this.mergedStyles
             )
           );
           onceNextCssLayout().then(() => {
             bar.classList.add(
-              getClassName(
-                `${this.rootElement}__timer--run`,
-                this.props.cssModule
-              )
+              getClassName(`${this.rootElement}__timer--run`, this.mergedStyles)
             );
             onceTransitionEnd(bar).then(() => {
               this.clearBarAnimation(bar);
@@ -103,7 +105,9 @@ export default function AutoplayHoc(WrappedComponent) {
 
     getBarFromSlide(slider) {
       const bar = slider.querySelector(
-        `.${getClassName(`${this.rootElement}__timer`, this.props.cssModule)}`
+        `.${getAnyClassName(
+          getClassName(`${this.rootElement}__timer`, this.mergedStyles)
+        )}`
       );
       return bar || null;
     }
@@ -111,7 +115,7 @@ export default function AutoplayHoc(WrappedComponent) {
     createBarElement() {
       const bar = document.createElement('div');
       bar.classList.add(
-        getClassName(`${this.rootElement}__timer`, this.props.cssModule)
+        getClassName(`${this.rootElement}__timer`, this.mergedStyles)
       );
       bar.style.setProperty('--timer-delay', `${this.props.interval}ms`);
       bar.style.setProperty('--timer-height', this.props.timerHeight);
@@ -129,7 +133,7 @@ export default function AutoplayHoc(WrappedComponent) {
           bar.clearCssEndEvent();
         }
         bar.classList.add(
-          getClassName(`${this.rootElement}__timer--fast`, this.props.cssModule)
+          getClassName(`${this.rootElement}__timer--fast`, this.mergedStyles)
         );
         onceTransitionEnd(bar).then(() => {
           this.clearBarAnimation(bar);
@@ -139,19 +143,16 @@ export default function AutoplayHoc(WrappedComponent) {
 
     clearBarAnimation(bar) {
       bar.classList.remove(
-        getClassName(
-          `${this.rootElement}__timer--animated`,
-          this.props.cssModule
-        )
+        getClassName(`${this.rootElement}__timer--animated`, this.mergedStyles)
       );
     }
 
     restartBarAnimation(bar) {
       bar.classList.remove(
-        getClassName(`${this.rootElement}__timer--run`, this.props.cssModule)
+        getClassName(`${this.rootElement}__timer--run`, this.mergedStyles)
       );
       bar.classList.remove(
-        getClassName(`${this.rootElement}__timer--fast`, this.props.cssModule)
+        getClassName(`${this.rootElement}__timer--fast`, this.mergedStyles)
       );
     }
 

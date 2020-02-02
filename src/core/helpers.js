@@ -2,6 +2,24 @@
 /* eslint-disable guard-for-in */
 import { classToModules, getClassName } from '../helpers/components';
 
+export const classListAdd = (element, classString) => {
+  if (typeof classString !== 'string' || !element) {
+    return;
+  }
+  classString.split(' ').forEach(className => {
+    element.classList.add(className);
+  });
+};
+
+export const classListRemove = (element, classString) => {
+  if (typeof classString !== 'string' || !element) {
+    return;
+  }
+  classString.split(' ').forEach(className => {
+    element.classList.remove(className);
+  });
+};
+
 export const getAnyClassName = className => {
   if (typeof className === 'string') {
     const cls = className.split(' ');

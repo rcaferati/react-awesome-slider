@@ -1,7 +1,7 @@
 import React from 'react';
 import AwesomeSlider from 'src';
 import CaptionedHoc from 'src/hoc/captioned-images/hoc';
-import AutoplayHoc from 'src/hoc/autoplay/hoc';
+// import AutoplayHoc from 'src/hoc/autoplay/hoc';
 import AwsSliderStyles from 'src/core/styles.scss';
 import CaptionedStyles from 'src/hoc/captioned-images/styles.scss';
 import AwesomeFrame from 'src/components/react-awesome-frame';
@@ -15,8 +15,9 @@ import {
   // examples,
 } from 'examples/common';
 
-const Slider = AutoplayHoc(AwesomeSlider);
-const Captioned = CaptionedHoc(Slider);
+// const Slider = AutoplayHoc(AwesomeSlider);
+const Captioned = CaptionedHoc(AwesomeSlider);
+
 /**
  * START CUSTOM RESETS
  */
@@ -102,8 +103,6 @@ function Component({ startup }) {
             title="Adult Swim &mdash; Rick and Morty"
           >
             <Captioned
-              play
-              interval={2000}
               startup={startup}
               name="captioned-mixed"
               startupScreen={startupScreen}
@@ -128,39 +127,19 @@ const example = {
   title: 'Captioned Images',
   items: [
     {
-      title: 'Basic Children Usage',
-      jsx: `
-import AwesomeSlider from 'react-awesome-slider';
-import AwsSliderStyles from 'react-awesome-slider/src/styles.scss';
-
-const slider = (
-  <AwesomeSlider cssModule={styles}>
-    <div data-src="/path/to/image.jpg">
-      <p>I want to see what you got.</p>
-    </div>
-    <div data-src="/path/to/image.jpg">
-      <p>The answer is -- Don't think about it.</p>
-    </div>
-    <div data-src="/path/to/image.jpg">
-      <p>Sometimes science is more art than science.</p>
-    </div>
-    <div data-src="/path/to/image.jpg">
-      <p>Love, connection, experience.</p>
-    </div>
-  </AwesomeSlider>
-);
-      `,
-    },
-    {
       title: 'Captioned Component',
       description:
         'For this specific example I\'m using the Captioned component which is a basic styled wrapper hoc that applies a simple caption strategy. You can check out all the available components <a target="_blank" href="https://github.com/rcaferati/react-awesome-slider/tree/master/src/components">here</a>.',
       jsx: `
-import Captioned from 'react-awesome-slider/src/components/captioned';
-import CaptionedStyles from 'react-awesome-slider/src/components/captioned/styles.scss';
+import AwesomeSlider from 'react-awesome-slider';
+import withCaption from 'react-awesome-slider/dist/captioned';
+import 'react-awesome-slider/dist/styles.css';
+import 'react-awesome-slider/dist/captioned.css';
+
+const CaptionedSlider = withCaption(AwesomeSlider);
 
 const component = (
-  <Captioned
+  <CaptionedSlider
     startupScreen={StartupScreen}
     cssModule={CaptionedStyles}
     screens={[
@@ -174,7 +153,6 @@ const component = (
         media: '/images/series/ricknmorty-3.png',
         caption: 'The answer is -- Don't think about it.',
       },
-      // ...
     ]}
   />
 )

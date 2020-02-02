@@ -82,10 +82,10 @@ const example = {
         "For this example we're importing the fold-out-animation style modules.",
       jsx: `
 import AwesomeSlider from 'react-awesome-slider';
-import AwesomeSliderStyles from 'react-awesome-slider/src/styled/fold-out-animation.scss';
+import 'react-awesome-slider/dist/custom-animations/fold-out-animation.css';
 
 const Slider = (
-  <AwesomeSlider cssModule={AwesomeSliderStyles}>
+  <AwesomeSlider animation="foldOutAnimation">
     <div data-src="/path/to/image-0.jpg" />
     <div data-src="/path/to/image-1.jpg" />
     <div data-src="/path/to/image-2.jpg" />

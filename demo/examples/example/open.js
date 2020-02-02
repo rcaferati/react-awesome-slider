@@ -81,10 +81,10 @@ const example = {
         "For this example we're importing the open-animation style modules.",
       jsx: `
 import AwesomeSlider from 'react-awesome-slider';
-import AwesomeSliderStyles from 'react-awesome-slider/src/styled/open-animation.scss';
+import 'react-awesome-slider/dist/custom-animations/open-animation.css';
 
 const Slider = (
-  <AwesomeSlider cssModule={AwesomeSliderStyles}>
+  <AwesomeSlider animation="openAnimation">
     <div data-src="/path/to/image-0.jpg" />
     <div data-src="/path/to/image-1.jpg" />
     <div data-src="/path/to/image-2.jpg" />

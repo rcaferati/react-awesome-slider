@@ -69,15 +69,17 @@ const example = {
       title: 'Autoplay HOC',
       description: `For this example we're importing the Autplay HOC that can be imported from de HOC folder. You can checkout it's full source <a target="_blank" href="https://github.com/rcaferati/react-awesome-slider/tree/master/src/hoc/autoplay/hoc.js">here</a>.`,
       jsx: `
-import AutoplaySlider from 'react-awesome-slider/hoc/autoplay';
-import AwesomeSliderStyles from 'react-awesome-slider/src/styled/fold-out-animation.scss';
+import AwesomeSlider from 'react-awesome-slider';
+import withAutoplay from 'react-awesome-slider/dist/autoplay';
+import 'react-awesome-slider/dist/styles.css';
+
+const AutoplaySlider = withAutoplay(AwesomeSlider);
 
 const Slider = (
   <AutoplaySlider
     play={true}
     cancelOnInteraction={false}
     interval={6000}
-    cssModule={AwesomeSliderStyles}
   >
     <div data-src="/path/to/image-0.jpg" />
     <div data-src="/path/to/image-1.jpg" />
