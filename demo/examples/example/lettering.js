@@ -48,6 +48,7 @@ function Component({ startup }) {
             <LetteringSlider
               name="lettering"
               startup={startup}
+              startupDelay={625}
               cssModule={[AwsSliderStyles, LetteringStyles]}
               startupScreen={startupScreen}
               onTransitionStart={transitionStart}
