@@ -768,7 +768,9 @@ export default class AwesomeSlider extends React.Component {
 
     if (
       !this.activeArrow ||
-      this.buttons.element.classList.contains(this.classNames.controlsActive)
+      (this.buttons &&
+        this.buttons.element &&
+        this.buttons.element.classList.contains(this.classNames.controlsActive))
     ) {
       if (callback) {
         callback();

@@ -48,6 +48,7 @@ export default function AutoplayHoc(WrappedComponent) {
 
     componentWillReceiveProps(newProps) {
       this.mergedStyles = mergeStyles(newProps.cssModule);
+      this.checkStartStatus(newProps);
     }
 
     setInfo(info) {
@@ -110,6 +111,20 @@ export default function AutoplayHoc(WrappedComponent) {
         )}`
       );
       return bar || null;
+    }
+
+    checkStartStatus(newProps) {
+      if (!this.currentInfo) {
+        return;
+      }
+      if (this.props.play !== newProps.play) {
+        if (newProps.play === true && this.currentInfo) {
+          this.setTimer(this.currentInfo.currentSlide);
+        }
+        if (newProps.play === false) {
+          this.forceClearBar(this.currentInfo);
+        }
+      }
     }
 
     createBarElement() {
@@ -190,12 +205,15 @@ export default function AutoplayHoc(WrappedComponent) {
           {...extra}
           selected={this.state.selected}
           onFirstMount={info => {
-            if (!extra.startupScreen) {
-              this.setInfo(info);
-              this.setTimer(info.currentSlide);
-            }
             if (onFirstMount) {
               onFirstMount(info);
+            }
+            if (extra.startupScreen) {
+              return;
+            }
+            this.setInfo(info);
+            if (play === true) {
+              this.setTimer(info.currentSlide);
             }
           }}
           onTransitionStart={info => {
@@ -219,7 +237,9 @@ export default function AutoplayHoc(WrappedComponent) {
           }}
           onTransitionEnd={info => {
             this.setInfo(info);
-            this.setTimer(info.currentSlide);
+            if (play === true) {
+              this.setTimer(info.currentSlide);
+            }
             if (onTransitionEnd) {
               onTransitionEnd(info);
             }
