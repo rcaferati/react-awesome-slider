@@ -67,9 +67,13 @@ export default function AutoplayHoc(WrappedComponent) {
           getClassName(`${this.rootElement}__timer`, this.mergedStyles)
         )}`
       );
+      const wrapper = element.querySelector('div');
+      if (!wrapper) {
+        return;
+      }
       if (!bar) {
         bar = this.createBarElement();
-        element.querySelector('div').appendChild(bar);
+        wrapper.appendChild(bar);
       }
       bar.classList.remove(
         getClassName(`${this.rootElement}__timer--animated`, this.mergedStyles)

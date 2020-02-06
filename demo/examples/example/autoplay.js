@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import AwesomeFrame from 'src/components/react-awesome-frame';
 import AwesomeSlider from 'src';
 import AutoplayHoc from 'src/hoc/autoplay/hoc';
@@ -10,6 +10,21 @@ import { GeneralContext } from 'context/GeneralContext';
 
 const AutoplaySlider = AutoplayHoc(AwesomeSlider);
 
+const slides = [
+  {
+    backgroundColor: '#2d5182',
+    src: '/images/series/bojack-0.png',
+  },
+  {
+    backgroundColor: '#5fb7b2',
+    src: '/images/series/bojack-2.png',
+  },
+  {
+    backgroundColor: '#fcd0a8',
+    src: '/images/series/bojack-5.jpg',
+  },
+];
+
 const startupScreen = (
   <div style={{ backgroundColor: '#0095B7' }}>
     <span style={{ fontSize: '72px', color: 'rgba(0, 0, 0, 0.25)' }}>♪</span>
@@ -17,6 +32,25 @@ const startupScreen = (
 );
 
 function Component({ startup }) {
+  const [render, setRender] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setRender(true);
+    }, 250);
+  }, []);
+
+  const renderSlides = () => {
+    return slides.map(slide => {
+      return (
+        <div
+          key={slide.src}
+          style={{ backgroundColor: slide.backgroundColor }}
+          data-src={slide.src}
+        />
+      );
+    });
+  };
   return (
     <GeneralContext.Consumer>
       {context => {
@@ -39,21 +73,7 @@ function Component({ startup }) {
               bullets={context.general['--bullets']}
               fillParent={context.general['--fillParent']}
             >
-              {/* <div style={{ backgroundColor: '#fff' }}>123</div>
-              <div style={{ backgroundColor: '#fff' }}>456</div>
-              <div style={{ backgroundColor: '#fff' }}>789</div> */}
-              <div
-                style={{ backgroundColor: '#2d5182' }}
-                data-src="/images/series/bojack-0.png"
-              />
-              <div
-                style={{ backgroundColor: '#5fb7b2' }}
-                data-src="/images/series/bojack-2.png"
-              />
-              <div
-                style={{ backgroundColor: '#fcd0a8' }}
-                data-src="/images/series/bojack-5.jpg"
-              />
+              {render && renderSlides()}
             </AutoplaySlider>
           </AwesomeFrame>
         );
