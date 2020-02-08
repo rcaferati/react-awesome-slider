@@ -40,7 +40,7 @@ declare module 'react-awesome-slider' {
     infinite?: boolean;
     media?: any;
     name?: string;
-    onFirstMount?(): void;
+    onFirstMount?(e: AwesomeSliderInfo): void;
     onLoadStart?(): void;
     onResetSlider?(): void;
     onStartupRelease?(): void;
