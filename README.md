@@ -225,7 +225,7 @@ const component = (
 | fillParent          | `boolean`  |     `false`      | When set to true the slider will fill the dimensions of the parent element. Usefull for using it in full-screen mode.                                |
 | infinite            | `boolean`  |      `true`      | When set to true the slider will behave on an infinite fashion returing to the first slide after the last one.                                       |
 | startupScreen       |   `node`   |      `null`      | Set's the startup screen component to be shown before the first screen is loaded. It works like a pre-loading screen.                                |
-| startup             | `boolean`  |      `true`      | Used together with `startupScreen` controls weather or not the startupScreen should auto-start.                                                      |
+| startup             | `boolean`  |      `true`      | Used together with `startupScreen` controls whether or not the startupScreen should auto-start.                                                      |
 | transitionDelay     |  `number`  |       `0`        | Sets a delay in `ms` between the slide transitions. Useful if you're waiting for an exit animation to finish in the current slide.                   |
 | buttons             | `boolean`  |      `true`      | Should render the default left and right navigation buttons.                                                                                         |
 | buttonContentRight  |   `node`   |      `null`      | Add content as children of the right button.                                                                                                         |
