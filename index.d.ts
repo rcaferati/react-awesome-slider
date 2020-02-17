@@ -55,6 +55,7 @@ declare module 'react-awesome-slider' {
     startupScreen?: object;
     style?: object;
     transitionDelay?: number;
+    touch?: boolean;
   }
 
   export default class AwesomeSlider extends Component<

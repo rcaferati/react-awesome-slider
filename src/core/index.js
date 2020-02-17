@@ -54,6 +54,7 @@ export default class AwesomeSlider extends React.Component {
     startupScreen: PropTypes.object,
     style: PropTypes.object,
     transitionDelay: PropTypes.number,
+    touch: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -87,6 +88,7 @@ export default class AwesomeSlider extends React.Component {
     startupScreen: null,
     style: {},
     transitionDelay: 0,
+    touch: true,
   };
 
   constructor(props) {
@@ -907,27 +909,6 @@ export default class AwesomeSlider extends React.Component {
     );
   };
 
-  renderBox(box) {
-    return (
-      <div
-        ref={el => {
-          this[`box${box}`] = el;
-        }}
-        className={this.classNames.box}
-        onTouchStart={this.touchStart}
-        onTouchMove={this.touchMove}
-        onTouchEnd={this.touchEnd}
-      >
-        {this.state[`box${box}`] && (
-          <Media
-            media={this.state[`box${box}`]}
-            className={this.classNames.content}
-          />
-        )}
-      </div>
-    );
-  }
-
   render() {
     const {
       cssModule,
@@ -938,6 +919,7 @@ export default class AwesomeSlider extends React.Component {
       buttons,
       buttonContentLeft,
       buttonContentRight,
+      touch
     } = this.props;
     const { rootElement } = this;
 
@@ -961,8 +943,38 @@ export default class AwesomeSlider extends React.Component {
             }}
             className={this.classNames.container}
           >
-            {this.renderBox('A')}
-            {this.renderBox('B')}
+            <div
+              ref={el => {
+                this.boxA = el;
+              }}
+              className={this.classNames.box}
+              onTouchStart={touch ? this.touchStart : undefined}
+              onTouchMove={touch ? this.touchMove : undefined}
+              onTouchEnd={touch ? this.touchEnd : undefined}
+            >
+              {this.state.boxA && (
+                <Media
+                  media={this.state.boxA}
+                  className={this.classNames.content}
+                />
+              )}
+            </div>
+            <div
+              ref={el => {
+                this.boxB = el;
+              }}
+              className={this.classNames.box}
+              onTouchStart={touch ? this.touchStart : undefined}
+              onTouchMove={touch ? this.touchMove : undefined}
+              onTouchEnd={touch ? this.touchEnd : undefined}
+            >
+              {this.state.boxB && (
+                <Media
+                  media={this.state.boxB}
+                  className={this.classNames.content}
+                />
+              )}
+            </div>
           </div>
           {buttons && (
             <Buttons
