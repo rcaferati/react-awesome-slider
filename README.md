@@ -227,7 +227,7 @@ const component = (
 | startupScreen       |   `node`   |      `null`      | Set's the startup screen component to be shown before the first screen is loaded. It works like a pre-loading screen.                                |
 | startup             | `boolean`  |      `true`      | Used together with `startupScreen` controls whether or not the startupScreen should auto-start.                                                      |
 | transitionDelay     |  `number`  |       `0`        | Sets a delay in `ms` between the slide transitions. Useful if you're waiting for an exit animation to finish in the current slide.                   |
-| touch               | `boolean`  |      `true`      | When set to true activates a swipe touch effect to navigate on mobile devices.                                                                        |
+| mobileTouch         | `boolean`  |      `true`      | When set to true activates a swipe touch effect to navigate on mobile devices.                                                                        |
 | buttons             | `boolean`  |      `true`      | Should render the default left and right navigation buttons.                                                                                         |
 | buttonContentRight  |   `node`   |      `null`      | Add content as children of the right button.                                                                                                         |
 | buttonContentLeft   |   `node`   |      `null`      | Add content as children of the left button.                                                                                                          |

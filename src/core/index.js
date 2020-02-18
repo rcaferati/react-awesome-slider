@@ -54,7 +54,7 @@ export default class AwesomeSlider extends React.Component {
     startupScreen: PropTypes.object,
     style: PropTypes.object,
     transitionDelay: PropTypes.number,
-    touch: PropTypes.bool,
+    mobileTouch: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -88,7 +88,7 @@ export default class AwesomeSlider extends React.Component {
     startupScreen: null,
     style: {},
     transitionDelay: 0,
-    touch: true,
+    mobileTouch: true,
   };
 
   constructor(props) {
@@ -919,7 +919,7 @@ export default class AwesomeSlider extends React.Component {
       buttons,
       buttonContentLeft,
       buttonContentRight,
-      touch
+      mobileTouch
     } = this.props;
     const { rootElement } = this;
 
@@ -948,9 +948,9 @@ export default class AwesomeSlider extends React.Component {
                 this.boxA = el;
               }}
               className={this.classNames.box}
-              onTouchStart={touch ? this.touchStart : undefined}
-              onTouchMove={touch ? this.touchMove : undefined}
-              onTouchEnd={touch ? this.touchEnd : undefined}
+              onTouchStart={mobileTouch ? this.touchStart : undefined}
+              onTouchMove={mobileTouch ? this.touchMove : undefined}
+              onTouchEnd={mobileTouch ? this.touchEnd : undefined}
             >
               {this.state.boxA && (
                 <Media
@@ -964,9 +964,9 @@ export default class AwesomeSlider extends React.Component {
                 this.boxB = el;
               }}
               className={this.classNames.box}
-              onTouchStart={touch ? this.touchStart : undefined}
-              onTouchMove={touch ? this.touchMove : undefined}
-              onTouchEnd={touch ? this.touchEnd : undefined}
+              onTouchStart={mobileTouch ? this.touchStart : undefined}
+              onTouchMove={mobileTouch ? this.touchMove : undefined}
+              onTouchEnd={mobileTouch ? this.touchEnd : undefined}
             >
               {this.state.boxB && (
                 <Media
