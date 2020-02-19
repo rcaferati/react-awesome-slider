@@ -964,8 +964,8 @@ export default class AwesomeSlider extends React.Component {
             }}
             className={this.classNames.container}
           >
-            {this.renderBox('A')}
-            {this.renderBox('B')}
+            {this.renderBox('A', mobileTouch)}
+            {this.renderBox('B', mobileTouch)}
           </div>
           {buttons && (
             <Buttons
