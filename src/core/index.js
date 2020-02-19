@@ -909,6 +909,27 @@ export default class AwesomeSlider extends React.Component {
     );
   };
 
+  renderBox(box, mobileTouch) {	
+    return (	
+      <div	
+        ref={el => {	
+          this[`box${box}`] = el;	
+        }}	
+        className={this.classNames.box}	
+        onTouchStart={mobileTouch ? this.touchStart : undefined}	
+        onTouchMove={mobileTouch ? this.touchMove : undefined}	
+        onTouchEnd={mobileTouch ? this.touchEnd : undefined}	
+      >	
+        {this.state[`box${box}`] && (	
+          <Media	
+            media={this.state[`box${box}`]}	
+            className={this.classNames.content}	
+          />	
+        )}	
+      </div>	
+    );	
+  }
+
   render() {
     const {
       cssModule,
@@ -943,38 +964,8 @@ export default class AwesomeSlider extends React.Component {
             }}
             className={this.classNames.container}
           >
-            <div
-              ref={el => {
-                this.boxA = el;
-              }}
-              className={this.classNames.box}
-              onTouchStart={mobileTouch ? this.touchStart : undefined}
-              onTouchMove={mobileTouch ? this.touchMove : undefined}
-              onTouchEnd={mobileTouch ? this.touchEnd : undefined}
-            >
-              {this.state.boxA && (
-                <Media
-                  media={this.state.boxA}
-                  className={this.classNames.content}
-                />
-              )}
-            </div>
-            <div
-              ref={el => {
-                this.boxB = el;
-              }}
-              className={this.classNames.box}
-              onTouchStart={mobileTouch ? this.touchStart : undefined}
-              onTouchMove={mobileTouch ? this.touchMove : undefined}
-              onTouchEnd={mobileTouch ? this.touchEnd : undefined}
-            >
-              {this.state.boxB && (
-                <Media
-                  media={this.state.boxB}
-                  className={this.classNames.content}
-                />
-              )}
-            </div>
+            {this.renderBox('A')}
+            {this.renderBox('B')}
           </div>
           {buttons && (
             <Buttons
