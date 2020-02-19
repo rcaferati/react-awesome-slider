@@ -909,25 +909,25 @@ export default class AwesomeSlider extends React.Component {
     );
   };
 
-  renderBox(box, mobileTouch) {	
-    return (	
-      <div	
-        ref={el => {	
-          this[`box${box}`] = el;	
-        }}	
-        className={this.classNames.box}	
-        onTouchStart={mobileTouch ? this.touchStart : undefined}	
-        onTouchMove={mobileTouch ? this.touchMove : undefined}	
-        onTouchEnd={mobileTouch ? this.touchEnd : undefined}	
-      >	
-        {this.state[`box${box}`] && (	
-          <Media	
-            media={this.state[`box${box}`]}	
-            className={this.classNames.content}	
-          />	
-        )}	
-      </div>	
-    );	
+  renderBox(box, mobileTouch) {
+    return (
+      <div
+        ref={el => {
+          this[`box${box}`] = el;
+        }}
+        className={this.classNames.box}
+        onTouchStart={mobileTouch ? this.touchStart : undefined}
+        onTouchMove={mobileTouch ? this.touchMove : undefined}
+        onTouchEnd={mobileTouch ? this.touchEnd : undefined}
+      >
+        {this.state[`box${box}`] && (
+          <Media
+            media={this.state[`box${box}`]}
+            className={this.classNames.content}
+          />
+        )}
+      </div>
+    );
   }
 
   render() {
