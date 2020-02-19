@@ -54,6 +54,7 @@ export default class AwesomeSlider extends React.Component {
     startupScreen: PropTypes.object,
     style: PropTypes.object,
     transitionDelay: PropTypes.number,
+    mobileTouch: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -87,6 +88,7 @@ export default class AwesomeSlider extends React.Component {
     startupScreen: null,
     style: {},
     transitionDelay: 0,
+    mobileTouch: true,
   };
 
   constructor(props) {
@@ -907,16 +909,16 @@ export default class AwesomeSlider extends React.Component {
     );
   };
 
-  renderBox(box) {
+  renderBox(box, mobileTouch) {
     return (
       <div
         ref={el => {
           this[`box${box}`] = el;
         }}
         className={this.classNames.box}
-        onTouchStart={this.touchStart}
-        onTouchMove={this.touchMove}
-        onTouchEnd={this.touchEnd}
+        onTouchStart={mobileTouch ? this.touchStart : undefined}
+        onTouchMove={mobileTouch ? this.touchMove : undefined}
+        onTouchEnd={mobileTouch ? this.touchEnd : undefined}
       >
         {this.state[`box${box}`] && (
           <Media
@@ -938,6 +940,7 @@ export default class AwesomeSlider extends React.Component {
       buttons,
       buttonContentLeft,
       buttonContentRight,
+      mobileTouch
     } = this.props;
     const { rootElement } = this;
 
@@ -961,8 +964,8 @@ export default class AwesomeSlider extends React.Component {
             }}
             className={this.classNames.container}
           >
-            {this.renderBox('A')}
-            {this.renderBox('B')}
+            {this.renderBox('A', mobileTouch)}
+            {this.renderBox('B', mobileTouch)}
           </div>
           {buttons && (
             <Buttons
