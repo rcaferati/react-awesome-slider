@@ -4935,11 +4935,6 @@ iferr@^0.1.5:
   resolved "https://registry.yarnpkg.com/iferr/-/iferr-0.1.5.tgz#c60eed69e6d8fdb6b3104a1fcbca1c192dc5b501"
   integrity sha1-xg7taebY/bazEEofy8ocGS3FtQE=
 
-ignore-emit-webpack-plugin@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/ignore-emit-webpack-plugin/-/ignore-emit-webpack-plugin-2.0.2.tgz#e06630f2a1fd259306055b19817a5f83b69b3b0e"
-  integrity sha512-mlwNY4ocAFJ+gzvIdbWdF2nPszE5CdZYJBvI38XEJnW2/qV7kA5HenzGE0XdS4nzoSqEIj268y2y4K6WTLFm8Q==
-
 ignore-walk@^3.0.1:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/ignore-walk/-/ignore-walk-3.0.3.tgz#017e2447184bfeade7c238e4aefdd1e8f95b1e37"
