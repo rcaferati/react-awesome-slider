@@ -27,10 +27,10 @@ export class MediaLoader {
       this.resolve = resolve;
       this.loading = true;
       this.ended = false;
-      if (url.match(/\.(mp4|webm)/i)) {
+      if (url.match(/\.(mp4|webm)|data:video\/.*;base64,/i)) {
         this.video.setAttribute('src', url);
       }
-      if (url.match(/\.(png|jp(e)?g|gif|webp)/i)) {
+      if (url.match(/\.(png|jp(e)?g|gif|webp)|data:image\/.*;base64,/i)) {
         this.image.src = url;
         if (this.image.width > 0 || this.image.height > 0) {
           resolve(true);
@@ -70,10 +70,10 @@ export class MediaLoader {
     }
   }
   startLoad(url) {
-    if (url.match(/\.(mp4|webm)/i)) {
+    if (url.match(/\.(mp4|webm)|data:video\/.*;base64,/i)) {
       this.loadVideo(url);
     }
-    if (url.match(/\.(png|jp(e)?g|gif|webp)/i)) {
+    if (url.match(/\.(png|jp(e)?g|gif|webp)|data:image\/.*;base64,/i)) {
       this.loadImage(url);
     }
   }
