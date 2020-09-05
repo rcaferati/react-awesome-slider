@@ -32,11 +32,25 @@ export default class Media extends React.Component {
     if (source) {
       if (source.match(/\.(mp4|webm)/)) {
         background = (
-          <video
-            title={media.title || media[`data-title`]}
-            src={source}
-            type="video/mp4"
-            controls
+//           <video
+//             title={media.title || media[`data-title`]}
+//             src={source}
+//             type="video/mp4"
+//             controls
+//           />
+          <div
+            dangerouslySetInnerHTML={{
+              __html: `
+              <video
+                title="${ media.title || media[`data-title`] }"
+                src="${source}"
+                loop
+                muted
+                autoplay
+                playsinline
+                preload="metadata"
+              />
+            }}
           />
         );
       } else {
