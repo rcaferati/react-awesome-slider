@@ -49,7 +49,7 @@ export default class Media extends React.Component {
                 autoplay
                 playsinline
                 preload="metadata"
-              />
+              />`
             }}
           />
         );
