@@ -24,6 +24,7 @@ export default class Media extends React.Component {
       onTransitionStartIn,
       onTransitionRequestOut,
       onTransitionRequestIn,
+      videoAttribute = {},
       ...extra
     } = media;
 
@@ -37,6 +38,7 @@ export default class Media extends React.Component {
             src={source}
             type="video/mp4"
             controls
+            {...videoAttribute}
           />
         );
       } else {
