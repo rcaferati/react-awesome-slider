@@ -116,7 +116,7 @@ const slider = (
 
 ```jsx
 import AwesomeSlider from 'react-awesome-slider';
-import AwesomeSliderStyles from 'react-awesome-slider/src/styles';
+import AwesomeSliderStyles from 'react-awesome-slider/dist/styles.css';
 
 const slider = (
   <AwesomeSlider cssModule={AwesomeSliderStyles}>
@@ -135,13 +135,13 @@ Note that on v3 there's an adition of the `animation` prop. The animation name i
 
 ```jsx
 import AwesomeSlider from 'react-awesome-slider';
-import CoreStyles from 'react-awesome-slider/src/core/styles.scss';
-import AnimationStyles from 'react-awesome-slider/src/styled/fold-out-animation/fold-out-animation.scss';
+import CoreStyles from 'react-awesome-slider/dist/styles.css';
+import AnimationStyles from 'react-awesome-slider/dist/custom-animations/fold-out-animation.css';
 
 const slider = (
   <AwesomeSlider
     animation="foldOutAnimation"
-    cssModule={[coreStyles, animationStyles]}
+    cssModule={[CoreStyles, AnimationStyles]}
   >
     <div data-src="/path/to/image-0.png" />
     <div data-src="/path/to/image-1.png" />
