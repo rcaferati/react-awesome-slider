@@ -43,6 +43,8 @@
   --organic-arrow-border-radius: #{$organic-arrow-border-radius};
   --control-bullet-color: #{$control-bullet-color};
   --control-bullet-active-color: #{$control-bullet-active-color};
+  --control-bullet-size: #{$control-bullet-size};
+  --control-bullet-margin: #{$control-bullet-margin};
   --content-background-color: #{$content-background-color};
 }
 
@@ -261,9 +263,9 @@
       @extend %clear-focus;
       padding: 0;
       display: block;
-      width: 16px;
-      height: 16px;
-      margin: 5px;
+      width: var(--control-bullet-size);
+      height: var(--control-bullet-size);
+      margin: var(--control-bullet-margin);
       border-radius: 50%;
       background: var(--control-bullet-color);
       text-indent: -9999px;
