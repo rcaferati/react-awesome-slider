@@ -16,6 +16,7 @@ export default class Media extends React.Component {
       children,
       style,
       loader,
+      background,
       [`data-src`]: dataSrc,
       [`data-alt`]: dataAlt,
       className: mediaClass,
@@ -26,8 +27,6 @@ export default class Media extends React.Component {
       onTransitionRequestIn,
       ...extra
     } = media;
-
-    let background = null;
 
     if (source) {
       if (source.match(/\.(mp4|webm)/)) {

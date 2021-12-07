@@ -110,6 +110,9 @@ export function transformChildren(children) {
     if (child.props['data-slug']) {
       item.slug = child.props['data-slug'];
     }
+    if (child.props['data-background']) {
+      item.background = child.props['data-background'];
+    }
     media.push(item);
   });
   return media;
