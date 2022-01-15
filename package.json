@@ -67,7 +67,7 @@
     "react-test-renderer": "^16.10.2",
     "regenerator-runtime": "^0.13.3",
     "sass-loader": "^6.0.3",
-    "shelljs": "^0.7.8",
+    "shelljs": "^0.8.5",
     "strip-ansi": "^6.0.0",
     "style-loader": "^0.19.1",
     "webpack": "^4.41.2",
