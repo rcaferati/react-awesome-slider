@@ -141,7 +141,7 @@ import AnimationStyles from 'react-awesome-slider/src/styled/fold-out-animation/
 const slider = (
   <AwesomeSlider
     animation="foldOutAnimation"
-    cssModule={[coreStyles, animationStyles]}
+    cssModule={[CoreStyles, AnimationStyles]}
   >
     <div data-src="/path/to/image-0.png" />
     <div data-src="/path/to/image-1.png" />
