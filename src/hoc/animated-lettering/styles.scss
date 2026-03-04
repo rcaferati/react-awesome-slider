@@ -1,75 +1,72 @@
-@import '../../core/constants.scss';
+/* src/hoc/animated-lettering/styles.scss (drop-in replacement) */
+@use 'sass:math';
+@use '../../core/constants.scss' as *;
 
 @mixin childrenDelay($selector, $start, $total, $modifier, $diff) {
-  $index: 0;
-  @while $index <= $total {
-    #{$selector + ':nth-child('+($index + $start) + ')'} {
-      $delay: ($index + 1) * $modifier;
-      $timeDiff: ($delay + $diff) * 1;
-      @if ($delay < 10) {
-        $delay: #{'0' + $delay};
-      }
-      @if ($timeDiff < 10) {
-        $timeDiff: #{'0' + $timeDiff};
-      }
-      transition-delay: #{'0.' + $delay + 's'}, #{'0.' + $timeDiff + 's'};
+  @for $i from 0 through $total {
+    #{$selector}:nth-child(#{$i + $start}) {
+      // $modifier and $diff are treated as "hundredths of a second"
+      $d1: math.div((($i + 1) * $modifier), 100) * 1s;
+      $d2: math.div(((($i + 1) * $modifier) + $diff), 100) * 1s;
+      transition-delay: $d1, $d2;
     }
-    $index: $index + 1;
   }
 }
 
 .#{$root-element} {
   &__content {
-    p:nth-child(n) {
+    p {
       text-align: center;
       font-size: 28px;
       line-height: 36px;
       color: rgba(0, 0, 0, 0.25);
 
+      transform: translate3d(0, 0, 0);
+      opacity: 1;
+
+      transition:
+        transform 0.45s cubic-bezier(0.15, 0.3, 0.15, 1),
+        opacity 0.35s ease-out;
+
       @media all and (max-width: 600px) {
         font-size: 22px;
         line-height: 28px;
       }
+
       @media all and (max-width: 400px) {
         font-size: 18px;
         line-height: 24px;
       }
     }
 
-    p:nth-child(n) {
-      transform: translate3d(0, 0, 0);
-      opacity: 1;
-    }
-
-    p:nth-child(n) {
-      transition: transform 0.45s cubic-bezier(0.15, 0.3, 0.15, 1),
-        opacity 0.35s ease-out;
-    }
-
-    @include childrenDelay('p', 2, 20, 5, 0);
+    @include childrenDelay(p, 2, 20, 5, 0);
 
     &--static {
-      p:nth-child(n) {
+      p {
         transition: none !important;
       }
     }
+
     &--exit {
-      p:nth-child(n) {
-        will-change: transform;
-        transition: transform 0.225s cubic-bezier(0.25, 0, 0.85, 1),
+      p {
+        will-change: transform, opacity;
+        transition:
+          transform 0.225s cubic-bezier(0.25, 0, 0.85, 1),
           opacity 0.15s ease-in 0.1s;
       }
-      @include childrenDelay('p', 2, 20, 6, 10);
+
+      @include childrenDelay(p, 2, 20, 6, 10);
     }
 
     &--moveLeft {
-      p:nth-child(n) {
+      p {
         transform: translate3d(-125px, 0, 0);
         opacity: 0;
       }
     }
+
     &--moveRight {
-      p:nth-child(n) {
+      p {
         transform: translate3d(125px, 0, 0);
         opacity: 0;
       }

@@ -1,4 +1,4 @@
-@import './constants.scss';
+@use './constants.scss' as *;
 
 %fill-parent {
   display: block;
@@ -44,6 +44,7 @@
   --control-bullet-color: #{$control-bullet-color};
   --control-bullet-active-color: #{$control-bullet-active-color};
   --content-background-color: #{$content-background-color};
+  --control-bullets-bottom: #{$control-bullets-bottom};
 }
 
 .#{$root-element} {
@@ -252,11 +253,12 @@
   }
   &__bullets {
     position: absolute;
-    bottom: -40px;
+    bottom: var(--control-bullets-bottom);
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 2;
     button {
       @extend %clear-focus;
       padding: 0;

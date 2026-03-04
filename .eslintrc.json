@@ -1,44 +1,89 @@
 {
-  "parser": "babel-eslint",
-  "extends": ["airbnb", "prettier"],
+  "root": true,
   "env": {
     "browser": true,
     "node": true,
-    "jest": true,
-    "es6": true
+    "es2022": true
   },
-  "plugins": ["react", "jsx-a11y"],
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 6,
+    "ecmaVersion": "latest",
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true
     }
   },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "react",
+    "react-hooks",
+    "jsx-a11y",
+    "storybook"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:storybook/recommended",
+    "prettier"
+  ],
   "rules": {
-    "func-names": 0,
-    "no-console": 0,
-    "arrow-parens": 0,
-    "camelcase": 0,
-    "indent": 0,
-    "class-methods-use-this": 0,
-    "object-curly-newline": 0,
-    "react/jsx-filename-extension": 0,
-    "react/forbid-prop-types": 0,
-    "import/no-unresolved": 0,
-    "import/extensions": 0,
-    "react/no-unused-prop-types": 0,
-    "react/prop-types": 0,
-    "react/no-array-index-key": 0,
-    "react/no-danger": 0,
-    "no-nested-ternary": 0,
-    "no-restricted-globals": 0,
-    "jsx-a11y/label-has-for": 0,
-    "jsx-a11y/anchor-is-valid": 0,
-    "no-prototype-builtins": 0,
-    "jsx-a11y/media-has-caption": 0,
-    "jsx-a11y/anchor-has-content": 0,
-    "jsx-a11y/click-events-have-key-events": 0,
-    "import/no-extraneous-dependencies": 0
-  }
+    "no-console": "off",
+
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
+
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_"
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/*.test.*",
+        "**/*.spec.*",
+        "**/__tests__/**/*",
+        "vitest.config.*",
+        "configs/**/*"
+      ],
+      "env": {
+        "browser": true,
+        "node": true
+      },
+      "globals": {
+        "describe": "readonly",
+        "it": "readonly",
+        "test": "readonly",
+        "expect": "readonly",
+        "beforeAll": "readonly",
+        "afterAll": "readonly",
+        "beforeEach": "readonly",
+        "afterEach": "readonly",
+        "vi": "readonly"
+      },
+      "rules": {
+        "@typescript-eslint/no-non-null-assertion": "off"
+      }
+    },
+    {
+      "files": ["**/*.js", "**/*.jsx"],
+      "rules": {
+        "@typescript-eslint/no-var-requires": "off"
+      }
+    }
+  ]
 }
