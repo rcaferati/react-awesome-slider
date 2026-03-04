@@ -1,8 +1,7 @@
 {
-  "name": "react-awesome-slider",
-  "version": "4.1.0",
+  "name": "@rcaferati/react-awesome-slider",
+  "version": "5.0.0",
   "description": "React Awesome Slider is a 60fps performant, extendable, highly customisable, production ready React Component that renders a media (image/video) gallery slider carousel.",
-  "main": "dist/index.js",
   "author": "Rafael Caferati",
   "license": "MIT",
   "homepage": "https://github.com/rcaferati/react-awesome-slider",
@@ -13,96 +12,161 @@
   "bugs": {
     "url": "https://github.com/rcaferati/react-awesome-slider/issues"
   },
-  "scripts": {
-    "start": "webpack-dev-server -d --config webpack.demo.config.js",
-    "build": "webpack --mode production",
-    "build:scss": "webpack --mode production --config webpack.scss.config.js && rm ./dist/styles.js ./dist/lettering.js ./dist/captioned.js",
-    "build:website": "webpack --mode production --config webpack.website.config.js",
-    "build:server": "webpack --mode production --config webpack.server.config.js",
-    "build:animations": "babel-node ./scss-builder.js",
-    "test": "jest",
-    "lint": "eslint src/**",
-    "prepublish": "npm run build && npm run build:scss && npm run build:animations"
+  "publishConfig": {
+    "access": "public"
   },
-  "peer-dependencies": {
-    "prop-types": "^15.6.0",
-    "react": "^15.0.1 || ^16.0.0"
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "style": "./dist/styles.css",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "default": "./dist/index.mjs"
+    },
+    "./styles": {
+      "types": "./dist/styles.d.ts",
+      "import": "./dist/styles.mjs",
+      "require": "./dist/styles.js",
+      "default": "./dist/styles.mjs"
+    },
+    "./autoplay": {
+      "types": "./dist/autoplay.d.ts",
+      "import": "./dist/autoplay.mjs",
+      "require": "./dist/autoplay.js",
+      "default": "./dist/autoplay.mjs"
+    },
+    "./captioned": {
+      "types": "./dist/captioned.d.ts",
+      "import": "./dist/captioned.mjs",
+      "require": "./dist/captioned.js",
+      "default": "./dist/captioned.mjs"
+    },
+    "./lettering": {
+      "types": "./dist/lettering.d.ts",
+      "import": "./dist/lettering.mjs",
+      "require": "./dist/lettering.js",
+      "default": "./dist/lettering.mjs"
+    },
+    "./navigation": {
+      "types": "./dist/navigation.d.ts",
+      "import": "./dist/navigation.mjs",
+      "require": "./dist/navigation.js",
+      "default": "./dist/navigation.mjs"
+    },
+    "./styles.css": "./dist/styles.css",
+    "./captioned.css": "./dist/captioned.css",
+    "./lettering.css": "./dist/lettering.css",
+    "./custom-animations/*": "./dist/custom-animations/*.css",
+    "./dist/*": "./dist/*",
+    "./package.json": "./package.json"
+  },
+  "typesVersions": {
+    "*": {
+      "styles": [
+        "dist/styles.d.ts"
+      ],
+      "autoplay": [
+        "dist/autoplay.d.ts"
+      ],
+      "captioned": [
+        "dist/captioned.d.ts"
+      ],
+      "lettering": [
+        "dist/lettering.d.ts"
+      ],
+      "navigation": [
+        "dist/navigation.d.ts"
+      ]
+    }
+  },
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "npm run clean && npm run build:js && npm run build:css && npm run build:animations",
+    "build:js": "tsup",
+    "build:css": "sass --no-source-map --silence-deprecation=import src/core/styles.scss dist/styles.css && sass --no-source-map --silence-deprecation=import src/hoc/animated-lettering/styles.scss dist/lettering.css && sass --no-source-map --silence-deprecation=import src/hoc/captioned-images/styles.scss dist/captioned.css",
+    "build:animations": "node scripts/build-animations.mjs",
+    "prepare": "npm run build",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:watch": "vitest --watch",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage",
+    "prepublishOnly": "npm run test:run && npm run build"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "dependencies": {
+    "@rcaferati/wac": "^1.2.0",
+    "prop-types": "^15.8.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.3",
-    "@babel/core": "^7.8.3",
-    "@babel/helper-plugin-utils": "^7.8.3",
-    "@babel/node": "^7.8.3",
-    "@babel/plugin-proposal-class-properties": "^7.8.3",
-    "@babel/preset-env": "^7.8.3",
-    "@babel/preset-react": "^7.8.3",
-    "@babel/register": "^7.8.3",
-    "autoprefixer": "^7.0.1",
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-eslint": "^8.2.1",
-    "babel-jest": "^23.4.2",
-    "babel-loader": "^8.0.0-beta",
-    "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
-    "css-loader": "^0.28.1",
-    "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.2",
-    "eslint": "^4.15.0",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-config-prettier": "^4.3.0",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.5.1",
-    "jest": "^24.9.0",
-    "mini-css-extract-plugin": "^0.8.0",
-    "node-sass": "^4.7.2",
-    "optimize-css-assets-webpack-plugin": "^5.0.3",
-    "postcss-loader": "^2.0.10",
-    "prismjs": "^1.9.0",
-    "prop-types": "^15.6.0",
-    "react": "^16.10.2",
-    "react-awesome-button": "^6.4.0",
-    "react-dom": "^16.10.2",
-    "react-router": "^4.1.1",
-    "react-router-dom": "^4.1.1",
-    "react-test-renderer": "^16.10.2",
-    "regenerator-runtime": "^0.13.3",
-    "sass-loader": "^6.0.3",
-    "shelljs": "^0.7.8",
-    "strip-ansi": "^6.0.0",
-    "style-loader": "^0.19.1",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.9.0"
+    "@babel/cli": "^7.28.6",
+    "@babel/core": "^7.29.0",
+    "@babel/node": "^7.29.0",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/preset-env": "^7.29.0",
+    "@babel/preset-react": "^7.28.5",
+    "@babel/preset-typescript": "^7.28.5",
+    "@babel/register": "^7.28.6",
+    "@rcaferati/react-awesome-button": "^8.0.0",
+    "@storybook/addon-a11y": "^10.2.14",
+    "@storybook/addon-docs": "^10.2.14",
+    "@storybook/addon-styling-webpack": "^3.0.0",
+    "@storybook/addon-webpack5-compiler-swc": "^4.0.2",
+    "@storybook/react-webpack5": "^10.2.14",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/testing-library__jest-dom": "^5.14.9",
+    "@vitest/coverage-v8": "^4.0.18",
+    "autoprefixer": "^10.4.21",
+    "css-loader": "^6.11.0",
+    "eslint-plugin-storybook": "^10.2.14",
+    "jsdom": "^28.1.0",
+    "postcss": "^8.5.8",
+    "postcss-loader": "^7.3.4",
+    "prismjs": "^1.30.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-test-renderer": "^18.2.0",
+    "rimraf": "^6.0.1",
+    "sass": "^1.97.3",
+    "sass-loader": "^13.3.3",
+    "storybook": "^10.2.14",
+    "style-loader": "^4.0.0",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
   },
-  "resolutions": {
-    "babel-core": "7.0.0-bridge.0"
-  },
-  "keywords": [
-    "react-component",
-    "react-awesome-slider",
-    "awesome-slider",
-    "react",
-    "slider",
-    "gallery",
-    "carousel",
-    "image",
-    "video",
-    "progress",
-    "component",
-    "UI component",
-    "javascript"
-  ],
-  "dependencies": {
-    "web-animation-club": "^0.6.0"
-  },
-  "jest": {
-    "setupFilesAfterEnv": [
-      "<rootDir>/configs/testConfig.js"
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
     ],
-    "coveragePathIgnorePatterns": [
-      "/node_modules"
-    ],
-    "verbose": true,
-    "clearMocks": true
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "volta": {
+    "node": "24.14.0"
   }
 }

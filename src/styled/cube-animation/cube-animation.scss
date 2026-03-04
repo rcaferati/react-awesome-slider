@@ -1,4 +1,4 @@
-@import '../../core/constants.scss';
+@use '../../core/constants.scss' as *;
 
 .#{$root-element} {
   &--cubeAnimation {

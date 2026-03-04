@@ -1,0 +1,45 @@
+{
+  "compilerOptions": {
+    "target": "ES2018",
+    "module": "ESNext",
+
+    // ✅ keep classic JSX transform (no react/jsx-runtime requirement)
+    "jsx": "react",
+
+    // ✅ Node-style resolution (storybook/webpack/vite friendly)
+    "moduleResolution": "node",
+
+    // ✅ tests need DOM types
+    "lib": ["ES2018", "DOM", "DOM.Iterable"],
+
+    // ✅ vitest globals typings (describe/it/expect)
+    "types": ["vitest/globals"],
+
+    // keep your current behavior
+    "declaration": true,
+    "emitDeclarationOnly": true,
+
+    // JS/TS mix
+    "allowJs": true,
+    "checkJs": false,
+
+    // perf / ergonomics
+    "skipLibCheck": true,
+    "strict": false,
+
+    // nice-to-have for mixed JS/TS + React libs
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+
+    // ✅ helps modern tooling; safe default
+    "isolatedModules": true
+  },
+  "include": [
+    "src/**/*",
+    "configs/**/*",
+    "vitest.config.ts",
+    "**/*.test.*",
+    "**/*.spec.*"
+  ]
+}

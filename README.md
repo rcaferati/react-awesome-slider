@@ -1,254 +1,403 @@
-# React Awesome Slider v3 [NEW fullpage navigation HOC]
+# React `<AwesomeSlider />`
 
-[![Travis](https://img.shields.io/travis/rcaferati/react-awesome-slider/master.svg)](https://travis-ci.org/rcaferati/react-awesome-slider) ![NPM](https://img.shields.io/npm/v/react-awesome-slider.svg)
+`@rcaferati/react-awesome-slider` provides a fast, production-ready slider/carousel with optional HOCs:
 
-`react-awesome-slider` is a 60fps, extendable, highly customizable, production ready React Component that renders a media (image/video) gallery slider/carousel.
+- **`AwesomeSlider`** — animated media/children slider
+- **`withAutoplay`** — autoplay wrapper
+- **`withCaptionedImages`** — caption overlay wrapper
+- **`withAnimatedLettering`** — “screens → <p> lines” wrapper
+- **Navigation utilities** — `Provider`, `Link`, `withNavigationContext`, `withNavigationHandlers`
 
-## FULLPAGE navigation HOC
+This README is updated for the current v5+ patterns (functional core + CSS variables + optional CSS Modules).
 
-For using the full-screen navigation HOCs please checkout the `GatsbyJS` and `NextJS` examples on the [ras fullpage strategies repository](https://github.com/rcaferati/ras-fullpage-strategies).
+---
 
-You can access the demo for the FULLPAGE navigation here: [fullpage.caferati.me](https://fullpage.caferati.me)
+## Installation
 
-[<img width="600" alt="react-awesome-slider demo" src="https://github.com/rcaferati/react-awesome-slider/blob/master/demo/public/images/fullscreen.gif?raw=true">](https://fullpage.caferati.me/)
+```bash
+npm install @rcaferati/react-awesome-slider
+```
 
-## Basic usage
+Peer deps:
 
-[<img width="400" alt="react-awesome-slider demo" src="https://github.com/rcaferati/react-awesome-slider/blob/master/demo/public/images/demo-bojack.gif?raw=true">](https://caferati.me/demo/react-awesome-slider)
-[<img width="400" alt="react-awesome-slider demo" src="https://github.com/rcaferati/react-awesome-slider/blob/master/demo/public/images/demo-lettering.gif?raw=true">](https://caferati.me/demo/react-awesome-slider)
+- `react >= 18`
+- `react-dom >= 18`
 
-### Basic usage with pure CSS
+---
+
+## Quick Start
+
+### Plain CSS (no CSS Modules)
 
 ```jsx
-import AwesomeSlider from 'react-awesome-slider';
-import 'react-awesome-slider/dist/styles.css';
+import React from 'react';
+import AwesomeSlider from '@rcaferati/react-awesome-slider';
+import '@rcaferati/react-awesome-slider/styles.css';
 
-const slider = (
-  <AwesomeSlider>
-    <div>1</div>
-    <div>2</div>
-    <div>3</div>
-    <div>4</div>
-  </AwesomeSlider>
-);
+export default function Example() {
+  return (
+    <AwesomeSlider>
+      <div data-src="https://picsum.photos/id/1018/1200/600" />
+      <div data-src="https://picsum.photos/id/1015/1200/600" />
+      <div data-src="https://picsum.photos/id/1019/1200/600" />
+    </AwesomeSlider>
+  );
+}
 ```
 
-## Animation recipes: scale-out, fold-out, cube, open and fall.
-
-For analysing how the animations are built, please check out to [this folder](https://github.com/rcaferati/react-awesome-slider/tree/master/src/styled). Collaborations with new creative ones are welcome, just open a PR.
-
-[<img width="400" alt="react-awesome-slider demo" src="https://github.com/rcaferati/react-awesome-slider/blob/master/demo/public/images/demo-stranger.gif?raw=true">](https://caferati.me/demo/react-awesome-slider)
-[<img width="400" alt="react-awesome-slider demo" src="https://github.com/rcaferati/react-awesome-slider/blob/master/demo/public/images/demo-cube.gif?raw=true">](https://caferati.me/demo/react-awesome-slider)
-[<img width="400" alt="react-awesome-slider demo" src="https://github.com/rcaferati/react-awesome-slider/blob/master/demo/public/images/demo-open.gif?raw=true">](https://caferati.me/demo/react-awesome-slider)
-[<img width="400" alt="react-awesome-slider demo" src="https://github.com/rcaferati/react-awesome-slider/blob/master/demo/public/images/demo-fall.gif?raw=true">](https://caferati.me/demo/react-awesome-slider)
-
-### Cube animation recipe
-
-Checkout more recipes on the styled folder. For more animation recipes check out the [styled folder](https://github.com/rcaferati/react-awesome-slider/tree/master/src/styled).
+### Media prop (recommended for deterministic slides)
 
 ```jsx
-import AwesomeSlider from 'react-awesome-slider';
-import 'react-awesome-slider/dist/custom-animations/cube-animation.css';
+import React from 'react';
+import AwesomeSlider from '@rcaferati/react-awesome-slider';
+import '@rcaferati/react-awesome-slider/styles.css';
 
-const slider = (
-  <AwesomeSlider animation="cubeAnimation">
-    <div data-src="/path/to/image-0.png" />
-    <div data-src="/path/to/image-1.png" />
-    <div data-src="/path/to/image-2.jpg" />
-  </AwesomeSlider>
-);
+export default function Example() {
+  return (
+    <AwesomeSlider
+      media={[
+        { source: 'https://picsum.photos/id/1018/1200/600', slug: 'slide-1' },
+        { source: 'https://picsum.photos/id/1015/1200/600', slug: 'slide-2' },
+        { source: 'https://picsum.photos/id/1019/1200/600', slug: 'slide-3' },
+      ]}
+    />
+  );
+}
 ```
 
-### Touch enabled
+---
 
-[<img width="400" alt="react-awesome-slider demo" src="https://github.com/rcaferati/react-awesome-slider/blob/master/demo/public/images/demo-bojack-mobile.gif?raw=true">](https://caferati.me/demo/react-awesome-slider)
+## Animations
 
-## Live demo
+### Default animation: `sideAnimation`
 
-Checkout the `CSS customizer` at <a title="React Awesome Slider - CSS Customizer" href="https://caferati.me/demo/react-awesome-slider" target="_blank">my portfolio</a>
+The default “side” animation ships in the base stylesheet:
 
-[<img src="https://github.com/rcaferati/react-awesome-slider/blob/master/demo/public/images/css-customiser.png?raw=true" width="800" />](https://caferati.me/demo/react-awesome-slider)
-
-## Figma File
-
-Import the component directly into your [Figma](https://www.figma.com/file/VItcmlJtKZxyGJhClk4Lg0kQ/react-awesome-slider) project.
-
-[<img src="https://github.com/rcaferati/react-awesome-slider/blob/master/demo/public/images/figma.png?raw=true" width="800" />](https://www.figma.com/file/VItcmlJtKZxyGJhClk4Lg0kQ/react-awesome-slider)
-
-### Installing
-
-```
-npm install --save react-awesome-slider
+```js
+import '@rcaferati/react-awesome-slider/styles.css';
 ```
 
-or
+### Extra animation recipes
 
-```
-yarn add react-awesome-slider
-```
+Load one of the extra animation stylesheets and set `animation`:
 
-## More Examples
-
-### Basic usage with Media object
+- `cubeAnimation`
+- `fallAnimation`
+- `foldOutAnimation`
+- `openAnimation`
+- `scaleOutAnimation`
 
 ```jsx
-import AwesomeSlider from 'react-awesome-slider';
-import 'react-awesome-slider/dist/styles.css';
+import React from 'react';
+import AwesomeSlider from '@rcaferati/react-awesome-slider';
 
-const slider = (
-  <AwesomeSlider
-    media={[
-      {
-        source: '/path/to/image-0.png',
-      },
-      {
-        source: '/path/to/image-1.png',
-      },
-      {
-        source: '/path/to/image-2.png',
-      },
-    ]}
-  />
-);
+import '@rcaferati/react-awesome-slider/styles.css';
+import '@rcaferati/react-awesome-slider/custom-animations/cube-animation.css';
+
+export default function Example() {
+  return (
+    <AwesomeSlider animation="cubeAnimation">
+      <div data-src="https://picsum.photos/id/1018/1200/600" />
+      <div data-src="https://picsum.photos/id/1015/1200/600" />
+      <div data-src="https://picsum.photos/id/1019/1200/600" />
+    </AwesomeSlider>
+  );
+}
 ```
 
-### Basic usage with CSS Modules
+> Tip: When `animation="sideAnimation"` you typically omit `animation` entirely (core defaults).
+
+---
+
+## Styling
+
+### CSS variables (recommended)
+
+The core stylesheet exposes CSS variables on the slider root element (default `awssld`).
+You can override them per instance using `style`:
 
 ```jsx
-import AwesomeSlider from 'react-awesome-slider';
-import AwesomeSliderStyles from 'react-awesome-slider/src/styles';
+<AwesomeSlider
+  style={{
+    // arrows
+    '--organic-arrow-color': 'rgba(255,255,255,0.9)',
+    '--organic-arrow-height': '44px',
+    '--organic-arrow-thickness': '4px',
 
-const slider = (
-  <AwesomeSlider cssModule={AwesomeSliderStyles}>
-    <div data-src="/path/to/image-0.png" />
-    <div data-src="/path/to/image-1.png" />
-    <div data-src="/path/to/image-2.jpg" />
-  </AwesomeSlider>
-);
+    // bullets
+    '--control-bullet-color': 'rgba(255,255,255,0.35)',
+    '--control-bullet-active-color': 'rgba(255,255,255,0.9)',
+
+    // content
+    '--content-background-color': '#10131a',
+  }}
+/>
 ```
 
-### Fold-out animation recipe with CSS Modules
+### CSS Modules (`cssModule`)
 
-Checkout more recipes on the styled folder. For more animation recipes check out the [styled folder](https://github.com/rcaferati/react-awesome-slider/tree/master/src/styled).
-
-Note that on v3 there's an adition of the `animation` prop. The animation name is the cammel-cased version of the animation css file.
+If your bundler emits CSS module maps, you can pass module objects via `cssModule`.
+Many setups export the module object as `default` — this pattern is safe:
 
 ```jsx
-import AwesomeSlider from 'react-awesome-slider';
-import CoreStyles from 'react-awesome-slider/src/core/styles.scss';
-import AnimationStyles from 'react-awesome-slider/src/styled/fold-out-animation/fold-out-animation.scss';
-
-const slider = (
-  <AwesomeSlider
-    animation="foldOutAnimation"
-    cssModule={[coreStyles, animationStyles]}
-  >
-    <div data-src="/path/to/image-0.png" />
-    <div data-src="/path/to/image-1.png" />
-    <div data-src="/path/to/image-2.jpg" />
-  </AwesomeSlider>
-);
+import AwsSliderStyles from '@rcaferati/react-awesome-slider/dist/styles.css?inline'; // (example — depends on bundler)
 ```
 
-### Using the Autoplay HOC with plain CSS
+In this repository’s Storybook setup, `*.scss` imports resolve to CSS module maps. In consumer apps, you’ll typically import prebuilt CSS files (`styles.css`, `captioned.css`, `lettering.css`, and `custom-animations/*.css`) unless you have a CSS-module pipeline configured.
+
+---
+
+## `AwesomeSlider`
+
+### Common usage patterns
+
+#### Children mode (HTML slides)
 
 ```jsx
-import AwesomeSlider from 'react-awesome-slider';
-import withAutoplay from 'react-awesome-slider/dist/autoplay';
-import 'react-awesome-slider/dist/styles.css';
+<AwesomeSlider>
+  <div style={{ background: '#0b0f18', height: '100%' }}>
+    <h2 style={{ color: 'white' }}>Slide A</h2>
+  </div>
+  <div style={{ background: '#f4f6fb', height: '100%' }}>
+    <h2 style={{ color: '#111' }}>Slide B</h2>
+  </div>
+</AwesomeSlider>
+```
+
+#### Media mode (images/videos)
+
+```jsx
+<AwesomeSlider
+  media={[
+    { source: '/img/0.jpg', slug: 'a' },
+    { source: '/img/1.jpg', slug: 'b' },
+  ]}
+/>
+```
+
+---
+
+## `AwesomeSlider` Props (current)
+
+| Prop                  | Type                         | Default            | Description                                                                             |
+| --------------------- | ---------------------------- | ------------------ | --------------------------------------------------------------------------------------- |
+| `media`               | `MediaItem[]`                | `[]`               | Slides as objects (`{ source, slug, preload? }`).                                       |
+| `children`            | `ReactNode`                  | `null`             | Slides as React children (supports `data-src` / `data-slug`).                           |
+| `selected`            | `number \| string`           | `0`                | Active slide index (number) or slug (string).                                           |
+| `name`                | `string`                     | `'awesome-slider'` | Instance name (useful when multiple sliders are present).                               |
+| `animation`           | `string \| null`             | `null`             | Animation key (`cubeAnimation`, `fallAnimation`, etc). Omit for default side animation. |
+| `buttons`             | `boolean`                    | `true`             | Show next/prev buttons.                                                                 |
+| `bullets`             | `boolean`                    | `true`             | Show bullets.                                                                           |
+| `organicArrows`       | `boolean`                    | `true`             | Use the organic arrow shape styling.                                                    |
+| `infinite`            | `boolean`                    | `true`             | Wrap-around navigation.                                                                 |
+| `fillParent`          | `boolean`                    | `false`            | Fill parent bounds (fullscreen layouts).                                                |
+| `startupScreen`       | `ReactNode`                  | `null`             | Optional startup screen shown before first slide.                                       |
+| `startup`             | `boolean`                    | `true`             | If `startupScreen` is set, whether to auto-start into first slide.                      |
+| `startupDelay`        | `number`                     | `0`                | Delay before auto-start.                                                                |
+| `transitionDelay`     | `number`                     | `0`                | Delay before starting transition animation (ms).                                        |
+| `controlsReturnDelay` | `number`                     | `0`                | Delay to remove “controls active” class after transitions (ms).                         |
+| `mobileTouch`         | `boolean`                    | `true`             | Enables touch/swipe navigation.                                                         |
+| `cssModule`           | `object \| object[] \| null` | `null`             | CSS module map(s) used to map class names.                                              |
+| `className`           | `string \| null`             | `null`             | Extra className(s) added to root element.                                               |
+| `style`               | `React.CSSProperties`        | `{}`               | Inline styles (also used for CSS variables).                                            |
+| `onFirstMount`        | `(info) => void`             | `null`             | Called once after mount with `getInfo()` payload.                                       |
+| `onTransitionStart`   | `(info) => void`             | `null`             | Called on transition start.                                                             |
+| `onTransitionEnd`     | `(info) => void`             | `null`             | Called on transition end.                                                               |
+| `onTransitionRequest` | `(info) => void`             | `null`             | Called when user requests a transition (next/prev/bullet).                              |
+| `onTransitionReject`  | `(info) => void`             | `null`             | Called when a transition is rejected (e.g., busy/loading).                              |
+| `onLoadStart`         | `(payload) => void`          | `null`             | Optional custom preload hook. Call `payload.next()` when ready.                         |
+
+### `getInfo()` payload (high level)
+
+`getInfo()` is used by the event callbacks and includes (best-effort):
+
+- `slides` — slide count
+- `currentIndex` — current index
+- `currentMedia` — current media item
+- `currentSlide` — active slide element (when available)
+- `element` — slider root element
+
+---
+
+## HOCs
+
+### Autoplay
+
+```jsx
+import React from 'react';
+import AwesomeSlider from '@rcaferati/react-awesome-slider';
+import withAutoplay from '@rcaferati/react-awesome-slider/autoplay';
+import '@rcaferati/react-awesome-slider/styles.css';
 
 const AutoplaySlider = withAutoplay(AwesomeSlider);
 
-const slider = (
-  <AutoplaySlider
-    play={true}
-    cancelOnInteraction={false} // should stop playing on user interaction
-    interval={6000}
-  >
-    <div data-src="/path/to/image-0.png" />
-    <div data-src="/path/to/image-1.png" />
-    <div data-src="/path/to/image-2.jpg" />
-  </AutoplaySlider>
-);
+export default function Example() {
+  return (
+    <AutoplaySlider
+      play={true}
+      cancelOnInteraction={false}
+      interval={6000}
+      media={[
+        { source: 'https://picsum.photos/id/1018/1200/600' },
+        { source: 'https://picsum.photos/id/1015/1200/600' },
+      ]}
+    />
+  );
+}
 ```
 
-### Using the Captioned HOC with plain CSS
+### Captioned Images
 
 ```jsx
-import AwesomeSlider from 'react-awesome-slider';
-import withCaption from 'react-awesome-slider/dist/captioned';
-import 'react-awesome-slider/dist/styles.css';
-import 'react-awesome-slider/dist/captioned.css';
+import React from 'react';
+import AwesomeSlider from '@rcaferati/react-awesome-slider';
+import withCaptionedImages from '@rcaferati/react-awesome-slider/captioned';
 
-const CaptionedSlider = withCaption(AwesomeSlider);
+import '@rcaferati/react-awesome-slider/styles.css';
+import '@rcaferati/react-awesome-slider/captioned.css';
 
-const component = (
-  <CaptionedSlider
-    startupScreen={StartupScreen}
-    cssModule={CaptionedStyles}
-    screens={[
-      {
-        backgroundColor: '#4a9c8c',
-        media: '/images/series/ricknmorty-3.png',
-        caption: 'I want to see what you got.',
-      },
-      {
-        backgroundColor: '#4a9c8c',
-        media: '/images/series/ricknmorty-3.png',
-        caption: "The answer is -- Don't think about it.",
-      },
-    ]}
-  />
-);
+const Captioned = withCaptionedImages(AwesomeSlider);
+
+export default function Example() {
+  return (
+    <Captioned
+      screens={[
+        {
+          media: 'https://picsum.photos/id/1018/1200/600',
+          caption: 'The first captioned slide',
+          backgroundColor: '#ffffff',
+        },
+        {
+          media: 'https://picsum.photos/id/1015/1200/600',
+          caption: 'Second slide — caption overlay',
+          backgroundColor: '#ffffff',
+        },
+      ]}
+    />
+  );
+}
 ```
 
-## Key Features
+### Animated Lettering
 
-- Look and feel customisable and extendable via SASS and CSS Variables ([custom-properties](https://github.com/rcaferati/react-awesome-slider/blob/master/src/core/styles.scss#L48)) ([scss main file](https://github.com/rcaferati/react-awesome-slider/blob/master/src/core/styles.scss))
-- Media pre-loader
-- Touch enabled
-- 60fps animations
-- Animated transition recipes
-- Extendable via custom plugin HOC components
-- FullScreen achieved through the `fillParent` prop
+```jsx
+import React from 'react';
+import AwesomeSlider from '@rcaferati/react-awesome-slider';
+import withAnimatedLettering from '@rcaferati/react-awesome-slider/lettering';
 
-## Main Props
+import '@rcaferati/react-awesome-slider/styles.css';
+import '@rcaferati/react-awesome-slider/lettering.css';
 
-| Attributes          |    Type    |     Default      | Description                                                                                                                                          |
-| :------------------ | :--------: | :--------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------- |
-| className           |  `string`  |      `null`      | Add a className to the component container                                                                                                           |
-| cssModule           |  `object`  |      `null`      | CSS Module object if you choose to use this styling approach                                                                                         |
-| name                |  `string`  | `awesome-slider` | Unique name of the rendered slider. Useful if you're navigating between multiple pages that contains a slider component.                             |
-| selected            |  `number`  |       `0`        | Sets the current active/selected screen                                                                                                              |
-| bullets             | `boolean`  |      `true`      | When set to true show the bullet controls underneath the slider                                                                                      |
-| organicArrows       | `boolean`  |      `true`      | When set to true show the organic arrow `next` and `prev` controls                                                                                   |
-| fillParent          | `boolean`  |     `false`      | When set to true the slider will fill the dimensions of the parent element. Usefull for using it in full-screen mode.                                |
-| infinite            | `boolean`  |      `true`      | When set to true the slider will behave on an infinite fashion returing to the first slide after the last one.                                       |
-| startupScreen       |   `node`   |      `null`      | Set's the startup screen component to be shown before the first screen is loaded. It works like a pre-loading screen.                                |
-| startup             | `boolean`  |      `true`      | Used together with `startupScreen` controls whether or not the startupScreen should auto-start.                                                      |
-| transitionDelay     |  `number`  |       `0`        | Sets a delay in `ms` between the slide transitions. Useful if you're waiting for an exit animation to finish in the current slide.                   |
-| mobileTouch         | `boolean`  |      `true`      | When set to true activates a swipe touch effect to navigate on mobile devices.                                                                        |
-| buttons             | `boolean`  |      `true`      | Should render the default left and right navigation buttons.                                                                                         |
-| buttonContentRight  |   `node`   |      `null`      | Add content as children of the right button.                                                                                                         |
-| buttonContentLeft   |   `node`   |      `null`      | Add content as children of the left button.                                                                                                          |
-| customContent       |   `node`   |      `null`      | Render extra content at the same level of the default buttons. Useful if you want to add an extra slider navigation layer or a fixed overlay element |
-| onFirstMount        | `function` |      `null`      | Called on componentDidMount passing the slider reference as an argument                                                                              |
-| onTransitionEnd     | `function` |      `null`      | Called on at the slider transition end event passing the slider reference as an argument                                                             |
-| onTransitionStart   | `function` |      `null`      | Called on slider transition start passing the slider reference as an argument                                                                        |
-| onTransitionRequest | `function` |      `null`      | Called when a user interacts with the slider navigation (arrows or bullets)                                                                          |
+const Lettering = withAnimatedLettering(AwesomeSlider);
 
-## Contribute
+export default function Example() {
+  return (
+    <Lettering
+      screens={[
+        {
+          backgroundColor: '#ffffff',
+          children: [
+            'React Awesome Slider',
+            'Animated Lettering',
+            'Each line is a <p>',
+          ],
+        },
+        {
+          backgroundColor: '#f5f5f5',
+          children: ['Transitions are slide-based', 'Text moves on change'],
+        },
+      ]}
+    />
+  );
+}
+```
 
-If you have an idea for a missing feature or animation just craft your own `hoc feature` or `animation style` and send it up via PR to the `src/components` folder.
+### Adaptive Controls (optional HOC)
+
+If your build includes `hoc/adaptive-controls`, it can compute a theme (light/dark) and apply CSS variables for arrows/bullets based on the active slide background.
+
+> This HOC is intentionally CSS-modules-safe and applies variables to the real slider root.
+
+---
+
+## Fullpage Navigation Utilities
+
+These are designed for SPA / “slides-as-routes” setups.
+
+### `Provider`
+
+```jsx
+import React from 'react';
+import { Provider } from '@rcaferati/react-awesome-slider/navigation';
+
+export default function App({ children }) {
+  return (
+    <Provider slug={window.location.pathname} defaultSlug="home">
+      {children}
+    </Provider>
+  );
+}
+```
+
+### `Link`
+
+```jsx
+import React from 'react';
+import { Link } from '@rcaferati/react-awesome-slider/navigation';
+
+export default function Nav() {
+  return (
+    <nav>
+      <Link href="/home">Home</Link>
+      <Link href="/about">About</Link>
+      <Link href="/contact">Contact</Link>
+    </nav>
+  );
+}
+```
+
+### `withNavigationHandlers`
+
+Wrap a slider so URL ↔ slider selection stays aligned (supports popstate, retries on rejects, and mismatch correction).
+
+```jsx
+import AwesomeSlider from '@rcaferati/react-awesome-slider';
+import { withNavigationHandlers } from '@rcaferati/react-awesome-slider/navigation';
+
+const SliderWithNav = withNavigationHandlers(AwesomeSlider);
+
+export default function Page() {
+  return <SliderWithNav />;
+}
+```
+
+---
+
+## Recommended patterns (current)
+
+### ✅ Prefer `media` for stable routing
+
+If you use slugs + navigation handlers, keep `media` entries stable and include `slug`.
+
+### ✅ Keep animations modular
+
+- Always load `styles.css`
+- Load one extra animation CSS only when that animation is selected
+
+### ✅ Customize via CSS variables first
+
+Theme/contrast/polish is usually easiest via the exposed custom properties.
+
+---
 
 ## Author
 
-#### Rafael Caferati
+**Rafael Caferati**  
+Website: https://caferati.dev  
+GitHub: https://github.com/rcaferati
 
-- Checkout my <a href="https://caferati.me" title="Full-Stack Web Developer, UI/UX Javascript Specialist" target="_blank">Web Developer Portfolio Website</a>
-- Other open source projects @ <a title="Web Software Developer Code Laboratory" target="_blank" href="https://caferati.me/labs">Code Laboratory</a>
-- A scope of my work @ <a title="Web Software Developer Portfolio" target="_blank" href="https://caferati.me/portfolio">Web Developer Portfolio</a>
+---
 
 ## License
 
-MIT. Copyright (c) 2018 Rafael Caferati.
+MIT
