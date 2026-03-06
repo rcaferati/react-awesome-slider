@@ -1,6 +1,6 @@
 {
   "name": "@rcaferati/react-awesome-slider",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "React Awesome Slider is a 60fps performant, extendable, highly customisable, production ready React Component that renders a media (image/video) gallery slider carousel.",
   "author": "Rafael Caferati",
   "license": "MIT",
@@ -59,7 +59,13 @@
     "./styles.css": "./dist/styles.css",
     "./captioned.css": "./dist/captioned.css",
     "./lettering.css": "./dist/lettering.css",
-    "./custom-animations/*": "./dist/custom-animations/*.css",
+    "./custom-animations/*": {
+      "types": "./dist/custom-animations/*.d.ts",
+      "import": "./dist/custom-animations/*.mjs",
+      "require": "./dist/custom-animations/*.js",
+      "default": "./dist/custom-animations/*.mjs"
+    },
+    "./custom-animations/*.css": "./dist/custom-animations/*.css",
     "./dist/*": "./dist/*",
     "./package.json": "./package.json"
   },
@@ -79,6 +85,9 @@
       ],
       "navigation": [
         "dist/navigation.d.ts"
+      ],
+      "custom-animations/*": [
+        "dist/custom-animations/*.d.ts"
       ]
     }
   },
@@ -97,8 +106,9 @@
     "build:css": "sass --no-source-map --silence-deprecation=import src/core/styles.scss dist/styles.css && sass --no-source-map --silence-deprecation=import src/hoc/animated-lettering/styles.scss dist/lettering.css && sass --no-source-map --silence-deprecation=import src/hoc/captioned-images/styles.scss dist/captioned.css",
     "build:animations": "node scripts/build-animations.mjs",
     "prepare": "npm run build",
+    "start": "npm run storybook",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
+    "build-storybook": "storybook build -o storybook-static",
     "test": "vitest",
     "test:run": "vitest run",
     "test:watch": "vitest --watch",

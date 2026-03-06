@@ -5,10 +5,10 @@
 - **`AwesomeSlider`** — animated media/children slider
 - **`withAutoplay`** — autoplay wrapper
 - **`withCaptionedImages`** — caption overlay wrapper
-- **`withAnimatedLettering`** — “screens → <p> lines” wrapper
+- **`withAnimatedLettering`** — “screens → `<p>` lines” wrapper
 - **Navigation utilities** — `Provider`, `Link`, `withNavigationContext`, `withNavigationHandlers`
 
-This README is updated for the current v5+ patterns (functional core + CSS variables + optional CSS Modules).
+This README is updated for the current v5 patterns (functional core + CSS variables + optional CSS Modules support).
 
 ---
 
@@ -18,7 +18,7 @@ This README is updated for the current v5+ patterns (functional core + CSS varia
 npm install @rcaferati/react-awesome-slider
 ```
 
-Peer deps:
+Peer dependencies:
 
 - `react >= 18`
 - `react-dom >= 18`
@@ -105,7 +105,66 @@ export default function Example() {
 }
 ```
 
-> Tip: When `animation="sideAnimation"` you typically omit `animation` entirely (core defaults).
+> Tip: when using the default side animation, omit the `animation` prop entirely.
+
+### Importing animation module objects
+
+This package also exports animation subpaths such as:
+
+- `@rcaferati/react-awesome-slider/custom-animations/cube-animation`
+- `@rcaferati/react-awesome-slider/custom-animations/fall-animation`
+
+Those module exports are useful for `cssModule` setups because they provide the class-name mapping object.
+
+**Important:** in current consumer setups such as Vite, the JS/MJS animation import alone should not be treated as enough to load the stylesheet into the page. You should still import the public CSS file as a side effect.
+
+#### Plain CSS users
+
+Use only the public CSS file:
+
+```js
+import '@rcaferati/react-awesome-slider/custom-animations/cube-animation.css';
+```
+
+#### `cssModule` users
+
+Import both:
+
+1. the public CSS file so the rules are actually injected
+2. the JS module export so you can pass the mapping object into `cssModule`
+
+```jsx
+import React from 'react';
+import AwesomeSlider from '@rcaferati/react-awesome-slider';
+import sliderStylesRaw from '@rcaferati/react-awesome-slider/styles';
+
+import '@rcaferati/react-awesome-slider/styles.css';
+
+import '@rcaferati/react-awesome-slider/custom-animations/cube-animation.css';
+import cubeAnimationRaw from '@rcaferati/react-awesome-slider/custom-animations/cube-animation';
+
+const sliderStyles = sliderStylesRaw?.default ?? sliderStylesRaw;
+const cubeAnimation = cubeAnimationRaw?.default ?? cubeAnimationRaw;
+
+export default function Example() {
+  return (
+    <AwesomeSlider
+      animation="cubeAnimation"
+      cssModule={[sliderStyles, cubeAnimation]}
+    >
+      <div data-src="https://picsum.photos/id/1018/1200/600" />
+      <div data-src="https://picsum.photos/id/1015/1200/600" />
+    </AwesomeSlider>
+  );
+}
+```
+
+In other words:
+
+- `.css` import → injects the stylesheet
+- JS/MJS import → provides the module mapping for `cssModule`
+
+For the widest compatibility, prefer the public CSS files whenever possible.
 
 ---
 
@@ -113,37 +172,89 @@ export default function Example() {
 
 ### CSS variables (recommended)
 
-The core stylesheet exposes CSS variables on the slider root element (default `awssld`).
+The core stylesheet exposes CSS variables on the slider root element (default root key: `awssld`).
 You can override them per instance using `style`:
 
 ```jsx
-<AwesomeSlider
-  style={{
-    // arrows
-    '--organic-arrow-color': 'rgba(255,255,255,0.9)',
-    '--organic-arrow-height': '44px',
-    '--organic-arrow-thickness': '4px',
+import React from 'react';
+import AwesomeSlider from '@rcaferati/react-awesome-slider';
+import '@rcaferati/react-awesome-slider/styles.css';
 
-    // bullets
-    '--control-bullet-color': 'rgba(255,255,255,0.35)',
-    '--control-bullet-active-color': 'rgba(255,255,255,0.9)',
+export default function Example() {
+  return (
+    <AwesomeSlider
+      style={{
+        // arrows
+        '--organic-arrow-color': 'rgba(255,255,255,0.9)',
+        '--organic-arrow-height': '44px',
+        '--organic-arrow-thickness': '4px',
 
-    // content
-    '--content-background-color': '#10131a',
-  }}
-/>
+        // bullets
+        '--control-bullet-color': 'rgba(255,255,255,0.35)',
+        '--control-bullet-active-color': 'rgba(255,255,255,0.9)',
+
+        // content
+        '--content-background-color': '#10131a',
+      }}
+      media={[
+        { source: 'https://picsum.photos/id/1018/1200/600' },
+        { source: 'https://picsum.photos/id/1015/1200/600' },
+      ]}
+    />
+  );
+}
 ```
 
 ### CSS Modules (`cssModule`)
 
 If your bundler emits CSS module maps, you can pass module objects via `cssModule`.
-Many setups export the module object as `default` — this pattern is safe:
+
+The package exports a `styles` entry:
 
 ```jsx
-import AwsSliderStyles from '@rcaferati/react-awesome-slider/dist/styles.css?inline'; // (example — depends on bundler)
+import React from 'react';
+import AwesomeSlider from '@rcaferati/react-awesome-slider';
+import sliderStylesRaw from '@rcaferati/react-awesome-slider/styles';
+import '@rcaferati/react-awesome-slider/styles.css';
+
+const styles = sliderStylesRaw?.default ?? sliderStylesRaw;
+
+export default function Example() {
+  return (
+    <AwesomeSlider cssModule={styles}>
+      <div data-src="https://picsum.photos/id/1018/1200/600" />
+      <div data-src="https://picsum.photos/id/1015/1200/600" />
+    </AwesomeSlider>
+  );
+}
 ```
 
-In this repository’s Storybook setup, `*.scss` imports resolve to CSS module maps. In consumer apps, you’ll typically import prebuilt CSS files (`styles.css`, `captioned.css`, `lettering.css`, and `custom-animations/*.css`) unless you have a CSS-module pipeline configured.
+If you are also using a custom animation module export, combine them as an array and still import the corresponding CSS file:
+
+```jsx
+import React from 'react';
+import AwesomeSlider from '@rcaferati/react-awesome-slider';
+import sliderStylesRaw from '@rcaferati/react-awesome-slider/styles';
+
+import '@rcaferati/react-awesome-slider/styles.css';
+
+import '@rcaferati/react-awesome-slider/custom-animations/cube-animation.css';
+import cubeAnimationRaw from '@rcaferati/react-awesome-slider/custom-animations/cube-animation';
+
+const core = sliderStylesRaw?.default ?? sliderStylesRaw;
+const cube = cubeAnimationRaw?.default ?? cubeAnimationRaw;
+
+export default function Example() {
+  return (
+    <AwesomeSlider animation="cubeAnimation" cssModule={[core, cube]}>
+      <div data-src="https://picsum.photos/id/1018/1200/600" />
+      <div data-src="https://picsum.photos/id/1015/1200/600" />
+    </AwesomeSlider>
+  );
+}
+```
+
+In most consumer apps, plain CSS imports are simpler and more portable than CSS-module object imports.
 
 ---
 
@@ -151,28 +262,44 @@ In this repository’s Storybook setup, `*.scss` imports resolve to CSS module m
 
 ### Common usage patterns
 
-#### Children mode (HTML slides)
+#### Children mode
 
 ```jsx
-<AwesomeSlider>
-  <div style={{ background: '#0b0f18', height: '100%' }}>
-    <h2 style={{ color: 'white' }}>Slide A</h2>
-  </div>
-  <div style={{ background: '#f4f6fb', height: '100%' }}>
-    <h2 style={{ color: '#111' }}>Slide B</h2>
-  </div>
-</AwesomeSlider>
+import React from 'react';
+import AwesomeSlider from '@rcaferati/react-awesome-slider';
+import '@rcaferati/react-awesome-slider/styles.css';
+
+export default function Example() {
+  return (
+    <AwesomeSlider>
+      <div style={{ background: '#0b0f18', height: '100%' }}>
+        <h2 style={{ color: 'white' }}>Slide A</h2>
+      </div>
+      <div style={{ background: '#f4f6fb', height: '100%' }}>
+        <h2 style={{ color: '#111' }}>Slide B</h2>
+      </div>
+    </AwesomeSlider>
+  );
+}
 ```
 
-#### Media mode (images/videos)
+#### Media mode
 
 ```jsx
-<AwesomeSlider
-  media={[
-    { source: '/img/0.jpg', slug: 'a' },
-    { source: '/img/1.jpg', slug: 'b' },
-  ]}
-/>
+import React from 'react';
+import AwesomeSlider from '@rcaferati/react-awesome-slider';
+import '@rcaferati/react-awesome-slider/styles.css';
+
+export default function Example() {
+  return (
+    <AwesomeSlider
+      media={[
+        { source: '/img/0.jpg', slug: 'a' },
+        { source: '/img/1.jpg', slug: 'b' },
+      ]}
+    />
+  );
+}
 ```
 
 ---
@@ -192,24 +319,24 @@ In this repository’s Storybook setup, `*.scss` imports resolve to CSS module m
 | `infinite`            | `boolean`                    | `true`             | Wrap-around navigation.                                                                 |
 | `fillParent`          | `boolean`                    | `false`            | Fill parent bounds (fullscreen layouts).                                                |
 | `startupScreen`       | `ReactNode`                  | `null`             | Optional startup screen shown before first slide.                                       |
-| `startup`             | `boolean`                    | `true`             | If `startupScreen` is set, whether to auto-start into first slide.                      |
+| `startup`             | `boolean`                    | `true`             | If `startupScreen` is set, whether to auto-start into the first slide.                  |
 | `startupDelay`        | `number`                     | `0`                | Delay before auto-start.                                                                |
 | `transitionDelay`     | `number`                     | `0`                | Delay before starting transition animation (ms).                                        |
-| `controlsReturnDelay` | `number`                     | `0`                | Delay to remove “controls active” class after transitions (ms).                         |
+| `controlsReturnDelay` | `number`                     | `0`                | Delay to remove the “controls active” class after transitions (ms).                     |
 | `mobileTouch`         | `boolean`                    | `true`             | Enables touch/swipe navigation.                                                         |
 | `cssModule`           | `object \| object[] \| null` | `null`             | CSS module map(s) used to map class names.                                              |
-| `className`           | `string \| null`             | `null`             | Extra className(s) added to root element.                                               |
-| `style`               | `React.CSSProperties`        | `{}`               | Inline styles (also used for CSS variables).                                            |
+| `className`           | `string \| null`             | `null`             | Extra className(s) added to the root element.                                           |
+| `style`               | `React.CSSProperties`        | `{}`               | Inline styles, including CSS variable overrides.                                        |
 | `onFirstMount`        | `(info) => void`             | `null`             | Called once after mount with `getInfo()` payload.                                       |
 | `onTransitionStart`   | `(info) => void`             | `null`             | Called on transition start.                                                             |
 | `onTransitionEnd`     | `(info) => void`             | `null`             | Called on transition end.                                                               |
-| `onTransitionRequest` | `(info) => void`             | `null`             | Called when user requests a transition (next/prev/bullet).                              |
-| `onTransitionReject`  | `(info) => void`             | `null`             | Called when a transition is rejected (e.g., busy/loading).                              |
+| `onTransitionRequest` | `(info) => void`             | `null`             | Called when the user requests a transition (next/prev/bullet).                          |
+| `onTransitionReject`  | `(info) => void`             | `null`             | Called when a transition is rejected (for example, busy/loading).                       |
 | `onLoadStart`         | `(payload) => void`          | `null`             | Optional custom preload hook. Call `payload.next()` when ready.                         |
 
 ### `getInfo()` payload (high level)
 
-`getInfo()` is used by the event callbacks and includes (best-effort):
+`getInfo()` is used by the event callbacks and includes, best-effort:
 
 - `slides` — slide count
 - `currentIndex` — current index
@@ -312,11 +439,16 @@ export default function Example() {
 }
 ```
 
-### Adaptive Controls (optional HOC)
+### Adaptive Controls
 
-If your build includes `hoc/adaptive-controls`, it can compute a theme (light/dark) and apply CSS variables for arrows/bullets based on the active slide background.
+Adaptive Controls is currently part of the repository work and Storybook examples, but it is not listed as a public package export in the current package `exports` map.
 
-> This HOC is intentionally CSS-modules-safe and applies variables to the real slider root.
+That means:
+
+- it is available in the source repository
+- it is not currently documented here as a stable public import path from the npm package
+
+If and when it becomes a public export, it should be documented with its exact import path.
 
 ---
 
@@ -358,9 +490,10 @@ export default function Nav() {
 
 ### `withNavigationHandlers`
 
-Wrap a slider so URL ↔ slider selection stays aligned (supports popstate, retries on rejects, and mismatch correction).
+Wrap a slider so URL ↔ slider selection stays aligned.
 
 ```jsx
+import React from 'react';
 import AwesomeSlider from '@rcaferati/react-awesome-slider';
 import { withNavigationHandlers } from '@rcaferati/react-awesome-slider/navigation';
 
@@ -369,6 +502,22 @@ const SliderWithNav = withNavigationHandlers(AwesomeSlider);
 export default function Page() {
   return <SliderWithNav />;
 }
+```
+
+### `withNavigationContext`
+
+If you need raw navigation state + setter injected into a component:
+
+```jsx
+import React from 'react';
+import { withNavigationContext } from '@rcaferati/react-awesome-slider/navigation';
+
+function Status(props) {
+  const { fullpage } = props;
+  return <pre>{JSON.stringify(fullpage.navigation, null, 2)}</pre>;
+}
+
+export default withNavigationContext(Status);
 ```
 
 ---
@@ -383,10 +532,22 @@ If you use slugs + navigation handlers, keep `media` entries stable and include 
 
 - Always load `styles.css`
 - Load one extra animation CSS only when that animation is selected
+- If you use animation module objects with `cssModule`, still import the matching `.css` file
 
 ### ✅ Customize via CSS variables first
 
-Theme/contrast/polish is usually easiest via the exposed custom properties.
+Theme, contrast, and visual polish are usually easiest via the exposed custom properties.
+
+### ✅ Use CSS module exports only when your bundler supports them
+
+For the widest compatibility:
+
+- use `styles.css`
+- use `captioned.css`
+- use `lettering.css`
+- use `custom-animations/*.css`
+
+Use `@rcaferati/react-awesome-slider/styles` or `@rcaferati/react-awesome-slider/custom-animations/*` module exports only when your bundler setup expects JS style-module entries, and pair them with the corresponding CSS file imports.
 
 ---
 
