@@ -12,6 +12,12 @@ This README is updated for the current v5 patterns (functional core + CSS variab
 
 ---
 
+## Preview
+
+[![React Awesome Slider preview](https://caferati.dev/images/ras.gif)](https://caferati.dev/images/ras.gif)
+
+---
+
 ## Installation
 
 ```bash
