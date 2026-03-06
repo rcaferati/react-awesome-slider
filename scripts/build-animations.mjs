@@ -16,6 +16,42 @@ if (!fs.existsSync(styledDir) || !fs.statSync(styledDir).isDirectory()) {
 
 fs.mkdirSync(outDir, { recursive: true });
 
+const CLASS_SELECTOR_RE = /\.(-?[_a-zA-Z]+[_a-zA-Z0-9-]*)/g;
+
+function extractCssModuleMap(css) {
+  const map = {};
+  CLASS_SELECTOR_RE.lastIndex = 0;
+  let match = CLASS_SELECTOR_RE.exec(css);
+
+  while (match) {
+    const className = match[1];
+    if (!Object.prototype.hasOwnProperty.call(map, className)) {
+      map[className] = className;
+    }
+    match = CLASS_SELECTOR_RE.exec(css);
+  }
+
+  return map;
+}
+
+function writeAnimationModuleFiles(themeName, cssMap) {
+  const esmFile = path.join(outDir, `${themeName}.mjs`);
+  const cjsFile = path.join(outDir, `${themeName}.js`);
+  const dtsFile = path.join(outDir, `${themeName}.d.ts`);
+  const dmtsFile = path.join(outDir, `${themeName}.d.mts`);
+
+  const cssMapJson = JSON.stringify(cssMap, null, 2);
+  const esmContents = `const Styles = ${cssMapJson};\n\nexport default Styles;\n`;
+  const cjsContents = `'use strict';\n\nconst Styles = ${cssMapJson};\n\nmodule.exports = Styles;\nmodule.exports.default = Styles;\n`;
+  const dtsContents =
+    "declare const Styles: { readonly [key: string]: string };\n\nexport default Styles;\n";
+
+  fs.writeFileSync(esmFile, esmContents, 'utf8');
+  fs.writeFileSync(cjsFile, cjsContents, 'utf8');
+  fs.writeFileSync(dtsFile, dtsContents, 'utf8');
+  fs.writeFileSync(dmtsFile, dtsContents, 'utf8');
+}
+
 const sassBin = path.join(
   root,
   'node_modules',
@@ -69,6 +105,12 @@ for (const theme of themes) {
     ],
     { stdio: 'inherit' }
   );
+
+  const css = fs.readFileSync(outFile, 'utf8');
+  const cssMap = extractCssModuleMap(css);
+  writeAnimationModuleFiles(theme, cssMap);
 }
 
-console.log(`[build:animations] Built ${themes.length} animation css file(s).`);
+console.log(
+  `[build:animations] Built ${themes.length} animation style(s) with css + module wrappers.`
+);
