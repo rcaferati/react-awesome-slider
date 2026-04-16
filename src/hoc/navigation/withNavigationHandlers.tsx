@@ -18,6 +18,28 @@ const getUrlSlug = (): string => {
   return getCleanPath(window.location.pathname) || '';
 };
 
+const getDefaultSlug = (navigation?: NavigationState): string =>
+  navigation?.defaultSlug || '';
+
+const resolveUrlSlug = (
+  rawSlug: string,
+  navigation?: NavigationState
+): string => {
+  return rawSlug === '' ? getDefaultSlug(navigation) : rawSlug;
+};
+
+const getHistoryPath = (slug: string): string => {
+  return slug === '' ? '/' : `/${slug}`;
+};
+
+const getMediaSlug = (media?: MediaLike): string | undefined => {
+  return typeof media?.slug === 'string' ? media.slug : undefined;
+};
+
+const firstDefined = (...values: Array<string | undefined>): string | undefined => {
+  return values.find((value) => value !== undefined);
+};
+
 type MediaLike = { slug?: string } | null | undefined;
 
 type TransitionInfoLike = {
@@ -104,9 +126,6 @@ export default function withNavigationHandlers<P extends object>(
         void reason; // retained for callsite intent; no logging
         if (typeof window === 'undefined') return;
 
-        const initialUrlSlug = getUrlSlug();
-        if (!initialUrlSlug) return;
-
         // latest-wins: cancel older runner
         if (syncRunningRef.current) {
           syncSeqRef.current += 1;
@@ -132,8 +151,7 @@ export default function withNavigationHandlers<P extends object>(
               pop: false,
             }) as NavigationState;
 
-            const urlNow = getUrlSlug();
-            if (!urlNow) continue;
+            const urlNow = resolveUrlSlug(getUrlSlug(), nav);
 
             // 1) Ensure the controlled "selected" (goto) matches the URL.
             //    Mark the next transitionStart as URL-driven so it must NOT pushState.
@@ -214,7 +232,7 @@ export default function withNavigationHandlers<P extends object>(
         }) as NavigationState;
 
         const cleanPath = getUrlSlug();
-        const nextSlug = element?.nextMedia?.slug || '';
+        const nextSlug = getMediaSlug(element?.nextMedia);
 
         // Real engine lifecycle
         txInFlightRef.current = true;
@@ -224,15 +242,19 @@ export default function withNavigationHandlers<P extends object>(
         urlDrivenStartLatchRef.current = false;
 
         // pushState only for click-driven transitions (not URL-driven pop/sync).
-        if (nextSlug && cleanPath !== nextSlug && !urlDrivenStart) {
-          window.history.pushState({}, '', `/${nextSlug}`);
+        if (
+          nextSlug !== undefined &&
+          cleanPath !== nextSlug &&
+          !urlDrivenStart
+        ) {
+          window.history.pushState({}, '', getHistoryPath(nextSlug));
         }
 
         safeNavigate(
           {
             ...nav,
-            goto: nextSlug || nav.goto,
-            slug: nav.slug || cleanPath,
+            goto: nextSlug !== undefined ? nextSlug : nav.goto,
+            slug: nav.slug,
             navigating: true,
             pop: urlDrivenStart ? true : false,
           } as any,
@@ -255,15 +277,16 @@ export default function withNavigationHandlers<P extends object>(
           pop: false,
         }) as NavigationState;
 
-        const currentSlug = element?.currentMedia?.slug || '';
-        const urlSlug = getUrlSlug();
+        const currentSlug =
+          firstDefined(getMediaSlug(element?.currentMedia), nav.goto, nav.slug) || '';
+        const urlSlug = resolveUrlSlug(getUrlSlug(), nav);
 
         // Real engine lifecycle ends here (authoritative)
         txInFlightRef.current = false;
 
-        if (currentSlug) landedSlugRef.current = currentSlug;
+        landedSlugRef.current = currentSlug;
 
-        const mismatch = !!(urlSlug && currentSlug && urlSlug !== currentSlug);
+        const mismatch = urlSlug !== currentSlug;
 
         // If mismatch, immediately set goto to URL so controlled selected follows it.
         safeNavigate(
@@ -271,8 +294,8 @@ export default function withNavigationHandlers<P extends object>(
             ...nav,
             navigating: false,
             pop: mismatch ? true : false,
-            slug: currentSlug || nav.slug,
-            goto: mismatch ? urlSlug : currentSlug || nav.goto,
+            slug: currentSlug,
+            goto: mismatch ? urlSlug : currentSlug,
           } as any,
           mismatch
             ? 'onTransitionEnd:mismatch(set-goto=url)'
@@ -302,7 +325,7 @@ export default function withNavigationHandlers<P extends object>(
           pop: false,
         }) as NavigationState;
 
-        const urlSlug = getUrlSlug();
+        const urlSlug = resolveUrlSlug(getUrlSlug(), nav);
 
         // NOTE: DO NOT overwrite landedSlugRef here.
         // Rejects can happen during an unrelated in-flight transition (loading churn),
@@ -313,32 +336,34 @@ export default function withNavigationHandlers<P extends object>(
 
         // Best-effort "where are we" for nav bookkeeping.
         const currentSlug =
-          element?.currentMedia?.slug ||
-          nav.slug ||
-          landedSlugRef.current ||
-          nav.goto ||
-          '';
+          firstDefined(
+            getMediaSlug(element?.currentMedia),
+            nav.slug,
+            landedSlugRef.current,
+            nav.goto
+          ) || '';
 
-        const mismatch = !!(urlSlug && currentSlug && urlSlug !== currentSlug);
+        const mismatch = urlSlug !== currentSlug;
 
         // Prefer keeping goto pointing at the URL (authoritative) when available,
         // so controlled selected continues to request the URL target.
         const desiredGoto =
-          urlSlug || element?.nextMedia?.slug || nav.goto || currentSlug;
+          firstDefined(urlSlug, getMediaSlug(element?.nextMedia), nav.goto, currentSlug) ||
+          '';
 
         safeNavigate(
           {
             ...nav,
-            slug: currentSlug || nav.slug,
+            slug: currentSlug,
             goto: desiredGoto,
             navigating: false,
-            pop: !!urlSlug, // treat as URL-driven alignment context
+            pop: true, // treat as URL-driven alignment context
           } as any,
           mismatch ? 'onTransitionReject:mismatch' : 'onTransitionReject'
         );
 
         // If URL says we should be elsewhere, kick sync loop (it will wait if tx is in-flight).
-        if (urlSlug && landedSlugRef.current !== urlSlug) {
+        if (landedSlugRef.current !== urlSlug) {
           syncToUrl(
             mismatch
               ? 'onTransitionReject:url-mismatch'

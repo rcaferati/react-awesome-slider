@@ -30,6 +30,7 @@ vi.mock('../../helpers/components', () => {
 });
 
 import createEngine from '../../core/engine';
+import { onceAnimationEnd } from '@rcaferati/wac';
 
 // --- helpers ----------------------------------------------------------------
 
@@ -295,6 +296,39 @@ describe('core/engine.integration (current engine.ts)', () => {
     // arrow should be cleared by finish
     expect(ctx.activeArrow).toBeNull();
     expect(ctx.activeArrowClass).toBeNull();
+  });
+
+  it('startAnimation waits for both active and loader animation end before finishing', async () => {
+    const ctx = mkCtx();
+    const engine = createEngine(() => ctx);
+
+    ctx.boxA.style.animationDuration = '0.6s';
+    ctx.boxB.style.animationDuration = '0.6s';
+
+    const resolvers: Array<(event: Event) => void> = [];
+    vi.mocked(onceAnimationEnd).mockImplementation(
+      () =>
+        new Promise<Event>((resolve) => {
+          resolvers.push(resolve);
+        })
+    );
+
+    const cb = vi.fn();
+    const media = { slug: 'about', source: 'https://example.com/b.jpg' };
+
+    engine.startAnimation(true, media as any, cb);
+
+    await flush(20);
+    expect(resolvers).toHaveLength(2);
+    expect(cb).not.toHaveBeenCalled();
+
+    resolvers[0](new Event('animationend'));
+    await flush(10);
+    expect(cb).not.toHaveBeenCalled();
+
+    resolvers[1](new Event('animationend'));
+    await flush(10);
+    expect(cb).toHaveBeenCalledTimes(1);
   });
 
   it('releaseTransition sets ctx.loading=false', () => {

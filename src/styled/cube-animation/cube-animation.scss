@@ -2,39 +2,54 @@
 
 .#{$root-element} {
   &--cubeAnimation {
-    --cube-animation-duration: 675ms;
-    --cube-animation-perspective: 1800px;
-    --cube-animation-ease-in: cubic-bezier(0.8, 0, 1, 0.8);
-    --cube-animation-ease-out: cubic-bezier(0, 0.2, 0.2, 1);
-    --cube-translateZ-distance: -225px;
+    --cube-animation-duration: 600ms;
+    --cube-animation-perspective: 1300px;
+    --cube-animation-ease: linear;
+    --cube-animation-ease-out: linear;
+    --cube-animation-faded-opacity: 0.3;
+    --cube-translateZ-distance: -200px;
 
     .#{$root-element} {
       &__container {
         perspective: var(--cube-animation-perspective);
+        transform-style: preserve-3d;
+      }
+
+      &--active {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) rotateY(0deg);
+      }
+
+      &--moveRight,
+      &--moveLeft,
+      &--exit {
+        transform-style: preserve-3d;
       }
 
       &--moveRight {
         transform-origin: 0% 50%;
         animation: cubeLeftIn var(--cube-animation-duration) both
-          var(--cube-animation-ease-in);
+          var(--cube-animation-ease);
       }
 
       &--moveLeft {
         transform-origin: 100% 50%;
         animation: cubeRightIn var(--cube-animation-duration) both
-          var(--cube-animation-ease-in);
+          var(--cube-animation-ease);
       }
 
       &--exit {
+        z-index: 3;
+
         &.#{$root-element}--moveLeft {
           transform-origin: 100% 50%;
           animation: cubeLeftOut var(--cube-animation-duration) both
-            var(--cube-animation-ease-in);
+            var(--cube-animation-ease);
         }
         &.#{$root-element}--moveRight {
           transform-origin: 0% 50%;
           animation: cubeRightOut var(--cube-animation-duration) both
-            var(--cube-animation-ease-in);
+            var(--cube-animation-ease);
         }
       }
     }
@@ -42,45 +57,65 @@
 }
 
 @keyframes cubeLeftOut {
+  0% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotateY(0deg);
+  }
   50% {
     animation-timing-function: var(--cube-animation-ease-out);
-    transform: translateX(-50%) translateZ(var(--cube-translateZ-distance))
+    transform: translate3d(-50%, 0, var(--cube-translateZ-distance))
       rotateY(-45deg);
   }
   100% {
-    transform: translateX(-100%) rotateY(-90deg);
+    opacity: var(--cube-animation-faded-opacity);
+    transform: translate3d(-100%, 0, 0) rotateY(-90deg);
   }
 }
 
 @keyframes cubeRightOut {
+  0% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotateY(0deg);
+  }
   50% {
     animation-timing-function: var(--cube-animation-ease-out);
-    transform: translateX(50%) translateZ(var(--cube-translateZ-distance))
+    transform: translate3d(50%, 0, var(--cube-translateZ-distance))
       rotateY(45deg);
   }
   100% {
-    transform: translateX(100%) rotateY(90deg);
+    opacity: var(--cube-animation-faded-opacity);
+    transform: translate3d(100%, 0, 0) rotateY(90deg);
   }
 }
 
 @keyframes cubeLeftIn {
   0% {
-    transform: translateX(100%) rotateY(90deg);
+    opacity: var(--cube-animation-faded-opacity);
+    transform: translate3d(100%, 0, 0) rotateY(90deg);
   }
   50% {
     animation-timing-function: var(--cube-animation-ease-out);
-    transform: translateX(50%) translateZ(var(--cube-translateZ-distance))
+    transform: translate3d(50%, 0, var(--cube-translateZ-distance))
       rotateY(45deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotateY(0deg);
   }
 }
 
 @keyframes cubeRightIn {
   0% {
-    transform: translateX(-100%) rotateY(-90deg);
+    opacity: var(--cube-animation-faded-opacity);
+    transform: translate3d(-100%, 0, 0) rotateY(-90deg);
   }
   50% {
     animation-timing-function: var(--cube-animation-ease-out);
-    transform: translateX(-50%) translateZ(var(--cube-translateZ-distance))
+    transform: translate3d(-50%, 0, var(--cube-translateZ-distance))
       rotateY(-45deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotateY(0deg);
   }
 }

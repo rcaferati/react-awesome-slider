@@ -479,10 +479,34 @@ export function createEngine(getCtx: () => EngineCtxLike): EngineLike {
             classListAdd(loader, loaderPosition);
             classListAdd(active, exitPosition);
 
-            const animTotal = getAnimationTotalMs(active);
-            const waitMs = animTotal
-              ? Math.max(300, Math.ceil(animTotal) + 300)
-              : 0;
+            const activeAnimTotal = getAnimationTotalMs(active);
+            const loaderAnimTotal = getAnimationTotalMs(loader);
+            const waitTargets: Promise<
+              | { ok: true; value: Event }
+              | { ok: false; reason: 'timeout' | 'error'; error?: any }
+            >[] = [];
+
+            if (activeAnimTotal) {
+              waitTargets.push(
+                withTimeout(
+                  onceAnimationEnd(active),
+                  Math.max(300, Math.ceil(activeAnimTotal) + 300),
+                  'runAnimation/onceAnimationEnd(active)',
+                  { animTotal: activeAnimTotal }
+                )
+              );
+            }
+
+            if (loaderAnimTotal) {
+              waitTargets.push(
+                withTimeout(
+                  onceAnimationEnd(loader),
+                  Math.max(300, Math.ceil(loaderAnimTotal) + 300),
+                  'runAnimation/onceAnimationEnd(loader)',
+                  { animTotal: loaderAnimTotal }
+                )
+              );
+            }
 
             const finish = () => {
               const ccc = getCtx();
@@ -537,17 +561,12 @@ export function createEngine(getCtx: () => EngineCtxLike): EngineLike {
               callback({ release });
             };
 
-            if (!waitMs) {
+            if (!waitTargets.length) {
               finish();
               return;
             }
 
-            withTimeout(
-              onceAnimationEnd(active),
-              waitMs,
-              'runAnimation/onceAnimationEnd',
-              { animTotal }
-            ).then(() => finish());
+            Promise.all(waitTargets).then(() => finish());
           });
         }, transitionDelay);
       });

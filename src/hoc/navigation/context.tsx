@@ -12,12 +12,13 @@ export type NavigationState = {
   goto: string;
   navigating: boolean;
   pop: boolean;
+  defaultSlug?: string;
 };
 
 export type SetNavigation = (next: Partial<NavigationState> | string) => void;
 
 export const Context = createContext<[NavigationState, SetNavigation]>([
-  { slug: '', goto: '', navigating: false, pop: false },
+  { slug: '', goto: '', navigating: false, pop: false, defaultSlug: '' },
   () => {},
 ]);
 
@@ -47,18 +48,18 @@ export const Provider: React.FC<ProviderProps> = ({
     goto: cleanPage,
     navigating: false,
     pop: false,
+    defaultSlug,
   }));
 
   // Re-anchor when slug prop changes, but don't clobber in-flight nav.
   useEffect(() => {
-    if (!cleanPage) return;
-
     setState((prev) => {
       // If we're mid-transition, don't force navigating=false or stomp goto.
       if (prev.navigating === true) {
         return {
           ...prev,
           slug: cleanPage,
+          defaultSlug,
           // keep goto as-is while navigating; end-handler will reconcile
         };
       }
@@ -69,9 +70,10 @@ export const Provider: React.FC<ProviderProps> = ({
         goto: cleanPage,
         navigating: false,
         pop: false,
+        defaultSlug,
       };
     });
-  }, [cleanPage]);
+  }, [cleanPage, defaultSlug]);
 
   const setNavigation = useCallback<SetNavigation>(
     (params) => {

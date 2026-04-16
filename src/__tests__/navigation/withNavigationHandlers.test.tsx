@@ -436,4 +436,109 @@ describe('navigation/withNavigationHandlers.tsx (integration)', () => {
 
     void setNav;
   });
+
+  it('navigates back to the empty root slug and writes "/" to history', async () => {
+    let latest: NavigationState | null = null;
+    let api: any = null;
+
+    setPath('/about');
+
+    render(
+      <Provider slug="/about/">
+        <NavSpy
+          onSnap={(s) => {
+            latest = s;
+          }}
+        />
+        <SliderWithHandlers __setApi={(x: any) => (api = x)} __auto={false} />
+      </Provider>
+    );
+
+    await act(async () => {
+      api.triggerStart('');
+    });
+
+    expect(window.location.pathname).toBe('/');
+
+    await act(async () => {
+      api.triggerEnd('');
+    });
+
+    await waitFor(() => {
+      expect(latest?.slug).toBe('');
+      expect(latest?.goto).toBe('');
+      expect(latest?.navigating).toBe(false);
+    });
+
+    const pushed = pushSpy.mock.calls.map((c: any[]) => c[2]);
+    expect(pushed).toContain('/');
+  });
+
+  it('popstate to "/" selects the empty root slug when no defaultSlug is configured', async () => {
+    let latest: NavigationState | null = null;
+    let api: any = null;
+
+    setPath('/about');
+
+    render(
+      <Provider slug="/about/">
+        <NavSpy
+          onSnap={(s) => {
+            latest = s;
+          }}
+        />
+        <SliderWithHandlers __setApi={(x: any) => (api = x)} />
+      </Provider>
+    );
+
+    await actPop(() => {
+      setPath('/');
+      dispatchPop();
+    });
+
+    await waitFor(() => {
+      expect(latest?.goto).toBe('');
+    });
+
+    await waitFor(() => {
+      expect(latest?.slug).toBe('');
+      expect(latest?.navigating).toBe(false);
+    });
+
+    expect(api.getSelected()).toBe('');
+  });
+
+  it('popstate to "/" resolves to defaultSlug when one is configured', async () => {
+    let latest: NavigationState | null = null;
+    let api: any = null;
+
+    setPath('/about');
+
+    render(
+      <Provider slug="/about/" defaultSlug="home">
+        <NavSpy
+          onSnap={(s) => {
+            latest = s;
+          }}
+        />
+        <SliderWithHandlers __setApi={(x: any) => (api = x)} />
+      </Provider>
+    );
+
+    await actPop(() => {
+      setPath('/');
+      dispatchPop();
+    });
+
+    await waitFor(() => {
+      expect(latest?.goto).toBe('home');
+    });
+
+    await waitFor(() => {
+      expect(latest?.slug).toBe('home');
+      expect(latest?.navigating).toBe(false);
+    });
+
+    expect(api.getSelected()).toBe('home');
+  });
 });

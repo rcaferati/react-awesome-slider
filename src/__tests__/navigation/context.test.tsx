@@ -64,6 +64,7 @@ describe('navigation/context.tsx', () => {
       goto: 'about',
       navigating: false,
       pop: false,
+      defaultSlug: '',
     });
   });
 
@@ -81,6 +82,24 @@ describe('navigation/context.tsx', () => {
     const last: Snap = (onSnap.mock.calls.at(-1) as any)[0];
     expect(last.state.slug).toBe('home');
     expect(last.state.goto).toBe('home');
+    expect(last.state.defaultSlug).toBe('home');
+  });
+
+  it('keeps the empty root slug when no defaultSlug is provided', async () => {
+    const onSnap = vi.fn();
+
+    render(
+      <Provider slug="/">
+        <Capture onSnap={onSnap} />
+      </Provider>
+    );
+
+    await flushPassive();
+
+    const last: Snap = (onSnap.mock.calls.at(-1) as any)[0];
+    expect(last.state.slug).toBe('');
+    expect(last.state.goto).toBe('');
+    expect(last.state.defaultSlug).toBe('');
   });
 
   it('re-anchors when slug prop changes (when not navigating): slug + goto follow cleanPage and navigating/pop reset', async () => {
@@ -108,6 +127,36 @@ describe('navigation/context.tsx', () => {
       goto: 'about',
       navigating: false,
       pop: false,
+      defaultSlug: 'home',
+    });
+  });
+
+  it('re-anchors to the empty root slug when slug prop changes to "/" without a defaultSlug', async () => {
+    const onSnap = vi.fn();
+
+    const { rerender } = render(
+      <Provider slug="/about/">
+        <Capture onSnap={onSnap} />
+      </Provider>
+    );
+
+    await flushPassive();
+
+    rerender(
+      <Provider slug="/">
+        <Capture onSnap={onSnap} />
+      </Provider>
+    );
+
+    await flushPassive();
+
+    const last: Snap = (onSnap.mock.calls.at(-1) as any)[0];
+    expect(last.state).toEqual({
+      slug: '',
+      goto: '',
+      navigating: false,
+      pop: false,
+      defaultSlug: '',
     });
   });
 
@@ -144,6 +193,7 @@ describe('navigation/context.tsx', () => {
     expect(snap.state.slug).toBe('home'); // updated
     expect(snap.state.navigating).toBe(true); // preserved
     expect(snap.state.goto).toBe('about'); // preserved
+    expect(snap.state.defaultSlug).toBe('home');
   });
 
   it('setNavigation(object) merges into state (Provider merges patches)', async () => {
